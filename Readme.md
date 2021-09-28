@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Daria Selezneva](https://up.htmlacademy.ru/react/8/user/1702695).
-* Наставник: `Неизвестно`.
+* Наставник: [Семён Якушев](https://htmlacademy.ru/profile/id1118791).
 
 ---
 

@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
+
+import { AppRoute } from '../../const';
 
 type MainProps = {
   promo: {
@@ -44,7 +47,7 @@ function Main(props: MainProps): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a href="/" className="user-block__link">Sign out</a>
+              <Link to={AppRoute.MyList} className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>

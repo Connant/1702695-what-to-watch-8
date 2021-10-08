@@ -8,6 +8,7 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
+
 import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
@@ -51,6 +52,10 @@ function App(props: AppProps): JSX.Element {
         <Route path={AppRoute.Player} exact>
           <Player />
         </Route>
+
+        {/* <Route path={AppRoute.MyList} exact>
+          <MyList />
+        </Route> */}
 
         <Route path={AppRoute.SignIn} exact>
           <SignIn />

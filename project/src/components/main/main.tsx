@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import FilmCard from '../film-card/film-card';
-
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type MainProps = {
@@ -33,11 +32,11 @@ function Main(props: MainProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a href="/" className="logo__link">
+            <Link to={AppRoute.Main} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <ul className="user-block">
@@ -66,12 +65,14 @@ function Main(props: MainProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <Link to={AppRoute.Player}>
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                </Link>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
@@ -128,14 +129,13 @@ function Main(props: MainProps): JSX.Element {
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
-
         <footer className="page-footer">
           <div className="logo">
-            <a href="/" className="logo__link logo__link--light">
+            <Link to={AppRoute.Main} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">

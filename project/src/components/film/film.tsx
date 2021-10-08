@@ -29,7 +29,7 @@ function Film(): JSX.Element {
                 </div>
               </li>
               <li className="user-block__item">
-                <a href="/" className="user-block__link">Sign out</a>
+                <Link to={AppRoute.MyList} className="user-block__link">Sign out</Link>
               </li>
             </ul>
           </header>
@@ -43,12 +43,14 @@ function Film(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <Link to={AppRoute.Player}>
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                </Link>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
@@ -141,11 +143,25 @@ function Film(): JSX.Element {
                 <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
               </div>
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
+                <Link className="small-film-card__link" to={AppRoute.Film}>Aviator</Link>
               </h3>
             </article>
           </div>
         </section>
+
+        <footer className="page-footer">
+          <div className="logo">
+            <Link to={AppRoute.Main} className="logo__link logo__link--light">
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </Link>
+          </div>
+          <div className="copyright">
+            <p>© 2019 What to watch Ltd.</p>
+          </div>
+        </footer>
+
       </div>
     </React.Fragment>
   );

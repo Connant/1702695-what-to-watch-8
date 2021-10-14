@@ -1,9 +1,9 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import  { FilmCardProps } from '../film-card/film-card';
 
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
-import Film from '../film/film';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
@@ -12,41 +12,24 @@ import Error from '../error/error';
 import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
-  films: {
-    id: number,
-    name: string,
-    previewImage: string,
-  }[];
+  films: Array<FilmCardProps>,
+  currentFilm: FilmCardProps,
 }
 
-function App(props: AppProps): JSX.Element {
-  const { promo, films } = props;
-
-
+function App({films, currentFilm}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
 
         <Route path={AppRoute.Main} exact>
           <Main
-            promo={promo}
             films={films}
+            currentFilm={currentFilm}
           />
         </Route>
 
         <Route path={AppRoute.AddReview} exact>
           <AddReview />
-        </Route>
-
-        <Route path={AppRoute.Film} exact>
-          <Film />
         </Route>
 
         <Route path={AppRoute.Player} exact>

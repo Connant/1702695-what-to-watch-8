@@ -2,30 +2,20 @@ import React from 'react';
 import FilmCard from '../film-card/film-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import  { FilmCardProps } from '../film-card/film-card';
 
 type MainProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
-
-  films: {
-    id: number,
-    name: string,
-    previewImage: string,
-  }[];
+  films: FilmCardProps[],
+  currentFilm: FilmCardProps,
 }
 
 function Main(props: MainProps): JSX.Element {
-  const { promo, films } = props;
+  const { currentFilm, films } = props;
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promo.previewImage} alt={promo.name} />
+          <img src={currentFilm.previewImage} alt={currentFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -54,14 +44,14 @@ function Main(props: MainProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promo.posterImage} alt={`${promo.name} poster`} width="218" height="327" />
+              <img src={currentFilm.posterImage} alt={`${currentFilm.name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
+              <h2 className="film-card__title">{currentFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.released}</span>
+                <span className="film-card__genre">{currentFilm.genre}</span>
+                <span className="film-card__year">{currentFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">

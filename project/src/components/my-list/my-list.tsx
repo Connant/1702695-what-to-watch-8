@@ -26,6 +26,7 @@ function MyList():JSX.Element {
           </li>
         </ul>
       </header>
+
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 

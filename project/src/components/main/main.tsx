@@ -57,7 +57,7 @@ function Main(props: MainProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={AppRoute.Player}>
+                <Link to={`/player/${currentFilm.id}`}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
@@ -114,7 +114,7 @@ function Main(props: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <FilmList films={films} currentFilm={currentFilm} />
+          <FilmList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

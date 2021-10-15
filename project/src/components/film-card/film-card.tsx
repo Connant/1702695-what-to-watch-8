@@ -18,6 +18,9 @@ export type FilmCardProps = {
   backgroundСolor: string,
   scoresCount: number,
   isFavorite: boolean,
+  isActive: boolean,
+  onMouseEnter: (id: number) => void,
+  onMouseLeave: () => void
 }
 
 function FilmCard(props: { film: FilmCardProps }): JSX.Element {

@@ -1,11 +1,35 @@
-import { MainProps } from '../main/main';
-import FilmCard from '../film-card/film-card';
+import { useState } from 'react';
+import FilmCard, { FilmCardProps } from '../film-card/film-card';
 
-export default function FilmList(props: MainProps): JSX.Element {
-  const { films } = props;
+export type FilmsListPropsType = {
+  films: FilmCardProps[]
+}
+
+type MoviesListState = number
+
+export default function FilmList({ films }: FilmsListPropsType): JSX.Element {
+
+  const [activeFilm, setActiveFilm] = useState<MoviesListState>(-1);
+
+  const handleMouseEnter = (id: number): void => {
+    setActiveFilm(id);
+  };
+
+  const handleMouseLeave = (): void => {
+    setActiveFilm(-1);
+  };
+
   return (
     <div className="catalog__films-list">
-      {films.map((film) => <FilmCard key={film.id} film={film} />)}
+      {films.map((film: FilmCardProps) => (
+        <FilmCard
+          {...film}
+          key={film.id}
+          isActive={activeFilm === film.id}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+      ))}
     </div>
   );
 }

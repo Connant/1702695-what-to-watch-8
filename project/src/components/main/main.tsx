@@ -1,10 +1,12 @@
 import React from 'react';
-import FilmCard from '../film-card/film-card';
+// import FilmCard from '../film-card/film-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import  { FilmCardProps } from '../film-card/film-card';
 
-type MainProps = {
+import FilmList from '../film-list/film-list';
+
+export type MainProps = {
   films: FilmCardProps[],
   currentFilm: FilmCardProps,
 }
@@ -15,7 +17,7 @@ function Main(props: MainProps): JSX.Element {
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={currentFilm.previewImage} alt={currentFilm.name} />
+          <img src={currentFilm.backgroundImage} alt={currentFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -75,6 +77,7 @@ function Main(props: MainProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
+
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
@@ -111,14 +114,13 @@ function Main(props: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key={film.id} film={film} />)}
-          </div>
+          <FilmList films={films} currentFilm={currentFilm} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
+
         <footer className="page-footer">
           <div className="logo">
             <Link to={AppRoute.Main} className="logo__link logo__link--light">

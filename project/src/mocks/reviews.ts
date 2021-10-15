@@ -1,10 +1,9 @@
-import { nanoid } from 'nanoid';
 
 export const fakeReviews = [
   {
-    id: nanoid,
+    id: '1',
     user: {
-      id: nanoid,
+      id: '1',
       name: 'Kate Muir',
     },
     rating: 8.9,
@@ -12,9 +11,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: nanoid,
+    id: '2',
     user: {
-      id: nanoid,
+      id: '2',
       name: 'Bill Murray',
     },
     rating: 8.9,
@@ -22,9 +21,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: nanoid,
+    id: '3',
     user: {
-      id: nanoid,
+      id: '3',
       name: 'Edward Norton',
     },
     rating: 6.3,
@@ -32,9 +31,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: nanoid,
+    id: '4',
     user: {
-      id: nanoid,
+      id: '4',
       name: 'Jude Law',
     },
     rating: 7.7,
@@ -42,9 +41,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: nanoid,
+    id: '5',
     user: {
-      id: nanoid,
+      id: '5',
       name: 'Willem Dafoe',
     },
     rating: 8.8,
@@ -52,9 +51,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: nanoid,
+    id: '6',
     user: {
-      id: nanoid,
+      id: '6',
       name: 'Saoirse Ronan',
     },
     rating: 9.9,

@@ -8,6 +8,7 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
+import Film from '../film/film';
 
 import PrivateRoute from '../private-route/private-route';
 
@@ -28,13 +29,11 @@ function App({films, currentFilm}: AppProps): JSX.Element {
           />
         </Route>
 
-        <Route path={AppRoute.AddReview} exact>
-          <AddReview />
-        </Route>
+        <Route path={AppRoute.Film} exact component={Film} />
 
-        <Route path={AppRoute.Player} exact>
-          <Player />
-        </Route>
+        <Route path={AppRoute.AddReview} exact component={AddReview} />
+
+        <Route path={AppRoute.Player} exact component={Player} />
 
         {/* <Route path={AppRoute.MyList} exact>
           <MyList />

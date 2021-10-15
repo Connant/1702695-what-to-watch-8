@@ -20,8 +20,8 @@ export type FilmCardProps = {
   isFavorite: boolean,
 }
 
-function FilmCard(props: FilmCardProps): JSX.Element {
-  const { id, name, posterImage } = props;
+function FilmCard(props: { film: FilmCardProps }): JSX.Element {
+  const { id, name, posterImage } = props.film;
 
 
   return (

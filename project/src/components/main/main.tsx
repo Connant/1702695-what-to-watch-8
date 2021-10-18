@@ -1,43 +1,34 @@
 import React from 'react';
+// import FilmCard from '../film-card/film-card';
 import { Link } from 'react-router-dom';
-import FilmCard from '../film-card/film-card';
-
 import { AppRoute } from '../../const';
+import  { Film, FilmCardProps } from '../film-card/film-card';
 
-type MainProps = {
-  promo: {
-    name: string,
-    genre: string,
-    released: number,
-    previewImage: string,
-    posterImage: string,
-  },
+import FilmList from '../film-list/film-list';
 
-  films: {
-    id: number,
-    name: string,
-    previewImage: string,
-  }[];
+export type MainProps = {
+  films: FilmCardProps[],
+  currentFilm: Film,
 }
 
 function Main(props: MainProps): JSX.Element {
-  const { promo, films } = props;
+  const { currentFilm, films } = props;
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promo.previewImage} alt={promo.name} />
+          <img src={currentFilm.backgroundImage} alt={currentFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a href="/" className="logo__link">
+            <Link to={AppRoute.Main} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <ul className="user-block">
@@ -55,23 +46,25 @@ function Main(props: MainProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promo.posterImage} alt={`${promo.name} poster`} width="218" height="327" />
+              <img src={currentFilm.posterImage} alt={`${currentFilm.name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
+              <h2 className="film-card__title">{currentFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.released}</span>
+                <span className="film-card__genre">{currentFilm.genre}</span>
+                <span className="film-card__year">{currentFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <Link to={`/player/${currentFilm.id}`}>
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                </Link>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
@@ -84,6 +77,7 @@ function Main(props: MainProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
+
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
@@ -120,9 +114,7 @@ function Main(props: MainProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key={film.id} film={film} />)}
-          </div>
+          <FilmList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -131,11 +123,11 @@ function Main(props: MainProps): JSX.Element {
 
         <footer className="page-footer">
           <div className="logo">
-            <a href="/" className="logo__link logo__link--light">
+            <Link to={AppRoute.Main} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">

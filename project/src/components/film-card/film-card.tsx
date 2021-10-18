@@ -1,26 +1,42 @@
 import { Link } from 'react-router-dom';
 
-import { AppRoute } from '../../const';
-
-type FilmCardProps = {
-  film: {
-    name: string,
-    previewImage: string
-  }
+export type Film = {
+  id: number,
+  name: string,
+  released: string,
+  description: string,
+  genre: string,
+  rating: string,
+  director: string,
+  actors: string,
+  runtime: string,
+  videoLink: string,
+  previewVideoLink: string,
+  posterImage: string,
+  previewImage: string,
+  backgroundImage: string,
+  backgroundСolor: string,
+  scoresCount: number,
+  isFavorite: boolean,
+  isActive: boolean,
 }
 
-function FilmCard(props: FilmCardProps): JSX.Element {
-  const {film} = props;
-  const {name, previewImage} = film;
+export type FilmCardProps = {
+  films: Film;
+  onMouseEnter: (id: number) => void,
+  onMouseLeave: () => void
+}
 
+function FilmCard(props: { film: FilmCardProps }): JSX.Element {
+  const { films, onMouseEnter } = props.film;
 
   return (
-    <article className="small-film-card catalog__films-card">
+    <article className="small-film-card catalog__films-card" onMouseEnter={() => onMouseEnter(films.id)}>
       <div className="small-film-card__image">
-        <img src={previewImage} alt={name} width="280" height="175" />
+        <img src={films.posterImage} alt={films.name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={AppRoute.Film}>{name}</Link>
+        <Link className="small-film-card__link" to={`/films/${films.id}`}>{films.name}</Link>
       </h3>
     </article>
   );

@@ -10,7 +10,7 @@ type MatchParams = {
 }
 
 
-function Film({ match }: RouteComponentProps<MatchParams>): JSX.Element {
+function FilmPage({ match }: RouteComponentProps<MatchParams>): JSX.Element {
 
   const history = useHistory();
 
@@ -181,4 +181,4 @@ function Film({ match }: RouteComponentProps<MatchParams>): JSX.Element {
   );
 }
 
-export default Film;
+export default FilmPage;

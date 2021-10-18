@@ -1,6 +1,6 @@
-import { FilmCardProps } from '../components/film-card/film-card';
+import { Film } from '../components/film-card/film-card';
 
-export const fakeFilms: FilmCardProps[] = [
+export const fakeFilms: Film[] = [
   {
     id: 1,
     name: 'The Grand Budapest Hotel',
@@ -19,6 +19,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 2,
@@ -38,6 +39,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 3,
@@ -57,6 +59,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 4,
@@ -76,6 +79,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 5,
@@ -95,6 +99,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 6,
@@ -114,6 +119,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 7,
@@ -133,6 +139,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
   {
     id: 8,
@@ -152,6 +159,7 @@ export const fakeFilms: FilmCardProps[] = [
     backgroundСolor: '#ffffff',
     scoresCount: 240,
     isFavorite: false,
+    isActive: false,
   },
 ];
 

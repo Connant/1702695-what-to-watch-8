@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export type FilmCardProps = {
+export type Film = {
   id: number,
   name: string,
   released: string,
@@ -19,21 +19,24 @@ export type FilmCardProps = {
   scoresCount: number,
   isFavorite: boolean,
   isActive: boolean,
+}
+
+export type FilmCardProps = {
+  films: Film;
   onMouseEnter: (id: number) => void,
   onMouseLeave: () => void
 }
 
 function FilmCard(props: { film: FilmCardProps }): JSX.Element {
-  const { id, name, posterImage } = props.film;
-
+  const { films, onMouseEnter } = props.film;
 
   return (
-    <article className="small-film-card catalog__films-card">
+    <article className="small-film-card catalog__films-card" onMouseEnter={() => onMouseEnter(films.id)}>
       <div className="small-film-card__image">
-        <img src={posterImage} alt={name} width="280" height="175" />
+        <img src={films.posterImage} alt={films.name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
+        <Link className="small-film-card__link" to={`/films/${films.id}`}>{films.name}</Link>
       </h3>
     </article>
   );

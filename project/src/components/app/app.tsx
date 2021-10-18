@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import  { FilmCardProps } from '../film-card/film-card';
+import  { Film, FilmCardProps } from '../film-card/film-card';
 
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
@@ -8,13 +8,13 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
-import Film from '../film/film';
+import FilmPage from '../film/film';
 
 import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
   films: Array<FilmCardProps>,
-  currentFilm: FilmCardProps,
+  currentFilm: Film,
 }
 
 function App({films, currentFilm}: AppProps): JSX.Element {
@@ -29,7 +29,7 @@ function App({films, currentFilm}: AppProps): JSX.Element {
           />
         </Route>
 
-        <Route path={AppRoute.Film} exact component={Film} />
+        <Route path={AppRoute.Film} exact component={FilmPage} />
 
         <Route path={AppRoute.AddReview} exact component={AddReview} />
 
@@ -46,7 +46,7 @@ function App({films, currentFilm}: AppProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyList />}
+          render={() => <MyList films={films} />}
           authorizationStatus={AuthorizationStatus.NoAuth}
         >
         </PrivateRoute>

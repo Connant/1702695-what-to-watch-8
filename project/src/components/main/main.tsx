@@ -2,13 +2,13 @@ import React from 'react';
 // import FilmCard from '../film-card/film-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import  { FilmCardProps } from '../film-card/film-card';
+import  { Film, FilmCardProps } from '../film-card/film-card';
 
 import FilmList from '../film-list/film-list';
 
 export type MainProps = {
   films: FilmCardProps[],
-  currentFilm: FilmCardProps,
+  currentFilm: Film,
 }
 
 function Main(props: MainProps): JSX.Element {

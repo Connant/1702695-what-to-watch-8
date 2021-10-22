@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { FilmCardProps } from '../film-card/film-card';
+import { Film } from '../film-card/film-card';
 import FilmList from '../film-list/film-list';
 
 type MyListProps = {
-  films: FilmCardProps[];
+  films: Film[];
 }
 
 function MyList({films}:MyListProps):JSX.Element {

@@ -12,7 +12,7 @@ export default function FilmList({ films }: FilmsListPropsType): JSX.Element {
         <FilmCard
           {...film}
           key={film.id}
-          film={film}
+          films={film}
         />
       ))}
     </div>

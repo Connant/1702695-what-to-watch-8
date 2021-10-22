@@ -2,12 +2,12 @@ import React from 'react';
 // import FilmCard from '../film-card/film-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import  { Film, FilmCardProps } from '../film-card/film-card';
+import  { Film } from '../film-card/film-card';
 
 import FilmList from '../film-list/film-list';
 
 export type MainProps = {
-  films: FilmCardProps[],
+  films: Film[],
   currentFilm: Film,
 }
 

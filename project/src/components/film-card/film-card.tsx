@@ -37,8 +37,7 @@ const VIDEO_STYLES = {
   alignItems: 'center',
 };
 
-function FilmCard(props: { film: FilmCardProps }): JSX.Element {
-  const { films } = props.film;
+function FilmCard({films}: {films: Film}): JSX.Element {
 
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [ isHovered, setHovered ] = useState(false);

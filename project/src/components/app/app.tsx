@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import  { Film, FilmCardProps } from '../film-card/film-card';
+import  { Film } from '../film-card/film-card';
 
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
@@ -13,7 +13,7 @@ import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
-  films: Array<FilmCardProps>,
+  films: Array<Film>,
   currentFilm: Film,
 }
 

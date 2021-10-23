@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import  { Film } from '../film-card/film-card';
+import { FilmReviewProps } from '../tab-reviews/tab-reviews';
 
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
@@ -15,9 +16,10 @@ import PrivateRoute from '../private-route/private-route';
 type AppProps = {
   films: Array<Film>,
   currentFilm: Film,
+  reviews: FilmReviewProps[];
 }
 
-function App({films, currentFilm}: AppProps): JSX.Element {
+function App({films, currentFilm, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -29,7 +31,12 @@ function App({films, currentFilm}: AppProps): JSX.Element {
           />
         </Route>
 
-        <Route path={AppRoute.Film} exact component={FilmPage} />
+        <Route path={AppRoute.Film} exact>
+          <FilmPage
+            films={films}
+            reviews={reviews}
+          />
+        </Route>
 
         <Route path={AppRoute.AddReview} exact component={AddReview} />
 

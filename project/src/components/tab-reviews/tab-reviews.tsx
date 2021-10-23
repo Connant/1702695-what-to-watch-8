@@ -1,6 +1,6 @@
 
 
-export type ReviewProps = {
+export type FilmReviewProps = {
     id: number,
   user: {
     id: number,
@@ -11,7 +11,7 @@ export type ReviewProps = {
   date: string,
 }
 
-export default function FilmTabReviews(reviews : ReviewProps) : JSX.Element {
+export default function TabReviews(reviews : FilmReviewProps) : JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

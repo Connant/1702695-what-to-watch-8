@@ -1,6 +1,6 @@
 import { Film } from '../film-card/film-card';
 
-export default function FilmTabDetails(film: Film) : JSX.Element {
+export default function TabDetails(film: Film) : JSX.Element {
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
-// import { fakeFilms } from '../../mocks/films';
 import { Redirect } from 'react-router';
 import { Film } from '../film-card/film-card';
 import { FilmReviewProps } from '../tab-reviews/tab-reviews';

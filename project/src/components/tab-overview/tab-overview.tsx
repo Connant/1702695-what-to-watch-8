@@ -1,7 +1,7 @@
 import React from 'react';
 import { Film } from '../film-card/film-card';
 
-export default function TabOverview(film: Film) : JSX.Element {
+export default function TabOverview({film}: {film: Film}): JSX.Element {
   return (
     <React.Fragment>
       <div className="film-rating">

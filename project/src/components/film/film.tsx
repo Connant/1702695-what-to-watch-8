@@ -15,7 +15,7 @@ export type FilmOverviewProps = {
   reviews: FilmReviewProps[],
 }
 
-const SIMILAR_FILMS = 4;
+// const SIMILAR_FILMS = 4;
 
 export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Element {
 
@@ -33,11 +33,11 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
     genre,
     released,
     posterImage,
-    rating,
-    scoresCount,
-    description,
-    director,
-    actors,
+    // rating,
+    // scoresCount,
+    // description,
+    // director,
+    // actors,
   } = currentFilm as Film;
 
   const renderActiveTab = (tab: string) => {
@@ -149,29 +149,17 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
                   </li>
                 </ul>
               </nav>
-
               {renderActiveTab(activeTab)}
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">TODO</span>
-                  <span className="film-rating__count">{scoresCount}</span>
-                </p>
-              </div>
-              <div className="film-card__text">
-                <p>{description}</p>
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-                <p className="film-card__starring"><strong>Starring: {actors}</strong></p>
-              </div>
             </div>
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">{similarFilms.length > 0 ? 'More like this' : ''}</h2>
+          <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            <FilmList films={similarFilms.slice(0, SIMILAR_FILMS)} />
+            {/* <FilmList films={films}/> */}
+            {similarFilms.map((film) => <FilmList films={films} key={film.id} />)}
           </div>
         </section>
 

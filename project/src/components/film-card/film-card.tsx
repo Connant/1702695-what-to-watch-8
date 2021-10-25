@@ -1,6 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
-import { AppRoute } from '../../const';
 
 export type Film = {
   id: number,
@@ -74,7 +73,7 @@ function FilmCard({films}: {films: Film}): JSX.Element {
 
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)} onClick={() => history.push(AppRoute.Film)}
+      onMouseLeave={() => setHovered(false)} onClick={() => history.push(`/films/${films.id}`)}
     >
       {
         isDelayedHovered ?

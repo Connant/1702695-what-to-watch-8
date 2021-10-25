@@ -1,9 +1,9 @@
 
 export const fakeReviews = [
   {
-    id: '1',
+    id: 1,
     user: {
-      id: '1',
+      id: 1,
       name: 'Kate Muir',
     },
     rating: 8.9,
@@ -11,9 +11,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: '2',
+    id: 2,
     user: {
-      id: '2',
+      id: 2,
       name: 'Bill Murray',
     },
     rating: 8.9,
@@ -21,9 +21,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: '3',
+    id: 3,
     user: {
-      id: '3',
+      id: 3,
       name: 'Edward Norton',
     },
     rating: 6.3,
@@ -31,9 +31,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: '4',
+    id: 4,
     user: {
-      id: '4',
+      id: 4,
       name: 'Jude Law',
     },
     rating: 7.7,
@@ -41,9 +41,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: '5',
+    id: 5,
     user: {
-      id: '5',
+      id: 5,
       name: 'Willem Dafoe',
     },
     rating: 8.8,
@@ -51,9 +51,9 @@ export const fakeReviews = [
     date: '2019-05-08T14:13:56.569Z',
   },
   {
-    id: '6',
+    id: 6,
     user: {
-      id: '6',
+      id: 6,
       name: 'Saoirse Ronan',
     },
     rating: 9.9,

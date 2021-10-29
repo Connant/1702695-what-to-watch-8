@@ -11,8 +11,8 @@ export type GenreListProps = {
   films: Film[],
 }
 
-const mapStateToProps = ({genre}: State) => ({
-  genre,
+const mapStateToProps = ({currentGenre}: State) => ({
+  currentGenre,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -29,7 +29,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedGenreListProps = PropsFromRedux & GenreListProps;
 
-export default function GenreList({films, onChangeGenre, onFilterFilms, genre}: ConnectedGenreListProps): JSX.Element {
+export default function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: ConnectedGenreListProps): JSX.Element {
 
   const genres = [
     Genres.All,
@@ -44,7 +44,7 @@ export default function GenreList({films, onChangeGenre, onFilterFilms, genre}: 
 
       {genres.map((genre) => (
         <li key={genre}
-          className={`catalog__genres-item ${genre === genre && 'catalog__genres-item--active'}`}
+          className={`catalog__genres-item ${currentGenre === genre && 'catalog__genres-item--active'}`}
         >
           <a href="/" className="catalog__genres-link"
             onClick={(evt) => {

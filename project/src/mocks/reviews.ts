@@ -60,4 +60,14 @@ export const fakeReviews = [
     comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     date: '2019-05-08T14:13:56.569Z',
   },
+  {
+    id: 7,
+    user: {
+      id: 7,
+      name: 'IRON MAN',
+    },
+    rating: 10,
+    comment: 'PERFECT',
+    date: '2019-06-08T14:13:56.569Z',
+  },
 ];

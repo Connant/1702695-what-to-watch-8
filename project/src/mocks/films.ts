@@ -67,7 +67,7 @@ export const fakeFilms: Film[] = [
     released: '2015',
     description: 'The story follows a Scottish general`s rise to power after receiving a prophecy from a trio of witches that one day he will become King of Scotland',
     genre: 'Historical drama',
-    rating: '8,5',
+    rating: '5,5',
     director: 'Justin Kurzel',
     actors: 'Michael Fassbender as Macbeth, Marion Cotillard as Lady Macbeth, Paddy Considine as Banquo, Sean Harris as Macduff and other',
     runtime: '2h 10m',

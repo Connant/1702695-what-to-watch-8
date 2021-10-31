@@ -9,6 +9,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 export type GenreListProps = {
   films: Film[],
+  currentGenre: Film,
 }
 
 const mapStateToProps = ({currentGenre}: State) => ({

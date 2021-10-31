@@ -17,9 +17,10 @@ type AppProps = {
   films: Array<Film>,
   currentFilm: Film,
   reviews: FilmReviewProps[];
+  rosterFilms: Film[],
 }
 
-function App({films, currentFilm, reviews }: AppProps): JSX.Element {
+function App({films, currentFilm, reviews, rosterFilms }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -27,7 +28,8 @@ function App({films, currentFilm, reviews }: AppProps): JSX.Element {
         <Route path={AppRoute.Main} exact>
           <Main
             films={films}
-            currentFilm={currentFilm}
+            // currentFilm={currentFilm}
+            rosterFilms={rosterFilms}
           />
         </Route>
 

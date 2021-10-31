@@ -5,12 +5,12 @@ import { Genres } from '../../const';
 
 export type State = {
   currentGenre: string,
-  currentFilm: Film[],
+  rosterFilms: Film[],
 }
 
 const initialState: State = {
   currentGenre: Genres.All,
-  currentFilm: fakeFilms,
+  rosterFilms: fakeFilms,
 };
 
 const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
@@ -27,7 +27,7 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, currentGenre: action.payload};
 
     case ActionType.FilterFilms:
-      return {...state, currentFilm: filterFilmsByGenre(action.payload, state.currentGenre)};
+      return {...state, rosterFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
 
     default:
       return state;

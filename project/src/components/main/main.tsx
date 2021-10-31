@@ -15,18 +15,19 @@ import { State } from '../reducer/reducer';
 
 export type MainProps = {
   films: Film[],
-  currentFilm: Film,
 }
-const mapStateToProps = ({currentFilm}: State) => ({
-  currentFilm,
+
+const mapStateToProps = ({rosterFilms}: State) => ({
+  rosterFilms,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedMainPageProps = PropsFromRedux & MainProps;
 
-export function Main({films, currentFilm}: ConnectedMainPageProps): JSX.Element {
+type ConnectedMainProps = PropsFromRedux & MainProps;
+
+export function Main({films, rosterFilms}: ConnectedMainProps): JSX.Element {
 
   const {
     id,
@@ -105,7 +106,7 @@ export function Main({films, currentFilm}: ConnectedMainPageProps): JSX.Element 
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentFilm} />
+          <GenreList films={rosterFilms} />
 
           <FilmList films={films} />
 

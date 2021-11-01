@@ -15,11 +15,11 @@ import PrivateRoute from '../private-route/private-route';
 
 type AppProps = {
   films: Array<Film>,
-  currentFilm: Film,
+  // currentGenre: Film[],
   reviews: FilmReviewProps[];
 }
 
-function App({films, currentFilm, reviews }: AppProps): JSX.Element {
+function App({films, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -27,7 +27,7 @@ function App({films, currentFilm, reviews }: AppProps): JSX.Element {
         <Route path={AppRoute.Main} exact>
           <Main
             films={films}
-            currentFilm={currentFilm}
+            // currentGenre={currentGenre}
           />
         </Route>
 

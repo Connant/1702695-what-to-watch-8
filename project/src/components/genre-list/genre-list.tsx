@@ -29,7 +29,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedGenreListProps = PropsFromRedux & GenreListProps;
 
-export default function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: ConnectedGenreListProps): JSX.Element {
+function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: ConnectedGenreListProps): JSX.Element {
 
   const genres = [
     Genres.All,
@@ -61,3 +61,5 @@ export default function GenreList({films, onChangeGenre, onFilterFilms, currentG
     </ul>
   );
 }
+
+export default connector(GenreList);

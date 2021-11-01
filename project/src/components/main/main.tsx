@@ -1,33 +1,28 @@
 import React from 'react';
-// import FilmCard from '../film-card/film-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
 
-import {
-  connect,
-  ConnectedProps
-} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 
 import { State } from '../reducer/reducer';
 
 export type MainProps = {
   films: Film[],
+  // currentGenre: Film[];
 }
 
-const mapStateToProps = ({rosterFilms}: State) => ({
-  rosterFilms,
+const mapStateToProps = ({currentFilm}: State) => ({
+  currentFilm,
 });
 
 const connector = connect(mapStateToProps);
-
 type PropsFromRedux = ConnectedProps<typeof connector>;
-
 type ConnectedMainProps = PropsFromRedux & MainProps;
 
-export function Main({films, rosterFilms}: ConnectedMainProps): JSX.Element {
+function Main({films, currentFilm }: ConnectedMainProps): JSX.Element {
 
   const {
     id,
@@ -106,7 +101,7 @@ export function Main({films, rosterFilms}: ConnectedMainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={rosterFilms} />
+          <GenreList films={currentFilm} />
 
           <FilmList films={films} />
 
@@ -133,4 +128,4 @@ export function Main({films, rosterFilms}: ConnectedMainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default connector(Main);

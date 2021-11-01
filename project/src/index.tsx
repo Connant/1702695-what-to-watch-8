@@ -17,9 +17,8 @@ ReactDOM.render(
     <Provider store={store}>
       <App
         films={fakeFilms}
-        // currentFilm={fakeFilms[0]}
         reviews={fakeReviews}
-        rosterFilms={fakeFilms}
+        // currentGenre={fakeFilms}
       />
     </Provider>
   </React.StrictMode>,

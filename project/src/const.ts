@@ -17,3 +17,6 @@ export enum AuthorizationStatus {
 export enum Genres {
   All = 'All genres',
 }
+
+export const FILM_CARD_COUNT = 8;
+export const DEFAULT_SIZE = 1;

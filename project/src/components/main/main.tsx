@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
-
 import { connect, ConnectedProps } from 'react-redux';
-
 import { State } from '../reducer/reducer';
+
+import ShowMore from '../show-more/show-more';
+import { useState } from 'react';
 
 export type MainProps = {
   films: Film[],
-  // currentGenre: Film[];
 }
 
 const mapStateToProps = ({currentFilm}: State) => ({
@@ -21,6 +21,7 @@ const mapStateToProps = ({currentFilm}: State) => ({
 const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainProps = PropsFromRedux & MainProps;
+
 
 function Main({films, currentFilm }: ConnectedMainProps): JSX.Element {
 
@@ -32,6 +33,13 @@ function Main({films, currentFilm }: ConnectedMainProps): JSX.Element {
     posterImage,
     backgroundImage,
   } = films[0];
+
+
+  const [showSize, setShowSize] = useState(DEFAULT_SIZE);
+  const filmList = films.slice(0, showSize * FILM_CARD_COUNT);
+  const handleShowMoreClick = () => {
+    setShowSize(() => showSize + 1);
+  };
 
   return (
     <React.Fragment>
@@ -103,11 +111,13 @@ function Main({films, currentFilm }: ConnectedMainProps): JSX.Element {
 
           <GenreList films={currentFilm} />
 
-          <FilmList films={films} />
+          <FilmList films={filmList} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {
+            films.length > filmList.length &&
+            <ShowMore onClick={handleShowMoreClick}/>
+          }
+
         </section>
 
         <footer className="page-footer">

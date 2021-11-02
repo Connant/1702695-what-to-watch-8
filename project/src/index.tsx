@@ -18,7 +18,6 @@ ReactDOM.render(
       <App
         films={fakeFilms}
         reviews={fakeReviews}
-        // currentGenre={fakeFilms}
       />
     </Provider>
   </React.StrictMode>,

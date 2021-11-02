@@ -1,10 +1,11 @@
 import { Film } from '../film-card/film-card';
-import { Genres } from '../../const';
 import { changeGenre, filterFilms } from '../../store/action';
 import { Actions } from '../reducer/action';
 import { State } from '../reducer/reducer';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
+import { Genres } from '../../const';
+// import { useDispatch, useSelector } from 'react-redux';
 
 
 export type GenreListProps = {
@@ -29,7 +30,13 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedGenreListProps = PropsFromRedux & GenreListProps;
 
-function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: ConnectedGenreListProps): JSX.Element {
+
+function GenreList({films, onChangeGenre, onFilterFilms, currentGenre }: ConnectedGenreListProps): JSX.Element {
+
+  // const dispatch = useDispatch();
+  // const filmList = useSelector((state: State) => state.currentFilm);
+  // const currentGenre = useSelector((state: State) => state.currentGenre);
+  // const genres = [Genres, ...new Set(filmList.map((it) => it.genre))] as string[];
 
   const genres = [
     Genres.All,
@@ -38,10 +45,6 @@ function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: Connecte
 
   return (
     <ul className="catalog__genres-list">
-      <li className="catalog__genres-item catalog__genres-item--active">
-        <a href="/" className="catalog__genres-link">All genres</a>
-      </li>
-
       {genres.map((genre) => (
         <li key={genre}
           className={`catalog__genres-item ${currentGenre === genre && 'catalog__genres-item--active'}`}
@@ -57,7 +60,6 @@ function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: Connecte
           </a>
         </li>
       ))}
-
     </ul>
   );
 }

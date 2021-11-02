@@ -17,6 +17,10 @@ export default function GenreList({ films }: ConnectedGenreListProps): JSX.Eleme
   const currentGenre = useSelector((state: State) => state.currentGenre);
   const genres = [...new Set(filmList.map((it) => it.genre))] as string[];
 
+  function onChangeGenre(genre:string) {
+    genre === 'All genres' && dispatch(changeGenre(genre));
+  }
+
   return (
     <ul className="catalog__genres-list">
       <li className="catalog__genres-item catalog__genres-item--active">
@@ -27,6 +31,7 @@ export default function GenreList({ films }: ConnectedGenreListProps): JSX.Eleme
           key={genre}
           onClick={(evt) => {
             evt.preventDefault();
+            onChangeGenre(genre);
             dispatch(changeGenre(genre));
           }}
         >

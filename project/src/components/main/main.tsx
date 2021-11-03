@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
+import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
@@ -14,8 +14,9 @@ export type MainProps = {
   films: Film[],
 }
 
-const mapStateToProps = ({currentFilm}: State) => ({
+const mapStateToProps = ({currentFilm, currentGenre}: State) => ({
   currentFilm,
+  currentGenre,
 });
 
 const connector = connect(mapStateToProps);
@@ -23,7 +24,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainProps = PropsFromRedux & MainProps;
 
 
-function Main({films, currentFilm }: ConnectedMainProps): JSX.Element {
+function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Element {
 
   const {
     id,
@@ -36,7 +37,14 @@ function Main({films, currentFilm }: ConnectedMainProps): JSX.Element {
 
 
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
-  const filmList = films.slice(0, showSize * FILM_CARD_COUNT);
+
+  const filmList = films.filter((film) => {
+    if (currentGenre === Genres.All) {
+      return true;
+    }
+    return film.genre === currentGenre;
+  }).slice(0, showSize * FILM_CARD_COUNT);
+
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };

@@ -45,6 +45,8 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
     return film.genre === currentGenre;
   }).slice(0, showSize * FILM_CARD_COUNT);
 
+  const shownFilms = films.slice(0, showSize * FILM_CARD_COUNT);
+
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };
@@ -121,10 +123,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
 
           <FilmList films={filmList} />
 
-          {
-            films.length > filmList.length &&
-            <ShowMore onClick={handleShowMoreClick}/>
-          }
+          {filmList.length === shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
 
         </section>
 

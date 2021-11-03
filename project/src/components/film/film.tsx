@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, MORE_FILMS } from '../../const';
 import { Redirect } from 'react-router';
 import { Film } from '../film-card/film-card';
 import { FilmReviewProps } from '../tab-reviews/tab-reviews';
@@ -14,8 +14,6 @@ export type FilmOverviewProps = {
   films: Film[],
   reviews: FilmReviewProps[],
 }
-
-// const SIMILAR_FILMS = 4;
 
 export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Element {
 
@@ -159,7 +157,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
             {/* <FilmList films={films}/> */}
-            {similarFilms.map((film) => <FilmList films={films} key={film.id} />)}
+            {similarFilms.map((film) => <FilmList films={films.slice(0, MORE_FILMS)} key={film.id} />)}
           </div>
         </section>
 

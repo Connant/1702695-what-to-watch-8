@@ -1,6 +1,6 @@
 import { Film } from '../film-card/film-card';
 import { changeGenre } from '../../store/action';
-import { State } from '../reducer/reducer';
+import { State } from '../../store/reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { Genres } from '../../const';
 

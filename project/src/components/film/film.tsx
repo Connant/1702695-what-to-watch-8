@@ -3,11 +3,11 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { AppRoute, MORE_FILMS } from '../../const';
 import { Redirect } from 'react-router';
 import { Film } from '../film-card/film-card';
-import { FilmReviewProps } from '../tab-reviews/tab-reviews';
+import { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
 
-import TabDetails from '../tab-details/tab-details';
-import TabOverview from '../tab-overview/tab-overview';
-import TabReviews from '../tab-reviews/tab-reviews';
+import TabDetails from '../tabs/tab-details/tab-details';
+import TabOverview from '../tabs/tab-overview/tab-overview';
+import TabReviews from '../tabs/tab-reviews/tab-reviews';
 import FilmList from '../film-list/film-list';
 
 export type FilmOverviewProps = {
@@ -154,11 +154,8 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-          <div className="catalog__films-list">
-            {/* <FilmList films={films}/> */}
-            {similarFilms.map((film) => <FilmList films={films.slice(0, MORE_FILMS)} key={film.id} />)}
-          </div>
+          <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
+          <FilmList films={similarFilms.slice(0, MORE_FILMS)} />
         </section>
 
         <footer className="page-footer">

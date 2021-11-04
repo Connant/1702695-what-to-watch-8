@@ -1,23 +1,18 @@
-import { fakeFilms } from '../../mocks/films';
 import { Actions,  ActionType } from './action';
-import { Film } from '../film-card/film-card';
-import { Genres } from '../../const';
+import { Film } from '../components/film-card/film-card';
+import { Genres } from '../const';
+import { adaptFilmsToClient, filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
   currentGenre: string,
   currentFilm: Film[],
+  isDataLoaded: boolean,
 }
 
 const initialState: State = {
   currentGenre: Genres.All,
-  currentFilm: fakeFilms,
-};
-
-const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
-  if (genre === Genres.All) {
-    return films;
-  }
-  return films.filter((film) => film.genre === genre);
+  currentFilm: [],
+  isDataLoaded: false,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
@@ -28,6 +23,15 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     case ActionType.FilterFilms:
       return {...state, currentFilm: filterFilmsByGenre(action.payload, state.currentGenre)};
 
+    case ActionType.LoadFilms: {
+      const adaptedFilms = adaptFilmsToClient(action.payload);
+
+      return {
+        ...state,
+        currentFilm: adaptedFilms,
+        isDataLoaded: true,
+      };
+    }
     default:
       return state;
   }

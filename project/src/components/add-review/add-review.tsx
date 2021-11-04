@@ -2,8 +2,9 @@ import React from 'react';
 import { useState, ChangeEvent, SyntheticEvent, Fragment } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
-import { fakeFilms } from '../../mocks/films';
 import { AppRoute } from '../../const';
+import { Film } from '../film-card/film-card';
+
 
 type stateForm = {
   rating: string,
@@ -23,7 +24,7 @@ function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Element {
     reviewText: '',
   });
 
-  const currentFilm = fakeFilms[+id];
+  const currentFilm = Film[+id];
 
   if (!currentFilm) {
     return <Redirect to='/' />;

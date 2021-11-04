@@ -1,4 +1,4 @@
-import { Film } from '../film-card/film-card';
+import { Film } from '../../film-card/film-card';
 
 export default function TabDetails({film}: {film: Film}) : JSX.Element {
   return (

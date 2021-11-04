@@ -1,4 +1,3 @@
-
 export const fakeReviews = [
   {
     id: 1,

@@ -4,29 +4,48 @@ import { useEffect, useState, useRef } from 'react';
 export type Film = {
   id: number,
   name: string,
-  released: string,
-  description: string,
-  genre: string,
-  rating: string,
-  director: string,
-  actors: string,
-  runtime: string,
-  videoLink: string,
-  previewVideoLink: string,
   posterImage: string,
   previewImage: string,
   backgroundImage: string,
-  backgroundСolor: string,
+  backgroundColor: string,
+  videoLink: string,
+  previewVideoLink: string,
+  description: string,
+  rating: number,
   scoresCount: number,
+  director: string,
+  starring: string[],
+  runTime: number,
+  genre: string,
+  released: number,
   isFavorite: boolean,
-  isActive: boolean,
 }
 
-export type FilmCardProps = {
-  films: Film;
-  onMouseEnter: (id: number) => void,
-  onMouseLeave: () => void
+export type FilmProps = {
+  'id': number,
+  'name': string,
+  'poster_image': string,
+  'preview_image': string,
+  'background_image': string,
+  'background_color': string,
+  'video_link': string,
+  'preview_video_link': string,
+  'description': string,
+  'rating': number,
+  'scores_count': number,
+  'director': string,
+  'starring': string[],
+  'run_time': number,
+  'genre': string,
+  'released': number,
+  'is_favorite': boolean,
 }
+
+// export type FilmCardProps = {
+//   films: Film;
+//   onMouseEnter: (id: number) => void,
+//   onMouseLeave: () => void
+// }
 
 const TIME = 1000;
 
@@ -78,10 +97,10 @@ function FilmCard({films}: {films: Film}): JSX.Element {
       {
         isDelayedHovered ?
           <div style={VIDEO_STYLES}>
-            <video src={films.previewVideoLink} autoPlay muted poster={films.previewImage} width="280" height="175" style={{objectFit: 'cover'}} />
+            <video src={films.preview_video_link} autoPlay muted poster={films.preview_image} width="280" height="175" style={{objectFit: 'cover'}} />
           </div> :
           <div className="small-film-card__image">
-            <img src={films.posterImage} alt={films.name} width="280" height="175" />
+            <img src={films.poster_image} alt={films.name} width="280" height="175" />
           </div>
       }
       <h3 className="small-film-card__title">

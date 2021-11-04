@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { fakeFilms } from '../../mocks/films';
+import { Film } from '../film-card/film-card';
 import { Redirect } from 'react-router';
 
 type MatchParams = {
@@ -12,7 +12,7 @@ function Player({ match }: RouteComponentProps<MatchParams>): JSX.Element {
 
   const { id } = match.params;
 
-  const currentFilm = fakeFilms[+id];
+  const currentFilm = Film[+id];
 
   if (!currentFilm) {
     return <Redirect to='/' />;

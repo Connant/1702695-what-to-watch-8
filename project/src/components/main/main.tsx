@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
-import  { Film } from '../film-card/film-card';
+import  { FilmProps } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
 import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../reducer/reducer';
+import { State } from '../../store/reducer';
 
 import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
 
 export type MainProps = {
-  films: Film[],
+  films: FilmProps[],
 }
 
 const mapStateToProps = ({currentFilm, currentGenre}: State) => ({
@@ -33,7 +33,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
     released,
     posterImage,
     backgroundImage,
-  } = films[0];
+  } = currentFilm[0];
 
 
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);

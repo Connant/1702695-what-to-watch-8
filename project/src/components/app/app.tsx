@@ -1,7 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import  { Film } from '../film-card/film-card';
-import { FilmReviewProps } from '../tab-reviews/tab-reviews';
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
 import MyList from '../my-list/my-list';
@@ -10,13 +8,36 @@ import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
+import Loading from '../loading/loading';
 
-type AppProps = {
-  films: Array<Film>,
-  reviews: FilmReviewProps[];
-}
+import type { State } from '../../store/reducer';
+import { fakeReviews } from '../mocks/reviews';
 
-function App({films, reviews }: AppProps): JSX.Element {
+import { connect, ConnectedProps } from 'react-redux';
+
+// type AppProps = {
+//   films: Array<Film>,
+//   reviews: FilmReviewProps[];
+// }
+
+const mapStateToProps = ({currentFilm, isDataLoaded}: State) => ({
+  films: currentFilm,
+  isDataLoaded,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+
+function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
+
+  if (!isDataLoaded) {
+    return (
+      <Loading />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -30,7 +51,7 @@ function App({films, reviews }: AppProps): JSX.Element {
         <Route path={AppRoute.Film} exact>
           <FilmPage
             films={films}
-            reviews={reviews}
+            reviews={fakeReviews}
           />
         </Route>
 
@@ -63,4 +84,4 @@ function App({films, reviews }: AppProps): JSX.Element {
   );
 }
 
-export default App;
+export default connector(App);

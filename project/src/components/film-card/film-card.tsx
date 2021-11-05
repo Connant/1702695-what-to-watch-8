@@ -97,10 +97,10 @@ function FilmCard({films}: {films: Film}): JSX.Element {
       {
         isDelayedHovered ?
           <div style={VIDEO_STYLES}>
-            <video src={films.preview_video_link} autoPlay muted poster={films.preview_image} width="280" height="175" style={{objectFit: 'cover'}} />
+            <video src={films.previewVideoLink} autoPlay muted poster={films.previewImage} width="280" height="175" style={{objectFit: 'cover'}} />
           </div> :
           <div className="small-film-card__image">
-            <img src={films.poster_image} alt={films.name} width="280" height="175" />
+            <img src={films.posterImage} alt={films.name} width="280" height="175" />
           </div>
       }
       <h3 className="small-film-card__title">

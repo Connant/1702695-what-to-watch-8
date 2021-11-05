@@ -14,6 +14,7 @@ import type { State } from '../../store/reducer';
 import { fakeReviews } from '../mocks/reviews';
 
 import { connect, ConnectedProps } from 'react-redux';
+// import { FilmProps } from '../film-card/film-card';
 
 // type AppProps = {
 //   films: Array<Film>,
@@ -21,7 +22,7 @@ import { connect, ConnectedProps } from 'react-redux';
 // }
 
 const mapStateToProps = ({currentFilm, isDataLoaded}: State) => ({
-  films: currentFilm,
+  currentFilm,
   isDataLoaded,
 });
 
@@ -30,7 +31,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
+function App({currentFilm, isDataLoaded}: PropsFromRedux): JSX.Element {
 
   if (!isDataLoaded) {
     return (
@@ -44,13 +45,13 @@ function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
 
         <Route path={AppRoute.Main} exact>
           <Main
-            films={films}
+            films={currentFilm}
           />
         </Route>
 
         <Route path={AppRoute.Film} exact>
           <FilmPage
-            films={films}
+            films={currentFilm}
             reviews={fakeReviews}
           />
         </Route>
@@ -70,7 +71,7 @@ function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyList films={films} />}
+          render={() => <MyList films={currentFilm} />}
           authorizationStatus={AuthorizationStatus.NoAuth}
         >
         </PrivateRoute>

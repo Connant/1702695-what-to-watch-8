@@ -1,7 +1,7 @@
 import { FilmProps, Film } from '../components/film-card/film-card';
 import { Genres } from '../const';
 
-export const adaptToClient = (film: Film): FilmProps => (
+export const adaptToClient = (film: FilmProps): Film => (
   {
     id: film['id'],
     name: film['name'],
@@ -23,7 +23,7 @@ export const adaptToClient = (film: Film): FilmProps => (
   }
 );
 
-export const adaptFilmsToClient = (films: Film[]): FilmProps[] => (
+export const adaptFilmsToClient = (films: FilmProps[]): Film[] => (
   films.map((film) => adaptToClient(film))
 );
 

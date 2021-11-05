@@ -3,7 +3,7 @@ import { useState, ChangeEvent, SyntheticEvent, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect, useParams } from 'react-router';
 import { AppRoute } from '../../const';
-import { Film } from '../film-card/film-card';
+import { FilmProps } from '../film-card/film-card';
 
 
 type stateForm = {
@@ -12,7 +12,7 @@ type stateForm = {
 }
 
 type AddReviewProps = {
-  films: Film[],
+  films: FilmProps[],
 }
 
 function AddReview({films}: AddReviewProps): JSX.Element {

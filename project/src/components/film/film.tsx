@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { AppRoute, MORE_FILMS } from '../../const';
@@ -27,10 +28,10 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
 
   const {
     name,
-    backgroundImage,
+    background_image,
     genre,
     released,
-    posterImage,
+    poster_image,
     // rating,
     // scoresCount,
     // description,
@@ -60,7 +61,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={backgroundImage} alt={name} />
+            <img src={background_image} alt={name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
 
@@ -115,7 +116,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
+              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
             </div>
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">

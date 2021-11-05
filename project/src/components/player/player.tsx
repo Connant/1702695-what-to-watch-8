@@ -1,18 +1,24 @@
 import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Film } from '../film-card/film-card';
-import { Redirect } from 'react-router';
+import { FilmProps } from '../film-card/film-card';
+import { Redirect, useParams } from 'react-router';
 
-type MatchParams = {
-  id: string;
+// type MatchParams = {
+//   id: string;
+// }
+
+type AddReviewProps = {
+  films: FilmProps[],
 }
 
-function Player({ match }: RouteComponentProps<MatchParams>): JSX.Element {
+function Player({films}: AddReviewProps): JSX.Element {
 
-  const { id } = match.params;
+  const { id }: {id: string} = useParams();
 
-  const currentFilm = Film[+id];
+  const currentFilm = films.find((film) => film.id === Number(id));
+
+  // const currentFilm = Film[+id];
 
   if (!currentFilm) {
     return <Redirect to='/' />;

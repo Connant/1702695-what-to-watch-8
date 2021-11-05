@@ -1,44 +1,45 @@
+/* eslint-disable camelcase */
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 
 export type Film = {
   id: number,
   name: string,
-  posterImage: string,
-  previewImage: string,
-  backgroundImage: string,
-  backgroundColor: string,
-  videoLink: string,
-  previewVideoLink: string,
+  poster_image: string,
+  preview_image: string,
+  background_image: string,
+  background_color: string,
+  video_link: string,
+  preview_video_link: string,
   description: string,
   rating: number,
-  scoresCount: number,
+  scores_count: number,
   director: string,
   starring: string[],
-  runTime: number,
+  run_time: number,
   genre: string,
   released: number,
-  isFavorite: boolean,
+  is_favorite: boolean,
 }
 
 export type FilmProps = {
   'id': number,
   'name': string,
-  'poster_image': string,
-  'preview_image': string,
-  'background_image': string,
-  'background_color': string,
-  'video_link': string,
-  'preview_video_link': string,
+  'posterImage': string,
+  'previewImage': string,
+  'backgroundImage': string,
+  'backgroundColor': string,
+  'videoLink': string,
+  'previewVideoLink': string,
   'description': string,
   'rating': number,
-  'scores_count': number,
+  'scoresCount': number,
   'director': string,
   'starring': string[],
-  'run_time': number,
+  'runTime': number,
   'genre': string,
   'released': number,
-  'is_favorite': boolean,
+  'isFavorite': boolean,
 }
 
 // export type FilmCardProps = {
@@ -88,7 +89,18 @@ function FilmCard({films}: {films: Film}): JSX.Element {
       setDelayedHovered(true);
     }, TIME);
     return clearTimer;
-  }, [isHovered]);
+  }, [isDelayedHovered, isHovered]);
+
+  const {
+    name,
+    preview_video_link,
+    preview_image,
+    poster_image,
+  } = films;
+
+  // eslint-disable-next-line no-console
+  console.log(films.poster_image);
+  // console.log(previewVideoLink);
 
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={() => setHovered(true)}
@@ -97,14 +109,14 @@ function FilmCard({films}: {films: Film}): JSX.Element {
       {
         isDelayedHovered ?
           <div style={VIDEO_STYLES}>
-            <video src={films.previewVideoLink} autoPlay muted poster={films.previewImage} width="280" height="175" style={{objectFit: 'cover'}} />
+            <video src={preview_video_link} autoPlay muted poster={preview_image} width="280" height="175" style={{objectFit: 'cover'}} />
           </div> :
           <div className="small-film-card__image">
-            <img src={films.posterImage} alt={films.name} width="280" height="175" />
+            <img src={poster_image} alt={name} width="280" height="175" />
           </div>
       }
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${films.id}`}>{films.name}</Link>
+        <Link className="small-film-card__link" to={`/films/${films.id}`}>{name}</Link>
       </h3>
     </article>
   );

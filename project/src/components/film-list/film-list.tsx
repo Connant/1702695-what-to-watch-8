@@ -4,6 +4,7 @@ export type FilmsListPropsType = {
   films: Film[];
 }
 
+
 export default function FilmList({ films }: FilmsListPropsType): JSX.Element {
 
   return (

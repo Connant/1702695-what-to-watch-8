@@ -1,7 +1,7 @@
 import { Actions,  ActionType } from './action';
 import { Film } from '../components/film-card/film-card';
 import { Genres } from '../const';
-import { adaptFilmsToClient, filterFilmsByGenre } from '../utils/utils';
+import { filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
   currentGenre: string,
@@ -24,7 +24,10 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, currentFilm: filterFilmsByGenre(action.payload, state.currentGenre)};
 
     case ActionType.LoadFilms: {
-      const adaptedFilms = adaptFilmsToClient(action.payload);
+      const adaptedFilms = action.payload;
+
+      // eslint-disable-next-line no-console
+      // console.log(action.payload);
 
       return {
         ...state,

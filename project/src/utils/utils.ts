@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { FilmProps, Film } from '../components/film-card/film-card';
 import { Genres } from '../const';
 
@@ -5,21 +6,21 @@ export const adaptToClient = (film: FilmProps): Film => (
   {
     id: film['id'],
     name: film['name'],
-    posterImage: film['poster_image'],
-    previewImage: film['preview_image'],
-    backgroundImage: film['background_image'],
-    backgroundColor: film['background_color'],
-    videoLink: film['video_link'],
-    previewVideoLink: film['preview_video_link'],
+    poster_image: film['posterImage'],
+    preview_image: film['previewImage'],
+    background_image: film['backgroundImage'],
+    background_color: film['backgroundColor'],
+    video_link: film['videoLink'],
+    preview_video_link: film['previewVideoLink'],
     description: film['description'],
     rating: film['rating'],
-    scoresCount: film['scores_count'],
+    scores_count: film['scoresCount'],
     director: film['director'],
     starring: film['starring'],
-    runTime: film['run_time'],
+    run_time: film['runTime'],
     genre: film['genre'],
     released: film['released'],
-    isFavorite: film['is_favorite'],
+    is_favorite: film['isFavorite'],
   }
 );
 

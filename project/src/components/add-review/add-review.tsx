@@ -1,31 +1,32 @@
 import React from 'react';
 import { useState, ChangeEvent, SyntheticEvent, Fragment } from 'react';
-import { RouteComponentProps, Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
-import { fakeFilms } from '../../mocks/films';
+import { Link } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router';
 import { AppRoute } from '../../const';
+import { FilmProps } from '../film-card/film-card';
+
 
 type stateForm = {
   rating: string,
   reviewText: string
 }
 
-type MatchParams = {
-  id: string;
+type AddReviewProps = {
+  films: FilmProps[],
 }
 
-function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Element {
+function AddReview({films}: AddReviewProps): JSX.Element {
 
-  const { id } = match.params;
+  const { id }: {id: string} = useParams();
 
   const [ stateForm, setStateForm ] = useState<stateForm>({
     rating: '',
     reviewText: '',
   });
 
-  const currentFilm = fakeFilms[+id];
+  const currentFilms = films.find((film) => film.id === Number(id));
 
-  if (!currentFilm) {
+  if (!currentFilms) {
     return <Redirect to='/' />;
   }
 

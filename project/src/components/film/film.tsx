@@ -1,13 +1,14 @@
+/* eslint-disable camelcase */
 import React, { useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { AppRoute, MORE_FILMS } from '../../const';
 import { Redirect } from 'react-router';
 import { Film } from '../film-card/film-card';
-import { FilmReviewProps } from '../tab-reviews/tab-reviews';
+import { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
 
-import TabDetails from '../tab-details/tab-details';
-import TabOverview from '../tab-overview/tab-overview';
-import TabReviews from '../tab-reviews/tab-reviews';
+import TabDetails from '../tabs/tab-details/tab-details';
+import TabOverview from '../tabs/tab-overview/tab-overview';
+import TabReviews from '../tabs/tab-reviews/tab-reviews';
 import FilmList from '../film-list/film-list';
 
 export type FilmOverviewProps = {
@@ -23,35 +24,30 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
 
   const [activeTab, setActiveTab] = useState('Overview');
 
-  const currentFilm = films.find((film) => film.id === Number(id));
+  const currentFilms = films.find((film) => film.id === Number(id));
 
   const {
     name,
-    backgroundImage,
+    background_image,
     genre,
     released,
-    posterImage,
-    // rating,
-    // scoresCount,
-    // description,
-    // director,
-    // actors,
-  } = currentFilm as Film;
+    poster_image,
+  } = currentFilms as Film;
 
   const renderActiveTab = (tab: string) => {
     switch (tab) {
       case 'Overview':
-        return <TabOverview film={currentFilm as Film} />;
+        return <TabOverview film={currentFilms as Film} />;
       case 'Details':
-        return <TabDetails film={currentFilm as Film} />;
+        return <TabDetails film={currentFilms as Film} />;
       case 'Reviews':
         return <TabReviews reviews={reviews}/>;
     }
   };
 
-  const similarFilms = films.filter((film) => film.genre === currentFilm?.genre && film.id !== currentFilm.id);
+  const similarFilms = films.filter((film) => film.genre === currentFilms?.genre && film.id !== currentFilms.id);
 
-  if (!currentFilm) {
+  if (!currentFilms) {
     return <Redirect to='/' />;
   }
 
@@ -60,7 +56,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={backgroundImage} alt={name} />
+            <img src={background_image} alt={name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
 
@@ -115,7 +111,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
+              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
             </div>
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
@@ -154,11 +150,8 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-          <div className="catalog__films-list">
-            {/* <FilmList films={films}/> */}
-            {similarFilms.map((film) => <FilmList films={films.slice(0, MORE_FILMS)} key={film.id} />)}
-          </div>
+          <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
+          <FilmList films={similarFilms.slice(0, MORE_FILMS)} />
         </section>
 
         <footer className="page-footer">

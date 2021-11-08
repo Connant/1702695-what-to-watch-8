@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
@@ -5,7 +6,7 @@ import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
 import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../reducer/reducer';
+import { State } from '../../store/reducer';
 
 import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
@@ -14,8 +15,8 @@ export type MainProps = {
   films: Film[],
 }
 
-const mapStateToProps = ({currentFilm, currentGenre}: State) => ({
-  currentFilm,
+const mapStateToProps = ({currentFilms, currentGenre}: State) => ({
+  currentFilms,
   currentGenre,
 });
 
@@ -24,16 +25,15 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainProps = PropsFromRedux & MainProps;
 
 
-function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Element {
+function Main({films, currentFilms, currentGenre }: ConnectedMainProps): JSX.Element {
 
   const {
-    id,
     name,
     genre,
     released,
-    posterImage,
-    backgroundImage,
-  } = films[0];
+    poster_image,
+    background_image,
+  } = currentFilms[0];
 
 
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
@@ -55,7 +55,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={backgroundImage} alt={name} />
+          <img src={background_image} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -84,7 +84,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
+              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -95,14 +95,12 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`/player/${id}`}>
-                  <button className="btn btn--play film-card__button" type="button">
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                </Link>
+                <button className="btn btn--play film-card__button" type="button">
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"></use>
+                  </svg>
+                  <span>Play</span>
+                </button>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
@@ -119,7 +117,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentFilm} />
+          <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
           <FilmList films={filmList} />
 

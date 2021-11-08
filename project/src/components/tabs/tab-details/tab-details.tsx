@@ -1,4 +1,4 @@
-import { Film } from '../film-card/film-card';
+import { Film } from '../../film-card/film-card';
 
 export default function TabDetails({film}: {film: Film}) : JSX.Element {
   return (
@@ -11,7 +11,7 @@ export default function TabDetails({film}: {film: Film}) : JSX.Element {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            {film.actors}
+            {film.starring}
           </span>
         </p>
       </div>
@@ -19,7 +19,7 @@ export default function TabDetails({film}: {film: Film}) : JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{film.runtime}</span>
+          <span className="film-card__details-value">{film.run_time}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Film } from '../film-card/film-card';
+import { Film } from '../../film-card/film-card';
 
 export default function TabOverview({film}: {film: Film}): JSX.Element {
   return (
@@ -8,7 +8,7 @@ export default function TabOverview({film}: {film: Film}): JSX.Element {
         <div className="film-rating__score">{film.rating}</div>
         <p className="film-rating__meta">
           <span className="film-rating__level">Very good</span>
-          <span className="film-rating__count">{film.scoresCount}</span>
+          <span className="film-rating__count">{film.scores_count}</span>
         </p>
       </div>
 
@@ -17,7 +17,7 @@ export default function TabOverview({film}: {film: Film}): JSX.Element {
 
         <p className="film-card__director"><strong>Director: {film.director}</strong></p>
 
-        <p className="film-card__starring"><strong>Starring: {film.actors}</strong></p>
+        <p className="film-card__starring"><strong>Starring: {film.starring}</strong></p>
       </div>
     </React.Fragment>
   );

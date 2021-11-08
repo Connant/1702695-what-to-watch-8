@@ -10,17 +10,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { createAPI } from './services/api';
 import { AuthorizationStatus } from './const';
+import { requireAuthorization } from './store/action';
+import { fetchFilmsAction, ThunkAppDispatch, checkAuthorizationAction } from './store/actions-api';
 
-import { fetchFilmsAction, ThunkAppDispatch } from './store/actions-api';
-
-const api = createAPI(() => AuthorizationStatus.Auth);
+const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
 
 const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk.withExtraArgument(api)),
 ));
 
 (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
-
+(store.dispatch as ThunkAppDispatch)(checkAuthorizationAction());
 
 ReactDOM.render(
   <React.StrictMode>

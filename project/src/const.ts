@@ -24,4 +24,6 @@ export const MORE_FILMS = 4;
 
 export enum APIRoute {
   Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
 }

@@ -5,13 +5,13 @@ import { filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
   currentGenre: string,
-  currentFilm: Film[],
+  currentFilms: Film[],
   isDataLoaded: boolean,
 }
 
 const initialState: State = {
   currentGenre: Genres.All,
-  currentFilm: [],
+  currentFilms: [],
   isDataLoaded: false,
 };
 
@@ -21,17 +21,14 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, currentGenre: action.payload};
 
     case ActionType.FilterFilms:
-      return {...state, currentFilm: filterFilmsByGenre(action.payload, state.currentGenre)};
+      return {...state, currentFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
 
     case ActionType.LoadFilms: {
       const adaptedFilms = action.payload;
 
-      // eslint-disable-next-line no-console
-      // console.log(action.payload);
-
       return {
         ...state,
-        currentFilm: adaptedFilms,
+        currentFilms: adaptedFilms,
         isDataLoaded: true,
       };
     }

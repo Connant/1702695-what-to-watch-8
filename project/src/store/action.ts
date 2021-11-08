@@ -1,9 +1,5 @@
 import { Film } from '../components/film-card/film-card';
 
-// export enum ActionType {
-// ChangeGenre = 'films/changeGenre',
-// FilterFilms = 'films/filterFilms',
-// }
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',

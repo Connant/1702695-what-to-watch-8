@@ -4,9 +4,6 @@ import { AppRoute } from '../../const';
 import { FilmProps } from '../film-card/film-card';
 import { Redirect, useParams } from 'react-router';
 
-// type MatchParams = {
-//   id: string;
-// }
 
 type AddReviewProps = {
   films: FilmProps[],
@@ -16,11 +13,9 @@ function Player({films}: AddReviewProps): JSX.Element {
 
   const { id }: {id: string} = useParams();
 
-  const currentFilm = films.find((film) => film.id === Number(id));
+  const currentFilms = films.find((film) => film.id === Number(id));
 
-  // const currentFilm = Film[+id];
-
-  if (!currentFilm) {
+  if (!currentFilms) {
     return <Redirect to='/' />;
   }
 
@@ -30,7 +25,7 @@ function Player({films}: AddReviewProps): JSX.Element {
 
   return (
     <div className="player">
-      <video src={currentFilm.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={currentFilms.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
 
       <Link to={AppRoute.Main} type="button" className="player__exit">Exit</Link>
 

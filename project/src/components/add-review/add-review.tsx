@@ -24,9 +24,9 @@ function AddReview({films}: AddReviewProps): JSX.Element {
     reviewText: '',
   });
 
-  const currentFilm = films.find((film) => film.id === Number(id));
+  const currentFilms = films.find((film) => film.id === Number(id));
 
-  if (!currentFilm) {
+  if (!currentFilms) {
     return <Redirect to='/' />;
   }
 

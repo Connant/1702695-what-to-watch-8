@@ -98,10 +98,6 @@ function FilmCard({films}: {films: Film}): JSX.Element {
     poster_image,
   } = films;
 
-  // eslint-disable-next-line no-console
-  console.log(films.poster_image);
-  // console.log(previewVideoLink);
-
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)} onClick={() => history.push(`/films/${films.id}`)}

@@ -24,7 +24,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
 
   const [activeTab, setActiveTab] = useState('Overview');
 
-  const currentFilm = films.find((film) => film.id === Number(id));
+  const currentFilms = films.find((film) => film.id === Number(id));
 
   const {
     name,
@@ -32,27 +32,22 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
     genre,
     released,
     poster_image,
-    // rating,
-    // scoresCount,
-    // description,
-    // director,
-    // actors,
-  } = currentFilm as Film;
+  } = currentFilms as Film;
 
   const renderActiveTab = (tab: string) => {
     switch (tab) {
       case 'Overview':
-        return <TabOverview film={currentFilm as Film} />;
+        return <TabOverview film={currentFilms as Film} />;
       case 'Details':
-        return <TabDetails film={currentFilm as Film} />;
+        return <TabDetails film={currentFilms as Film} />;
       case 'Reviews':
         return <TabReviews reviews={reviews}/>;
     }
   };
 
-  const similarFilms = films.filter((film) => film.genre === currentFilm?.genre && film.id !== currentFilm.id);
+  const similarFilms = films.filter((film) => film.genre === currentFilms?.genre && film.id !== currentFilms.id);
 
-  if (!currentFilm) {
+  if (!currentFilms) {
     return <Redirect to='/' />;
   }
 

@@ -15,8 +15,8 @@ export type MainProps = {
   films: Film[],
 }
 
-const mapStateToProps = ({currentFilm, currentGenre}: State) => ({
-  currentFilm,
+const mapStateToProps = ({currentFilms, currentGenre}: State) => ({
+  currentFilms,
   currentGenre,
 });
 
@@ -25,7 +25,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainProps = PropsFromRedux & MainProps;
 
 
-function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Element {
+function Main({films, currentFilms, currentGenre }: ConnectedMainProps): JSX.Element {
 
   const {
     name,
@@ -33,7 +33,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
     released,
     poster_image,
     background_image,
-  } = currentFilm[0];
+  } = currentFilms[0];
 
 
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
@@ -117,7 +117,7 @@ function Main({films, currentFilm, currentGenre }: ConnectedMainProps): JSX.Elem
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentFilm} />
+          <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
           <FilmList films={filmList} />
 

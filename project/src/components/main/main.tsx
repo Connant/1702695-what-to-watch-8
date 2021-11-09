@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
+import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT, AuthorizationStatus } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
@@ -15,9 +15,10 @@ export type MainProps = {
   films: Film[],
 }
 
-const mapStateToProps = ({currentFilms, currentGenre}: State) => ({
+const mapStateToProps = ({currentFilms, currentGenre, authorizationStatus}: State) => ({
   currentFilms,
   currentGenre,
+  authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);
@@ -25,7 +26,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainProps = PropsFromRedux & MainProps;
 
 
-function Main({films, currentFilms, currentGenre }: ConnectedMainProps): JSX.Element {
+function Main({ films, currentFilms, currentGenre, authorizationStatus }: ConnectedMainProps): JSX.Element {
 
   const {
     name,
@@ -70,14 +71,25 @@ function Main({films, currentFilms, currentGenre }: ConnectedMainProps): JSX.Ele
           </div>
 
           <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.MyList} className="user-block__link">Sign out</Link>
-            </li>
+            {
+              authorizationStatus === AuthorizationStatus.Auth ?
+                (
+                  <React.Fragment>
+                    <li className="user-block__item">
+                      <div className="user-block__avatar">
+                        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                      </div>
+                    </li>
+                    <li className="user-block__item">
+                      <Link className="user-block__link" to="#">user@mail.com</Link>
+                    </li>
+                  </React.Fragment>
+                ) : (
+                  <li className="user-block__item">
+                    <Link className="user-block__link" to={AppRoute.SignIn}>Sign in</Link>
+                  </li>
+                )
+            }
           </ul>
         </header>
 

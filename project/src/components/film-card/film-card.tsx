@@ -42,11 +42,6 @@ export type FilmProps = {
   'isFavorite': boolean,
 }
 
-// export type FilmCardProps = {
-//   films: Film;
-//   onMouseEnter: (id: number) => void,
-//   onMouseLeave: () => void
-// }
 
 const TIME = 1000;
 

@@ -14,12 +14,7 @@ import type { State } from '../../store/reducer';
 import { fakeReviews } from '../mocks/reviews';
 
 import { connect, ConnectedProps } from 'react-redux';
-// import { FilmProps } from '../film-card/film-card';
 
-// type AppProps = {
-//   films: Array<Film>,
-//   reviews: FilmReviewProps[];
-// }
 
 const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
   currentFilms,
@@ -61,21 +56,19 @@ function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux):
 
         <Route path={AppRoute.Player} exact component={Player} />
 
-        {/* <Route path={AppRoute.MyList} exact>
-          <MyList />
-        </Route> */}
-
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
         </Route>
 
-        <PrivateRoute
-          exact
-          path={AppRoute.MyList}
+        <PrivateRoute exact path={AppRoute.MyList}>
+          <MyList films={currentFilms} />
+        </PrivateRoute>
+
+        {/* <PrivateRoute exact path={AppRoute.MyList}
           render={() => <MyList films={currentFilms} />}
           // authorizationStatus={AuthorizationStatus.NoAuth}
         >
-        </PrivateRoute>
+        </PrivateRoute> */}
 
         <Route>
           <Error />

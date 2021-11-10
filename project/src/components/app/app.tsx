@@ -14,16 +14,12 @@ import type { State } from '../../store/reducer';
 import { fakeReviews } from '../mocks/reviews';
 
 import { connect, ConnectedProps } from 'react-redux';
-// import { FilmProps } from '../film-card/film-card';
 
-// type AppProps = {
-//   films: Array<Film>,
-//   reviews: FilmReviewProps[];
-// }
 
-const mapStateToProps = ({currentFilms, isDataLoaded}: State) => ({
+const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
   currentFilms,
   isDataLoaded,
+  authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);
@@ -31,9 +27,9 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
-function App({currentFilms, isDataLoaded}: PropsFromRedux): JSX.Element {
+function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
 
-  if (!isDataLoaded) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
     return (
       <Loading />
     );
@@ -60,21 +56,19 @@ function App({currentFilms, isDataLoaded}: PropsFromRedux): JSX.Element {
 
         <Route path={AppRoute.Player} exact component={Player} />
 
-        {/* <Route path={AppRoute.MyList} exact>
-          <MyList />
-        </Route> */}
-
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
         </Route>
 
-        <PrivateRoute
-          exact
-          path={AppRoute.MyList}
-          render={() => <MyList films={currentFilms} />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
-        >
+        <PrivateRoute exact path={AppRoute.MyList}>
+          <MyList films={currentFilms} />
         </PrivateRoute>
+
+        {/* <PrivateRoute exact path={AppRoute.MyList}
+          render={() => <MyList films={currentFilms} />}
+          // authorizationStatus={AuthorizationStatus.NoAuth}
+        >
+        </PrivateRoute> */}
 
         <Route>
           <Error />

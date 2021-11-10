@@ -29,8 +29,23 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
 
   const history = useHistory();
 
+  const letterCheck = /[a-zA-Z]/;
+  const numberCheck = /[0-9]/;
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (!letterCheck.test(userInput.password)) {
+      // eslint-disable-next-line no-alert
+      alert('Password must have at least one letter');
+      return;
+    }
+
+    if (!numberCheck.test(userInput.password)) {
+      // eslint-disable-next-line no-alert
+      alert('Password must have at least one number');
+      return;
+    }
 
     if (userInput.login !== '' && userInput.password !== '') {
       onSubmit(userInput);

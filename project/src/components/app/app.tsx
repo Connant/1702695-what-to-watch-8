@@ -1,5 +1,8 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import type { State } from '../../store/reducer';
+import { connect, ConnectedProps } from 'react-redux';
+
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
 import MyList from '../my-list/my-list';
@@ -9,11 +12,6 @@ import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
 import Loading from '../loading/loading';
-
-import type { State } from '../../store/reducer';
-import { fakeReviews } from '../mocks/reviews';
-
-import { connect, ConnectedProps } from 'react-redux';
 
 
 const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
@@ -45,12 +43,7 @@ function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux):
           />
         </Route>
 
-        <Route path={AppRoute.Film} exact>
-          <FilmPage
-            films={currentFilms}
-            reviews={fakeReviews}
-          />
-        </Route>
+        <Route path={AppRoute.Film} exact component={FilmPage} />
 
         <Route path={AppRoute.AddReview} exact component={AddReview} />
 

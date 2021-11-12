@@ -13,6 +13,9 @@ import { AuthorizationStatus } from './const';
 import { requireAuthorization } from './store/action';
 import { fetchFilmsAction, ThunkAppDispatch, checkAuthorizationAction } from './store/actions-api';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
 
 const store = createStore(reducer, composeWithDevTools(
@@ -25,6 +28,7 @@ const store = createStore(reducer, composeWithDevTools(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>,

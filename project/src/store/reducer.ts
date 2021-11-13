@@ -1,4 +1,3 @@
-import { ChangeEventHandler } from 'react';
 import { Actions,  ActionType } from './action';
 import { Film } from '../components/film-card/film-card';
 import { Genres, AuthorizationStatus } from '../const';

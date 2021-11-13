@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { sendReview, ThunkAppDispatch } from '../../store/actions-api';
 import { State } from '../../store/reducer';
 
@@ -21,8 +21,9 @@ const MAX_RATING = 10;
 const MIN_LENGTH = 50;
 const MAX_LENGTH = 400;
 
-const mapStateToProps = ({currentFilms}: State) => ({
+const mapStateToProps = ({currentFilms, reviews}: State) => ({
   currentFilms,
+  reviews,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -34,10 +35,10 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function ReviewForm({currentFilms}: PropsFromRedux): JSX.Element {
+function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
 
-  const { id }: {id: string} = useParams();
-  const filmId = Number(id);
+  // const { id }: {id: string} = useParams();
+  // const filmId = Number(id);
 
   const [userInput, setUserInput] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
@@ -56,21 +57,7 @@ function ReviewForm({currentFilms}: PropsFromRedux): JSX.Element {
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-
-    const postData = {
-      id,
-      user: {
-        id,
-      },
-      rating: rating,
-      comment: userInput,
-      date,
-    };
-
     setIsFormSending(true);
-
-    sendReview(filmId, postData)
-      .then(() => setIsFormSending(false));
   };
 
   return (

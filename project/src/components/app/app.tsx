@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import type { State } from '../../store/reducer';
 import { connect, ConnectedProps } from 'react-redux';
 
@@ -11,7 +11,7 @@ import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
-import Loading from '../loading/loading';
+// import Loading from '../loading/loading';
 
 
 const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
@@ -27,11 +27,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
-    return (
-      <Loading />
-    );
-  }
+  // if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
+  //   return (
+  //     <Loading />
+  //   );
+  // }
 
   return (
     <BrowserRouter>

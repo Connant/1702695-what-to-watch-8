@@ -16,7 +16,7 @@ const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export function SimilarFilms({currentFilms, similarFilms}: PropsFromRedux): JSX.Element {
+function SimilarFilms({currentFilms, similarFilms}: PropsFromRedux): JSX.Element {
 
   const { id }: {id: string} = useParams();
   const currentMovie = currentFilms.find((film) => film.id === Number(id));
@@ -38,4 +38,3 @@ export function SimilarFilms({currentFilms, similarFilms}: PropsFromRedux): JSX.
 }
 
 export default connector(SimilarFilms);
-

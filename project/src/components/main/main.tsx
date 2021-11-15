@@ -28,15 +28,6 @@ type ConnectedMainProps = PropsFromRedux & MainProps;
 
 function Main({ films, currentFilms, currentGenre, authorizationStatus }: ConnectedMainProps): JSX.Element {
 
-  const {
-    name,
-    genre,
-    released,
-    poster_image,
-    background_image,
-  } = currentFilms[0];
-
-
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
 
   const filmList = films.filter((film) => {
@@ -51,6 +42,14 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };
+
+  const {
+    name,
+    genre,
+    released,
+    poster_image,
+    background_image,
+  } = films[0];
 
   return (
     <React.Fragment>

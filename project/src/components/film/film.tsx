@@ -9,7 +9,7 @@ import { Film } from '../film-card/film-card';
 import TabReviews, { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
 import { fetchFilmsAction, fetchReviewsAction, fetchSimilarFilmsAction, ThunkAppDispatch } from '../../store/actions-api';
 import { State } from '../../store/reducer';
-import { SimilarFilms } from './similar-films';
+import SimilarFilms from './similar-films';
 
 import TabDetails from '../tabs/tab-details/tab-details';
 import TabOverview from '../tabs/tab-overview/tab-overview';
@@ -200,7 +200,7 @@ function FilmPage({films, reviews, getCurrentFilm, similarFilms, similarFilmsLoa
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
 
-          {similarFilmsLoading ? (<SimilarFilms currentFilms={films} similarFilms={films} />) : (<Loading />)}
+          {similarFilmsLoading ? (<SimilarFilms />) : (<Loading />)}
 
         </section>
 
@@ -224,3 +224,4 @@ function FilmPage({films, reviews, getCurrentFilm, similarFilms, similarFilmsLoa
 }
 
 export default connector(FilmPage);
+

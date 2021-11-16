@@ -48,7 +48,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedFilmProps = PropsFromRedux & FilmOverviewProps;
 
-function FilmPage({films, reviews, getCurrentFilm, similarFilms, similarFilmsLoading,
+function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similarFilmsLoading,
   getSimilarFilms, isReviewsLoaded, getReviews, authorizationStatus }: ConnectedFilmProps): JSX.Element {
 
   const history = useHistory();
@@ -57,7 +57,7 @@ function FilmPage({films, reviews, getCurrentFilm, similarFilms, similarFilmsLoa
 
   const [activeTab, setActiveTab] = useState('Overview');
 
-  const currentMovie = films.find((film) => film.id === Number(id));
+  const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
   const filmId = Number(id);
 

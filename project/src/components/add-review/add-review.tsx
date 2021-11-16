@@ -23,11 +23,15 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedFilmProps = PropsFromRedux;
 
-function AddReview({currentFilms, getCurrentFilm}: PropsFromRedux): JSX.Element {
+function AddReview({currentFilms, getCurrentFilm}: ConnectedFilmProps): JSX.Element {
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
+
+  // eslint-disable-next-line no-console
+  console.log(currentFilms);
 
   const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
@@ -88,4 +92,4 @@ function AddReview({currentFilms, getCurrentFilm}: PropsFromRedux): JSX.Element 
   );
 }
 
-export default AddReview;
+export default connector(AddReview);

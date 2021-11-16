@@ -10,6 +10,7 @@ import { State } from '../../store/reducer';
 
 import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
+import Loading from '../loading/loading';
 
 export type MainProps = {
   films: Film[],
@@ -42,6 +43,10 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };
+
+  if(!films.length) {
+    return <Loading />;
+  }
 
   const {
     name,

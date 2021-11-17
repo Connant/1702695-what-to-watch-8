@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import SimilarFilms from './similar-films';
 import TabDetails from '../tabs/tab-details/tab-details';
 import TabOverview from '../tabs/tab-overview/tab-overview';
 import Loading from '../loading/loading';
+import Error from '../error/error';
 
 export type FilmOverviewProps = {
   films: Film[],
@@ -61,6 +62,10 @@ function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similar
 
   const filmId = Number(id);
 
+  if (!currentMovie) {
+    return <Error />;
+  }
+
   if (currentMovie?.id !== filmId) {
     getCurrentFilm(filmId);
     return (
@@ -91,10 +96,6 @@ function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similar
         return <TabReviews reviews={reviews}/>;
     }
   };
-
-  if (!currentMovie) {
-    return <Redirect to='/' />;
-  }
 
   return (
     <React.Fragment>

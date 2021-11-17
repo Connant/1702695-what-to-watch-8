@@ -85,7 +85,7 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
                       </div>
                     </li>
                     <li className="user-block__item">
-                      <Link className="user-block__link" to="#">user@mail.com</Link>
+                      <Link className="user-block__link" to={AppRoute.MyList}>user@gmail.com</Link>
                     </li>
                   </React.Fragment>
                 ) : (

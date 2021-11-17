@@ -1,6 +1,7 @@
 import { Film } from '../components/film-card/film-card';
 import { AuthorizationStatus } from '../const';
 import { FilmReviewProps } from '../components/tabs/tab-reviews/tab-reviews';
+import { createAction } from '@reduxjs/toolkit';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
@@ -36,14 +37,12 @@ export const loadFilms = (films: Film[]) => ({
   payload: films,
 } as const);
 
-export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
-  type: ActionType.RequireAuthorization,
-  payload: authStatus,
-} as const);
+export const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({payload: authStatus}),
+);
 
-export const requireLogout = () => ({
-  type: ActionType.RequireLogout,
-} as const);
+export const requireLogout = createAction(ActionType.RequireLogout);
 
 export const loadSimilarFilms = (films: Film[]) => ({
   type: ActionType.LoadSimilarFilms,

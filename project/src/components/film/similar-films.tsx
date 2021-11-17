@@ -26,7 +26,7 @@ function SimilarFilms({currentFilms, similarFilms}: PropsFromRedux): JSX.Element
     <div>
       {similarFilms.length > 0 && (
         <React.Fragment>
-          <h2 className="catalog__title">More like this</h2>
+          {/* <h2 className="catalog__title">More like this</h2> */}
           <FilmList films={similarFilms
             .filter((film) => currentMovie?.id !== filmId)
             .slice(0, SIMILAR_FILMS)}

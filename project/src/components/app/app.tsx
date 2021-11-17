@@ -27,10 +27,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
 
-  // if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
-  //   return (
-  //     <Loading />
-  //   );
+  // eslint-disable-next-line no-console
+  console.log(authorizationStatus);
+
+  // if (authorizationStatus === AuthorizationStatus.NoAuth || !isDataLoaded) {
+  //   return <Loading />;
   // }
 
   return (

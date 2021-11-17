@@ -1,5 +1,8 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
+import type { State } from '../../store/reducer';
+import { connect, ConnectedProps } from 'react-redux';
+
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
 import MyList from '../my-list/my-list';
@@ -8,12 +11,7 @@ import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
-import Loading from '../loading/loading';
-
-import type { State } from '../../store/reducer';
-import { fakeReviews } from '../mocks/reviews';
-
-import { connect, ConnectedProps } from 'react-redux';
+// import Loading from '../loading/loading';
 
 
 const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
@@ -29,11 +27,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
-    return (
-      <Loading />
-    );
-  }
+  // eslint-disable-next-line no-console
+  console.log(authorizationStatus);
+
+  // if (authorizationStatus === AuthorizationStatus.NoAuth || !isDataLoaded) {
+  //   return <Loading />;
+  // }
 
   return (
     <BrowserRouter>
@@ -45,12 +44,7 @@ function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux):
           />
         </Route>
 
-        <Route path={AppRoute.Film} exact>
-          <FilmPage
-            films={currentFilms}
-            reviews={fakeReviews}
-          />
-        </Route>
+        <Route path={AppRoute.Film} exact component={FilmPage} />
 
         <Route path={AppRoute.AddReview} exact component={AddReview} />
 

@@ -1,22 +1,56 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
+// import { Redirect } from 'react-router';
+import { connect, ConnectedProps } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { AppRoute, MORE_FILMS } from '../../const';
-import { Redirect } from 'react-router';
+
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Film } from '../film-card/film-card';
-import { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
+import TabReviews, { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
+import { fetchFilmsAction, fetchReviewsAction, fetchSimilarFilmsAction, ThunkAppDispatch } from '../../store/actions-api';
+import { State } from '../../store/reducer';
+import SimilarFilms from './similar-films';
 
 import TabDetails from '../tabs/tab-details/tab-details';
 import TabOverview from '../tabs/tab-overview/tab-overview';
-import TabReviews from '../tabs/tab-reviews/tab-reviews';
-import FilmList from '../film-list/film-list';
+import Loading from '../loading/loading';
+import Error from '../error/error';
 
 export type FilmOverviewProps = {
   films: Film[],
   reviews: FilmReviewProps[],
+  id: number,
 }
 
-export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Element {
+const mapStateToProps = ({currentFilms, similarFilms, similarFilmsLoading, reviews,
+  isReviewsLoaded, authorizationStatus}: State) => ({
+  currentFilms,
+  similarFilms,
+  similarFilmsLoading,
+  reviews,
+  isReviewsLoaded,
+  authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  getCurrentFilm(id: number) {
+    dispatch(fetchFilmsAction());
+  },
+  getSimilarFilms(id: number) {
+    dispatch(fetchSimilarFilmsAction(id));
+  },
+  getReviews(id: number) {
+    dispatch(fetchReviewsAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedFilmProps = PropsFromRedux & FilmOverviewProps;
+
+function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similarFilmsLoading,
+  getSimilarFilms, isReviewsLoaded, getReviews, authorizationStatus }: ConnectedFilmProps): JSX.Element {
 
   const history = useHistory();
 
@@ -24,7 +58,25 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
 
   const [activeTab, setActiveTab] = useState('Overview');
 
-  const currentFilms = films.find((film) => film.id === Number(id));
+  const currentMovie = currentFilms.find((film) => film.id === Number(id));
+
+  const filmId = Number(id);
+
+  if (!currentMovie) {
+    return <Error />;
+  }
+
+  if (currentMovie?.id !== filmId) {
+    getCurrentFilm(filmId);
+    return (
+      <Loading />
+    );
+  }
+
+  if (!similarFilmsLoading && !isReviewsLoaded) {
+    getSimilarFilms(filmId);
+    getReviews(filmId);
+  }
 
   const {
     name,
@@ -32,24 +84,18 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
     genre,
     released,
     poster_image,
-  } = currentFilms as Film;
+  } = currentMovie as Film;
 
   const renderActiveTab = (tab: string) => {
     switch (tab) {
       case 'Overview':
-        return <TabOverview film={currentFilms as Film} />;
+        return <TabOverview film={currentMovie as Film} />;
       case 'Details':
-        return <TabDetails film={currentFilms as Film} />;
+        return <TabDetails film={currentMovie as Film} />;
       case 'Reviews':
         return <TabReviews reviews={reviews}/>;
     }
   };
-
-  const similarFilms = films.filter((film) => film.genre === currentFilms?.genre && film.id !== currentFilms.id);
-
-  if (!currentFilms) {
-    return <Redirect to='/' />;
-  }
 
   return (
     <React.Fragment>
@@ -90,7 +136,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button"
-                  onClick={() => history.push(AppRoute.Player.replace(':id', `${id}`))}
+                  onClick={() => history.push(AppRoute.Player.replace(':id', `${filmId}`))}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -103,7 +149,10 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${id}`)}>Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth &&
+                  <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>
+                    Add review
+                  </Link>}
               </div>
             </div>
           </div>
@@ -119,7 +168,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
                   <li className={`film-nav__item ${activeTab==='Overview' ? 'film-nav__item--active' : ''}`}>
                     <Link
                       className="film-nav__link"
-                      to={`/films/${id}/#overview`}
+                      to={`/films/${filmId}/#overview`}
                       onClick={(elem) => setActiveTab(elem.currentTarget.text)}
                     >Overview
                     </Link>
@@ -127,7 +176,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
                   <li className={`film-nav__item ${activeTab==='Details' ? 'film-nav__item--active' : ''}`}>
                     <Link
                       className="film-nav__link"
-                      to={`/films/${id}/#details`}
+                      to={`/films/${filmId}/#details`}
                       onClick={(elem) => setActiveTab(elem.currentTarget.text)}
                     >Details
                     </Link>
@@ -135,7 +184,7 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
                   <li className={`film-nav__item ${activeTab==='Reviews' ? 'film-nav__item--active' : ''}`}>
                     <Link
                       className="film-nav__link"
-                      to={`/films/${id}/#reviews`}
+                      to={`/films/${filmId}/#reviews`}
                       onClick={(elem) => setActiveTab(elem.currentTarget.text)}
                     >
                       Reviews
@@ -151,7 +200,9 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
-          <FilmList films={similarFilms.slice(0, MORE_FILMS)} />
+
+          {similarFilmsLoading ? (<SimilarFilms />) : (<Loading />)}
+
         </section>
 
         <footer className="page-footer">
@@ -172,4 +223,6 @@ export default function FilmPage({films, reviews}: FilmOverviewProps): JSX.Eleme
     </React.Fragment>
   );
 }
+
+export default connector(FilmPage);
 

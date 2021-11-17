@@ -1,6 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { logoutAction } from '../../store/actions-api';
 import { Film } from '../film-card/film-card';
 import FilmList from '../film-list/film-list';
 
@@ -9,6 +11,13 @@ type MyListProps = {
 }
 
 function MyList({films}:MyListProps):JSX.Element {
+
+  const dispatch = useDispatch();
+
+  const setLogout = () => {
+    dispatch(logoutAction());
+  };
+
   return (
     <div className="user-page">
       <header className="page-header film-card__head">
@@ -27,7 +36,7 @@ function MyList({films}:MyListProps):JSX.Element {
             </div>
           </li>
           <li className="user-block__item">
-            <Link to={AppRoute.MyList} className="user-block__link">Sign out</Link>
+            <Link onClick={setLogout} to={AppRoute.Main} className="user-block__link">Sign out</Link>
           </li>
         </ul>
       </header>

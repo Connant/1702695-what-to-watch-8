@@ -36,15 +36,11 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
     evt.preventDefault();
 
     if (!letterCheck.test(userInput.password)) {
-      // eslint-disable-next-line no-alert
-      alert('Password must have at least one letter');
-      return;
+      return('Password must have at least one letter');
     }
 
     if (!numberCheck.test(userInput.password)) {
-      // eslint-disable-next-line no-alert
-      alert('Password must have at least one number');
-      return;
+      return('Password must have at least one number');
     }
 
     if (userInput.login !== '' && userInput.password !== '') {

@@ -11,7 +11,6 @@ import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
-// import Loading from '../loading/loading';
 
 
 const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
@@ -26,13 +25,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 
 function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
-
-  // eslint-disable-next-line no-console
-  console.log(authorizationStatus);
-
-  // if (authorizationStatus === AuthorizationStatus.NoAuth || !isDataLoaded) {
-  //   return <Loading />;
-  // }
 
   return (
     <BrowserRouter>
@@ -57,12 +49,6 @@ function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux):
         <PrivateRoute exact path={AppRoute.MyList}>
           <MyList films={currentFilms} />
         </PrivateRoute>
-
-        {/* <PrivateRoute exact path={AppRoute.MyList}
-          render={() => <MyList films={currentFilms} />}
-          // authorizationStatus={AuthorizationStatus.NoAuth}
-        >
-        </PrivateRoute> */}
 
         <Route>
           <Error />

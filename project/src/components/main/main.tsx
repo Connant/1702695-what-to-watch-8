@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT, AuthorizationStatus } from '../../const';
+import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
@@ -11,6 +11,7 @@ import { State } from '../../store/reducer';
 import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
 import Loading from '../loading/loading';
+import UserBlock from '../user-block/ user-block';
 
 export type MainProps = {
   films: Film[],
@@ -74,27 +75,8 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
             </Link>
           </div>
 
-          <ul className="user-block">
-            {
-              authorizationStatus === AuthorizationStatus.Auth ?
-                (
-                  <React.Fragment>
-                    <li className="user-block__item">
-                      <div className="user-block__avatar">
-                        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                      </div>
-                    </li>
-                    <li className="user-block__item">
-                      <Link className="user-block__link" to={AppRoute.MyList}>user@gmail.com</Link>
-                    </li>
-                  </React.Fragment>
-                ) : (
-                  <li className="user-block__item">
-                    <Link className="user-block__link" to={AppRoute.SignIn}>Sign in</Link>
-                  </li>
-                )
-            }
-          </ul>
+          <UserBlock />
+
         </header>
 
         <div className="film-card__wrap">

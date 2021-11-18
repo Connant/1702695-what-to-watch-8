@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
-// import { Redirect } from 'react-router';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
@@ -15,6 +14,7 @@ import TabDetails from '../tabs/tab-details/tab-details';
 import TabOverview from '../tabs/tab-overview/tab-overview';
 import Loading from '../loading/loading';
 import Error from '../error/error';
+import UserBlock from '../user-block/ user-block';
 
 export type FilmOverviewProps = {
   films: Film[],
@@ -115,16 +115,7 @@ function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similar
               </Link>
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <Link to={AppRoute.MyList} className="user-block__link">Sign out</Link>
-              </li>
-            </ul>
+            <UserBlock />
           </header>
 
           <div className="film-card__wrap">

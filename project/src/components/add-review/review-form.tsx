@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-// import { useParams } from 'react-router-dom';
 import { sendReview, ThunkAppDispatch } from '../../store/actions-api';
 import { State } from '../../store/reducer';
 
@@ -36,9 +35,6 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
-
-  // const { id }: {id: string} = useParams();
-  // const filmId = Number(id);
 
   const [userInput, setUserInput] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);

@@ -1,13 +1,12 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Film } from '../film-card/film-card';
 import TabReviews, { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
-import { fetchFilmsAction, fetchReviewsAction, fetchSimilarFilmsAction, ThunkAppDispatch } from '../../store/actions-api';
-import { State } from '../../store/reducer';
+import { fetchFilmsAction } from '../../store/actions-api';
 import SimilarFilms from './similar-films';
 
 import TabDetails from '../tabs/tab-details/tab-details';
@@ -16,66 +15,50 @@ import Loading from '../loading/loading';
 import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
 
+import { getAuthorizationStatus, getCurrentFilm, getReviews, getSimilarFilms, getSimilarFilmsLoading } from '../../store/selectors';
+
 export type FilmOverviewProps = {
   films: Film[],
   reviews: FilmReviewProps[],
   id: number,
 }
 
-const mapStateToProps = ({currentFilms, similarFilms, similarFilmsLoading, reviews,
-  isReviewsLoaded, authorizationStatus}: State) => ({
-  currentFilms,
-  similarFilms,
-  similarFilmsLoading,
-  reviews,
-  isReviewsLoaded,
-  authorizationStatus,
-});
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getCurrentFilm(id: number) {
+export default function FilmPage(): JSX.Element {
+  const currentFilms = useSelector(getCurrentFilm);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const reviews = useSelector(getReviews);
+  const similarFilms = useSelector(getSimilarFilms);
+  const similarFilmsLoading = useSelector(getSimilarFilmsLoading);
+  const dispatch = useDispatch();
+
+  const getFilm = (currentFilmId: number) => {
     dispatch(fetchFilmsAction());
-  },
-  getSimilarFilms(id: number) {
-    dispatch(fetchSimilarFilmsAction(id));
-  },
-  getReviews(id: number) {
-    dispatch(fetchReviewsAction(id));
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  const { id }: {id: string} = useParams();
+  const filmId = Number(id);
+  const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedFilmProps = PropsFromRedux & FilmOverviewProps;
-
-function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similarFilmsLoading,
-  getSimilarFilms, isReviewsLoaded, getReviews, authorizationStatus }: ConnectedFilmProps): JSX.Element {
+  useEffect(() => {
+    if (currentMovie?.id !== filmId) {
+      getFilm(filmId);
+    }
+  });
 
   const history = useHistory();
 
-  const { id }: {id: string} = useParams();
 
   const [activeTab, setActiveTab] = useState('Overview');
-
-  const currentMovie = currentFilms.find((film) => film.id === Number(id));
-
-  const filmId = Number(id);
 
   if (!currentMovie) {
     return <Error />;
   }
 
   if (currentMovie?.id !== filmId) {
-    getCurrentFilm(filmId);
     return (
       <Loading />
     );
-  }
-
-  if (!similarFilmsLoading && !isReviewsLoaded) {
-    getSimilarFilms(filmId);
-    getReviews(filmId);
   }
 
   const {
@@ -215,5 +198,4 @@ function FilmPage({ reviews, currentFilms, getCurrentFilm, similarFilms, similar
   );
 }
 
-export default connector(FilmPage);
 

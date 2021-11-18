@@ -1,7 +1,6 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import type { State } from '../../store/reducer';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
@@ -12,19 +11,21 @@ import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
 
-
-const mapStateToProps = ({currentFilms, isDataLoaded, authorizationStatus}: State) => ({
-  currentFilms,
-  isDataLoaded,
-  authorizationStatus,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import { getCurrentFilm, getCurrentGenre } from '../../store/selectors';
 
 
-function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
+export default  function App(): JSX.Element {
+
+  const currentFilms = useSelector(getCurrentFilm);
+  const currentGenre = useSelector(getCurrentGenre);
+  // const isDataLoaded = useSelector(getIsDataLoaded);
+  // const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  // if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
+  //   return (
+  //     <Loading />
+  //   );
+  // }
 
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux):
         <Route path={AppRoute.Main} exact>
           <Main
             films={currentFilms}
+            currentGenre={currentGenre}
           />
         </Route>
 
@@ -59,4 +61,3 @@ function App({currentFilms, isDataLoaded, authorizationStatus}: PropsFromRedux):
   );
 }
 
-export default connector(App);

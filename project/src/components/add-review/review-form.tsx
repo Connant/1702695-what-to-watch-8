@@ -36,6 +36,9 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
 
+  // const { id }: {id: string} = useParams();
+  // const filmId = Number(id);
+
   const [userInput, setUserInput] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isFormSending, setIsFormSending] = useState(false);
@@ -95,4 +98,3 @@ function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
 }
 
 export default connector(ReviewForm);
-

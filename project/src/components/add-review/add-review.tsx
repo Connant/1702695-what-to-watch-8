@@ -2,39 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { AppRoute } from '../../const';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../store/reducer';
+import { useSelector } from 'react-redux';
 
 import Loading from '../loading/loading';
-import { fetchFilmsAction, ThunkAppDispatch } from '../../store/actions-api';
 import { title } from 'process';
 import ReviewForm from './review-form';
 import UserBlock from '../user-block/ user-block';
+import { getCurrentFilm } from '../../store/selectors';
 
 
-const mapStateToProps = ({currentFilms}: State) => ({
-  currentFilms,
-});
+export default function AddReview(): JSX.Element {
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getCurrentFilm(id: number) {
-    dispatch(fetchFilmsAction());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedFilmProps = PropsFromRedux;
-
-function AddReview({currentFilms, getCurrentFilm}: ConnectedFilmProps): JSX.Element {
-
+  const currentFilms = useSelector(getCurrentFilm);
   const { id }: {id: string} = useParams();
-  const filmId = Number(id);
-
   const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
   if (!currentMovie?.id) {
-    getCurrentFilm(filmId);
     return <Loading />;
   }
 
@@ -82,4 +65,4 @@ function AddReview({currentFilms, getCurrentFilm}: ConnectedFilmProps): JSX.Elem
   );
 }
 
-export default connector(AddReview);
+// export default connector(AddReview);

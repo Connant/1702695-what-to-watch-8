@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { FormEvent, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { loginAction, AuthorizationData, ThunkAppDispatch } from '../../store/actions-api';
+import { loginAction, AuthorizationData } from '../../store/actions-api';
 
 
 const DEFAULT_STATE: AuthorizationData = {
@@ -12,20 +12,16 @@ const DEFAULT_STATE: AuthorizationData = {
   password: '',
 };
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onSubmit(authData: AuthorizationData) {
-    dispatch(loginAction(authData));
-  },
-});
 
-const connector = connect(null, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-
-function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
+export default function SignIn(): JSX.Element {
 
   const [userInput, setUserInput] = useState(DEFAULT_STATE);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (authData: AuthorizationData) => {
+    dispatch(loginAction(authData));
+  };
 
   const history = useHistory();
 
@@ -118,4 +114,4 @@ function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(SignIn);
+// export default connector(SignIn);

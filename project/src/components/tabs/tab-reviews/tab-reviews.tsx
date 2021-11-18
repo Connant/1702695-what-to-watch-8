@@ -1,4 +1,7 @@
 import React from 'react';
+// import { useSelector } from 'react-redux';
+
+// import { getReviews } from '../../../store/selectors';
 
 export type FilmReviewProps = {
     id: number,

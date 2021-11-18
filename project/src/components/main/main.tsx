@@ -1,45 +1,38 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT, AuthorizationStatus } from '../../const';
+import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../store/reducer';
-
+import { useSelector } from 'react-redux';
 import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
 import Loading from '../loading/loading';
+import UserBlock from '../user-block/ user-block';
+
+import { getCurrentFilm } from '../../store/selectors';
 
 export type MainProps = {
   films: Film[],
+  currentGenre: string,
 }
 
-const mapStateToProps = ({currentFilms, currentGenre, authorizationStatus}: State) => ({
-  currentFilms,
-  currentGenre,
-  authorizationStatus,
-});
+export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedMainProps = PropsFromRedux & MainProps;
-
-
-function Main({ films, currentFilms, currentGenre, authorizationStatus }: ConnectedMainProps): JSX.Element {
-
+  const currentFilms = useSelector(getCurrentFilm);
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
 
   const filmList = films.filter((film) => {
+
     if (currentGenre === Genres.All) {
       return true;
     }
+
     return film.genre === currentGenre;
   }).slice(0, showSize * FILM_CARD_COUNT);
 
   const shownFilms = films.slice(0, showSize * FILM_CARD_COUNT);
-
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };
@@ -54,7 +47,7 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
     released,
     poster_image,
     background_image,
-  } = films[0];
+  } = currentFilms[0];
 
   return (
     <React.Fragment>
@@ -74,27 +67,8 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
             </Link>
           </div>
 
-          <ul className="user-block">
-            {
-              authorizationStatus === AuthorizationStatus.Auth ?
-                (
-                  <React.Fragment>
-                    <li className="user-block__item">
-                      <div className="user-block__avatar">
-                        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                      </div>
-                    </li>
-                    <li className="user-block__item">
-                      <Link className="user-block__link" to={AppRoute.MyList}>user@gmail.com</Link>
-                    </li>
-                  </React.Fragment>
-                ) : (
-                  <li className="user-block__item">
-                    <Link className="user-block__link" to={AppRoute.SignIn}>Sign in</Link>
-                  </li>
-                )
-            }
-          </ul>
+          <UserBlock />
+
         </header>
 
         <div className="film-card__wrap">
@@ -159,4 +133,3 @@ function Main({ films, currentFilms, currentGenre, authorizationStatus }: Connec
   );
 }
 
-export default connector(Main);

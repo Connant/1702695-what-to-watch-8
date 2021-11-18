@@ -11,6 +11,7 @@ export enum ActionType {
   RequireLogout = 'user/requireLogout',
   LoadSimilarFilms = 'data/loadSimilarFilms',
   LoadReviews = 'data/loadReviews',
+  RedirectToRoute = 'app/redirect',
 }
 
 export type Actions =
@@ -53,3 +54,8 @@ export const loadReviews = (reviews: FilmReviewProps[]) => ({
   type: ActionType.LoadReviews,
   payload: reviews,
 } as const);
+
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (url: string) => ({payload: url}),
+);

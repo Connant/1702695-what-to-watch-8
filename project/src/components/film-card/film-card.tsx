@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { Link, useHistory } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, memo } from 'react';
 
 export type Film = {
   id: number,
@@ -113,4 +113,4 @@ function FilmCard({films}: {films: Film}): JSX.Element {
   );
 }
 
-export default FilmCard;
+export default memo(FilmCard);

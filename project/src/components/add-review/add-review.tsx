@@ -2,41 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { AppRoute } from '../../const';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../store/reducer';
+import { useSelector } from 'react-redux';
 
 import Loading from '../loading/loading';
-import { fetchFilmsAction, ThunkAppDispatch } from '../../store/actions-api';
 import { title } from 'process';
 import ReviewForm from './review-form';
+import UserBlock from '../user-block/ user-block';
+import { getCurrentFilm } from '../../store/selectors';
 
 
-const mapStateToProps = ({currentFilms}: State) => ({
-  currentFilms,
-});
+export default function AddReview(): JSX.Element {
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getCurrentFilm(id: number) {
-    dispatch(fetchFilmsAction());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedFilmProps = PropsFromRedux;
-
-function AddReview({currentFilms, getCurrentFilm}: ConnectedFilmProps): JSX.Element {
-
+  const currentFilms = useSelector(getCurrentFilm);
   const { id }: {id: string} = useParams();
-  const filmId = Number(id);
-
-  // eslint-disable-next-line no-console
-  console.log(currentFilms);
-
   const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
   if (!currentMovie?.id) {
-    getCurrentFilm(filmId);
     return <Loading />;
   }
 
@@ -69,16 +50,8 @@ function AddReview({currentFilms, getCurrentFilm}: ConnectedFilmProps): JSX.Elem
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to={AppRoute.MyList} className="user-block__link">Sign out</Link>
-            </li>
-          </ul>
+          <UserBlock />
+
         </header>
 
         <div className="film-card__poster film-card__poster--small">
@@ -92,4 +65,4 @@ function AddReview({currentFilms, getCurrentFilm}: ConnectedFilmProps): JSX.Elem
   );
 }
 
-export default connector(AddReview);
+// export default connector(AddReview);

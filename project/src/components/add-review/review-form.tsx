@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-// import { useParams } from 'react-router-dom';
 import { sendReview, ThunkAppDispatch } from '../../store/actions-api';
 import { State } from '../../store/reducer';
 
@@ -99,4 +98,3 @@ function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
 }
 
 export default connector(ReviewForm);
-

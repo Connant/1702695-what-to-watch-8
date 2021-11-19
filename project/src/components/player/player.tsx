@@ -1,53 +1,79 @@
-import React from 'react';
+/* eslint-disable camelcase */
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { FilmProps } from '../film-card/film-card';
-import { Redirect, useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentFilm } from '../../store/selectors';
+import { fetchFilmsAction } from '../../store/actions-api';
+import { AppRoute, Time } from '../../const';
 
+import Controls from './controls';
+import Pause from './pause';
+import Play from './play';
 
-type AddReviewProps = {
-  films: FilmProps[],
-}
+export default function Player(): JSX.Element {
+  const currentFilms = useSelector(getCurrentFilm);
+  const dispatch = useDispatch();
+  const {id}: {id: string} = useParams();
+  const filmId = Number(id);
 
-function Player({films}: AddReviewProps): JSX.Element {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [isPlayed, setIsPlayed] = useState(false);
+  const [duration, setDuration] = useState(Time.Zero);
+  const [currentTime, setCurrentTime] = useState(Time.Zero);
 
-  const { id }: {id: string} = useParams();
+  const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
-  const currentFilms = films.find((film) => film.id === Number(id));
+  useEffect(() => {
+    dispatch(fetchFilmsAction());
+  }, [dispatch, filmId]);
 
-  if (!currentFilms) {
-    return <Redirect to='/' />;
-  }
-
-  const playerStyles = {
-    left: '30%',
-  };
+  useEffect(() => {
+    isPlayed ? ref.current?.play() : ref.current?.pause();
+  }, [isPlayed]);
 
   return (
     <div className="player">
-      <video src={currentFilms.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
+      <video
+        src={currentMovie?.video_link}
+        ref={ref}
+        className="player__video"
+        preload='metadata'
+        poster={currentMovie?.preview_image}
+        onTimeUpdate={(evt) => setCurrentTime(Math.round(evt.currentTarget.currentTime))}
+        onDurationChange={(evt) => setDuration(Math.round(evt.currentTarget.duration))}
+      />
 
-      <Link to={AppRoute.Main} type="button" className="player__exit">Exit</Link>
+      <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>
+        <button type="button" className="player__exit">Exit</button>
+      </Link>
 
       <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={playerStyles}>Toggler</div>
-          </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
+
+        <Controls
+          duration={duration}
+          currentTime={currentTime}
+        />
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
+          <button
+            type="button"
+            className="player__play"
+            onClick={() => setIsPlayed((state) => !state)}
+          >
+            {
+              isPlayed ? <Pause /> : <Play />
+            }
+            <span>{isPlayed ? 'Pause' : 'Play'}</span>
           </button>
-          <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen">
+          <div className="player__name">{currentMovie?.name}</div>
+
+          <button
+            type="button"
+            className="player__full-screen"
+            onClick={() => ref.current?.requestFullscreen()}
+          >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
@@ -58,5 +84,3 @@ function Player({films}: AddReviewProps): JSX.Element {
     </div>
   );
 }
-
-export default Player;

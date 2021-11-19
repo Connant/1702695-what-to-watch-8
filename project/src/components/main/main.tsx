@@ -10,6 +10,7 @@ import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
 import Loading from '../loading/loading';
 import UserBlock from '../user-block/ user-block';
+import { useHistory } from 'react-router';
 
 import { getCurrentFilm } from '../../store/selectors';
 
@@ -22,13 +23,12 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
   const currentFilms = useSelector(getCurrentFilm);
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
+  const history = useHistory();
 
   const filmList = films.filter((film) => {
-
     if (currentGenre === Genres.All) {
       return true;
     }
-
     return film.genre === currentGenre;
   }).slice(0, showSize * FILM_CARD_COUNT);
 
@@ -42,6 +42,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
   }
 
   const {
+    id,
     name,
     genre,
     released,
@@ -85,7 +86,9 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button"
+                  onClick={() => history.push(AppRoute.Player.replace(':id', `${id}`))}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

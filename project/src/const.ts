@@ -30,3 +30,16 @@ export enum APIRoute {
   SimilarFilms = '/films/:id/similar',
   Reviews = '/comments/:id',
 }
+
+export enum Grade {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}
+
+export enum Time {
+  Zero = 0,
+  HourInSecond = 3600,
+}

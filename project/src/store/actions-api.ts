@@ -1,6 +1,6 @@
 
-import { loadFilms, requireAuthorization, requireLogout } from './action';
-import { APIRoute, AuthorizationStatus } from '../const';
+import { addFavorite, loadFavorite, loadFilms, removeFavorite, requireAuthorization, requireLogout } from './action';
+import { APIRoute, AuthorizationStatus, FavoriteFilms } from '../const';
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { toast } from 'react-toastify';
@@ -68,3 +68,21 @@ export const sendReview = (filmId: number, review: FilmReviewProps ): ThunkActio
     }
   };
 
+
+export const fetchFavoriteFilms = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void>  => {
+    const {data} = await api.get<Film[]>(APIRoute.Favorites);
+    dispatch(loadFavorite(data));
+  };
+
+export const setFavoriteAction = (filmId: number, action: FavoriteFilms): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
+
+    if (action === FavoriteFilms.Add) {
+      dispatch(addFavorite());
+    }
+    if (action === FavoriteFilms.Remove) {
+      dispatch(removeFavorite());
+    }
+  };

@@ -49,7 +49,7 @@ export default  function App(): JSX.Element {
         </Route>
 
         <PrivateRoute exact path={AppRoute.MyList}>
-          <MyList films={currentFilms} />
+          <MyList />
         </PrivateRoute>
 
         <Route>

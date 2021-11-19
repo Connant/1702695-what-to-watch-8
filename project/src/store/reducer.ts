@@ -1,8 +1,8 @@
 import { Actions,  ActionType } from './action';
 import { Film } from '../components/film-card/film-card';
 import { Genres, AuthorizationStatus } from '../const';
-import { filterFilmsByGenre } from '../utils/utils';
 import { FilmReviewProps } from '../components/tabs/tab-reviews/tab-reviews';
+import { filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
   currentGenre: string,
@@ -13,6 +13,7 @@ export type State = {
   similarFilmsLoading: boolean,
   reviews: FilmReviewProps[],
   isReviewsLoaded: boolean,
+  favoriteFilms: Film[],
 }
 
 const initialState: State = {
@@ -24,6 +25,7 @@ const initialState: State = {
   similarFilmsLoading: false,
   reviews: [],
   isReviewsLoaded: false,
+  favoriteFilms: [],
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
@@ -49,6 +51,9 @@ export const reducer = (state: State = initialState, action: Actions): State => 
 
     case ActionType.RequireLogout:
       return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
+
+    case ActionType.LoadFavorite:
+      return  {...state, favoriteFilms: action.payload};
 
     default:
       return state;

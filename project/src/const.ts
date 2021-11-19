@@ -29,6 +29,7 @@ export enum APIRoute {
   Logout = '/logout',
   SimilarFilms = '/films/:id/similar',
   Reviews = '/comments/:id',
+  Favorites = '/favorite',
 }
 
 export enum Grade {
@@ -42,4 +43,9 @@ export enum Grade {
 export enum Time {
   Zero = 0,
   HourInSecond = 3600,
+}
+
+export enum FavoriteFilms {
+  Add = 1,
+  Remove = 0,
 }

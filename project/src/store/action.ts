@@ -27,6 +27,7 @@ export type Actions =
 | ReturnType<typeof loadReviews>
 | ReturnType<typeof addFavorite>
 | ReturnType<typeof removeFavorite>
+| ReturnType<typeof loadFavorite>
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,

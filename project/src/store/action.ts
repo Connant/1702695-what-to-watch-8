@@ -12,6 +12,9 @@ export enum ActionType {
   LoadSimilarFilms = 'data/loadSimilarFilms',
   LoadReviews = 'data/loadReviews',
   RedirectToRoute = 'app/redirect',
+  LoadFavorite = 'user/loadFavorite',
+  AddFavorite = 'user/addFavorite',
+  RemoveFavorite = 'user/removeFavorite',
 }
 
 export type Actions =
@@ -22,6 +25,9 @@ export type Actions =
 | ReturnType<typeof requireLogout>
 | ReturnType<typeof loadSimilarFilms>
 | ReturnType<typeof loadReviews>
+| ReturnType<typeof addFavorite>
+| ReturnType<typeof removeFavorite>
+| ReturnType<typeof loadFavorite>
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,
@@ -59,3 +65,12 @@ export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
   (url: string) => ({payload: url}),
 );
+
+export const loadFavorite = createAction(
+  ActionType.LoadFavorite,
+  (films: Film[]) => ({payload: films}),
+);
+
+export const addFavorite = createAction(ActionType.AddFavorite);
+
+export const removeFavorite = createAction(ActionType.RemoveFavorite);

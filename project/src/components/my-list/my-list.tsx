@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Film } from '../film-card/film-card';
+import { fetchFavoriteFilms } from '../../store/actions-api';
+import { getFavoriteFilms } from '../../store/selectors';
 import FilmList from '../film-list/film-list';
 import UserBlock from '../user-block/ user-block';
 
-type MyListProps = {
-  films: Film[];
-}
 
-function MyList({films}:MyListProps):JSX.Element {
+export default function MyList(): JSX.Element {
+  const favoriteFilms = useSelector(getFavoriteFilms);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilms());
+  }, [dispatch]);
 
   return (
     <div className="user-page">
@@ -29,7 +34,7 @@ function MyList({films}:MyListProps):JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList films={films} />
+        <FilmList films={favoriteFilms} />
 
       </section>
 
@@ -48,5 +53,3 @@ function MyList({films}:MyListProps):JSX.Element {
     </div>
   );
 }
-
-export default MyList;

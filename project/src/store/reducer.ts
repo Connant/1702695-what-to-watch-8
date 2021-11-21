@@ -50,10 +50,16 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, reviews: action.payload, isReviewsLoaded: true};
 
     case ActionType.RequireLogout:
-      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
+      return {...state, authorizationStatus: AuthorizationStatus.NoAuth, favoriteFilms: []};
+
+    case ActionType.RemoveFavorite:
+      return {...state, favoriteFilms: []};
+
+    case ActionType.AddFavorite:
+      return {...state, authorizationStatus: AuthorizationStatus.Auth,  favoriteFilms: []};
 
     case ActionType.LoadFavorite:
-      return  {...state, favoriteFilms: action.payload};
+      return  {...state, favoriteFilms: []};
 
     default:
       return state;

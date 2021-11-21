@@ -25,6 +25,8 @@ export type Actions =
 | ReturnType<typeof requireLogout>
 | ReturnType<typeof loadSimilarFilms>
 | ReturnType<typeof loadReviews>
+| ReturnType<typeof addFavorite>
+| ReturnType<typeof removeFavorite>
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,

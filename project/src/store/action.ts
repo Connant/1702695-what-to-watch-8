@@ -29,15 +29,25 @@ export type Actions =
 | ReturnType<typeof removeFavorite>
 | ReturnType<typeof loadFavorite>
 
-export const changeGenre = (genre: string) => ({
+export type ChangeGenreAction = {
+  type: ActionType.ChangeGenre,
+  payload: string,
+}
+
+export const changeGenre = (genre: string): ChangeGenreAction => ({
   type: ActionType.ChangeGenre,
   payload: genre,
-} as const);
+});
 
-export const filterFilms = (films: Film[]) => ({
-  type: ActionType.FilterFilms,
-  payload: films,
-} as const);
+// export const changeGenre = createAction(
+//   ActionType.ChangeGenre,
+//   (genre: string) => ({payload: genre}),
+// );
+
+export const filterFilms = createAction(
+  ActionType.FilterFilms,
+  (films: Film[]) => ({payload: films}),
+);
 
 export const loadFilms = (films: Film[]) => ({
   type: ActionType.LoadFilms,

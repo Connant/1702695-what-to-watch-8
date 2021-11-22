@@ -25,7 +25,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 
-  const filmList = films.filter((film) => {
+  const filmList = currentFilms.filter((film) => {
     if (currentGenre === Genres.All) {
       return true;
     }
@@ -33,6 +33,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
   }).slice(0, showSize * FILM_CARD_COUNT);
 
   const shownFilms = films.slice(0, showSize * FILM_CARD_COUNT);
+
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };

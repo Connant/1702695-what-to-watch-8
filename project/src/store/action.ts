@@ -39,11 +39,6 @@ export const changeGenre = (genre: string): ChangeGenreAction => ({
   payload: genre,
 });
 
-// export const changeGenre = createAction(
-//   ActionType.ChangeGenre,
-//   (genre: string) => ({payload: genre}),
-// );
-
 export const filterFilms = createAction(
   ActionType.FilterFilms,
   (films: Film[]) => ({payload: films}),

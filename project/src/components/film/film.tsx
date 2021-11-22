@@ -115,7 +115,7 @@ export default function FilmPage(): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                <MyListButton />
+                {authorizationStatus === AuthorizationStatus.Auth && <MyListButton />}
 
                 {authorizationStatus === AuthorizationStatus.Auth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>

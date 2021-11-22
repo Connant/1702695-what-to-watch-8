@@ -65,4 +65,3 @@ export default function AddReview(): JSX.Element {
   );
 }
 
-// export default connector(AddReview);

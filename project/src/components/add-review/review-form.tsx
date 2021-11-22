@@ -1,8 +1,5 @@
 import React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { sendReview, ThunkAppDispatch } from '../../store/actions-api';
-import { State } from '../../store/reducer';
 
 export type ReviewPost = {
   id: number,
@@ -20,25 +17,8 @@ const MAX_RATING = 10;
 const MIN_LENGTH = 50;
 const MAX_LENGTH = 400;
 
-const mapStateToProps = ({currentFilms, reviews}: State) => ({
-  currentFilms,
-  reviews,
-});
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  sendReview(id: number, data: ReviewPost) {
-    return dispatch(sendReview(id, data));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
-
-  // const { id }: {id: string} = useParams();
-  // const filmId = Number(id);
-
+export default function ReviewForm(): JSX.Element {
   const [userInput, setUserInput] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isFormSending, setIsFormSending] = useState(false);
@@ -97,4 +77,3 @@ function ReviewForm({currentFilms, reviews}: PropsFromRedux): JSX.Element {
   );
 }
 
-export default connector(ReviewForm);

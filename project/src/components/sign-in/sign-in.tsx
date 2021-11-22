@@ -114,4 +114,3 @@ export default function SignIn(): JSX.Element {
   );
 }
 
-// export default connector(SignIn);

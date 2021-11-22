@@ -15,7 +15,7 @@ import Loading from '../loading/loading';
 import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
 
-import { getAuthorizationStatus, getCurrentFilm, getSimilarFilms, getSimilarFilmsLoading } from '../../store/selectors';
+import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type FilmOverviewProps = {
@@ -28,9 +28,6 @@ export type FilmOverviewProps = {
 export default function FilmPage(): JSX.Element {
   const currentFilms = useSelector(getCurrentFilm);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  // const reviews = useSelector(getReviews);
-  const similarFilms = useSelector(getSimilarFilms);
-  const similarFilmsLoading = useSelector(getSimilarFilmsLoading);
   const dispatch = useDispatch();
 
   const getFilm = (currentFilmId: number) => {
@@ -49,17 +46,16 @@ export default function FilmPage(): JSX.Element {
 
   const history = useHistory();
 
-
   const [activeTab, setActiveTab] = useState('Overview');
-
-  if (!currentMovie) {
-    return <Error />;
-  }
 
   if (currentMovie?.id !== filmId) {
     return (
       <Loading />
     );
+  }
+
+  if (!currentMovie) {
+    return <Error />;
   }
 
   const {
@@ -171,9 +167,9 @@ export default function FilmPage(): JSX.Element {
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
+          <h2 className="catalog__title">More like this</h2>
 
-          {similarFilmsLoading ? (<SimilarFilms />) : (<Loading />)}
+          <SimilarFilms />
 
         </section>
 

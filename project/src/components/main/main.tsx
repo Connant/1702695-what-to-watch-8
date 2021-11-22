@@ -112,9 +112,11 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
           <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
-          <FilmList films={filmList} />
+          {
+            currentFilms.length !== 0 ? <FilmList films={filmList} /> : <Loading />
+          }
 
-          {filmList.length === shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
+          {currentFilms.length > shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
 
         </section>
 

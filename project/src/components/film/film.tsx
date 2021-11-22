@@ -15,7 +15,7 @@ import Loading from '../loading/loading';
 import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
 
-import { getAuthorizationStatus, getCurrentFilm, getReviews, getSimilarFilms, getSimilarFilmsLoading } from '../../store/selectors';
+import { getAuthorizationStatus, getCurrentFilm, getSimilarFilms, getSimilarFilmsLoading } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type FilmOverviewProps = {
@@ -28,7 +28,7 @@ export type FilmOverviewProps = {
 export default function FilmPage(): JSX.Element {
   const currentFilms = useSelector(getCurrentFilm);
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const reviews = useSelector(getReviews);
+  // const reviews = useSelector(getReviews);
   const similarFilms = useSelector(getSimilarFilms);
   const similarFilmsLoading = useSelector(getSimilarFilmsLoading);
   const dispatch = useDispatch();
@@ -77,7 +77,7 @@ export default function FilmPage(): JSX.Element {
       case 'Details':
         return <TabDetails film={currentMovie as Film} />;
       case 'Reviews':
-        return <TabReviews reviews={reviews}/>;
+        return <TabReviews />;
     }
   };
 

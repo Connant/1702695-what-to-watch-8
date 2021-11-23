@@ -25,12 +25,11 @@ function MyListButton(): JSX.Element {
     evt.preventDefault();
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       dispatch(<Redirect to={AppRoute.SignIn} />);
-      setIsInFavoriteList(!isInFavoriteList);
       return;
     }
+    setIsInFavoriteList(!isInFavoriteList);
     dispatch(setFavoriteAction(filmIdNum, isInFavoriteList ? FavoriteFilms.Remove : FavoriteFilms.Add));
   };
-
 
   return (
     <button className="btn btn--list film-card__button" type="button" onClick={handleFavoriteClick}>

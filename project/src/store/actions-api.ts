@@ -8,7 +8,7 @@ import { State } from './reducer';
 import { Film } from '../components/film-card/film-card';
 import { Actions, loadSimilarFilms, loadReviews } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
-import { FilmReviewProps } from '../components/tabs/tab-reviews/tab-reviews';
+import { ReviewPost } from '../components/add-review/review-form';
 
 export type AuthorizationData = {
   login: string,
@@ -54,14 +54,14 @@ export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
 
 export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmReviewProps[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
+    const {data} = await api.get<ReviewPost[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
     dispatch(loadReviews(data));
   };
 
-export const sendReview = (filmId: number, review: FilmReviewProps ): ThunkActionResult =>
+export const sendReview = (filmId: number, review: ReviewPost ): ThunkActionResult =>
   async (dispatch, _getState, api) : Promise<void> => {
     try {
-      const {data} = await api.post<FilmReviewProps[]>(APIRoute.Reviews.replace(':id', `${filmId}`), review);
+      const {data} = await api.post<ReviewPost[]>(APIRoute.Reviews.replace(':id', `${filmId}`), review);
       dispatch(loadReviews(data));
     } catch {
       toast.error('Sending failed');

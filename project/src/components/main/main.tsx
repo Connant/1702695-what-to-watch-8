@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT, AuthorizationStatus } from '../../const';
+import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
@@ -12,7 +12,7 @@ import Loading from '../loading/loading';
 import UserBlock from '../user-block/ user-block';
 import { useHistory } from 'react-router';
 
-import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
+import { getCurrentFilm } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type MainProps = {
@@ -23,7 +23,7 @@ export type MainProps = {
 export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
   const currentFilms = useSelector(getCurrentFilm);
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+  // const authorizationStatus = useSelector(getAuthorizationStatus);
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 
@@ -98,7 +98,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                {authorizationStatus === AuthorizationStatus.Auth && <MyListButton />}
+                <MyListButton />
 
               </div>
             </div>

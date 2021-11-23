@@ -40,7 +40,9 @@ export default  function App(): JSX.Element {
 
         <Route path={AppRoute.Film} exact component={FilmPage} />
 
-        <Route path={AppRoute.AddReview} exact component={AddReview} />
+        <PrivateRoute path={AppRoute.AddReview} exact>
+          <AddReview />
+        </PrivateRoute>
 
         <Route path={AppRoute.Player} exact component={Player} />
 

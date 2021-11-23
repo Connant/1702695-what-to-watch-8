@@ -1,7 +1,7 @@
 import { Actions,  ActionType } from './action';
 import { Film } from '../components/film-card/film-card';
 import { Genres, AuthorizationStatus } from '../const';
-import { FilmReviewProps } from '../components/tabs/tab-reviews/tab-reviews';
+import { ReviewPost } from '../components/add-review/review-form';
 import { filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
@@ -11,7 +11,7 @@ export type State = {
   authorizationStatus: AuthorizationStatus;
   similarFilms: Film[],
   similarFilmsLoading: boolean,
-  reviews: FilmReviewProps[],
+  reviews: ReviewPost[],
   isReviewsLoaded: boolean,
   favoriteFilms: Film[],
 }

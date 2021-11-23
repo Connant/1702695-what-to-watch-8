@@ -5,7 +5,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Film } from '../film-card/film-card';
-import TabReviews, { FilmReviewProps } from '../tabs/tab-reviews/tab-reviews';
+import TabReviews from '../tabs/tab-reviews/tab-reviews';
 import { fetchFilmsAction } from '../../store/actions-api';
 import SimilarFilms from './similar-films';
 
@@ -17,12 +17,6 @@ import UserBlock from '../user-block/ user-block';
 
 import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
-
-export type FilmOverviewProps = {
-  films: Film[],
-  reviews: FilmReviewProps[],
-  id: number,
-}
 
 
 export default function FilmPage(): JSX.Element {
@@ -115,7 +109,7 @@ export default function FilmPage(): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                {authorizationStatus === AuthorizationStatus.Auth && <MyListButton />}
+                <MyListButton />
 
                 {authorizationStatus === AuthorizationStatus.Auth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>

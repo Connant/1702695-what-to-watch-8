@@ -1,6 +1,6 @@
 import { Film } from '../components/film-card/film-card';
 import { AuthorizationStatus } from '../const';
-import { FilmReviewProps } from '../components/tabs/tab-reviews/tab-reviews';
+import { ReviewPost } from '../components/add-review/review-form';
 import { createAction } from '@reduxjs/toolkit';
 
 export enum ActionType {
@@ -61,7 +61,7 @@ export const loadSimilarFilms = (films: Film[]) => ({
   payload: films,
 } as const);
 
-export const loadReviews = (reviews: FilmReviewProps[]) => ({
+export const loadReviews = (reviews: ReviewPost[]) => ({
   type: ActionType.LoadReviews,
   payload: reviews,
 } as const);

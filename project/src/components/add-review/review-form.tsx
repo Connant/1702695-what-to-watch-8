@@ -1,5 +1,7 @@
 import React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { sendReview } from '../../store/actions-api';
 
 export type ReviewPost = {
   id: number,
@@ -23,6 +25,7 @@ export default function ReviewForm(): JSX.Element {
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isFormSending, setIsFormSending] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const isRatingValid = rating > DEFAULT_RATING;
@@ -30,13 +33,16 @@ export default function ReviewForm(): JSX.Element {
     setIsFormValid(isRatingValid && isTextAreaValid);
   }, [rating, userInput]);
 
+
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setRating(+evt.currentTarget.value);
   };
 
+
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     setIsFormSending(true);
+    dispatch(sendReview);
   };
 
   return (

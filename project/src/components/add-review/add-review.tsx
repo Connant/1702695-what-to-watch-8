@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { AppRoute } from '../../const';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '../loading/loading';
 import { title } from 'process';
 import ReviewForm from './review-form';
 import UserBlock from '../user-block/ user-block';
 import { getCurrentFilm } from '../../store/selectors';
+import { fetchFilmsAction } from '../../store/actions-api';
 
 
 export default function AddReview(): JSX.Element {
@@ -16,6 +17,19 @@ export default function AddReview(): JSX.Element {
   const currentFilms = useSelector(getCurrentFilm);
   const { id }: {id: string} = useParams();
   const currentMovie = currentFilms.find((film) => film.id === Number(id));
+
+  const dispatch = useDispatch();
+  const filmId = Number(id);
+
+  const getFilm = (currentFilmId: number) => {
+    dispatch(fetchFilmsAction());
+  };
+
+  useEffect(() => {
+    if (currentMovie?.id !== filmId) {
+      getFilm(filmId);
+    }
+  });
 
   if (!currentMovie?.id) {
     return <Loading />;
@@ -45,7 +59,7 @@ export default function AddReview(): JSX.Element {
                 <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)} className="breadcrumbs__link">{title}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="/" className="breadcrumbs__link">Add review</a>
+                <Link to={AppRoute.AddReview.replace(':id', id.toString())} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>

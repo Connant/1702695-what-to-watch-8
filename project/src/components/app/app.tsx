@@ -18,14 +18,6 @@ export default  function App(): JSX.Element {
 
   const currentFilms = useSelector(getCurrentFilm);
   const currentGenre = useSelector(getCurrentGenre);
-  // const isDataLoaded = useSelector(getIsDataLoaded);
-  // const authorizationStatus = useSelector(getAuthorizationStatus);
-
-  // if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
-  //   return (
-  //     <Loading />
-  //   );
-  // }
 
   return (
     <BrowserRouter>

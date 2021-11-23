@@ -13,22 +13,10 @@ import { fetchFilmsAction, checkAuthorizationAction } from './store/actions-api'
 import { configureStore } from '@reduxjs/toolkit';
 import { redirect } from './store/redirect';
 import { browserHistory } from './store/redirect';
-// import { State } from './store/reducer';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.Auth)));
-
-// const loadState = () => {
-//   try {
-//     const serialisedState = window.localStorage.getItem('app_state');
-//     if (!serialisedState) {
-//       return undefined;
-//     }
-//     return JSON.parse(serialisedState);
-//   } catch (err) {
-//     return undefined;
-//   }
-// };
 
 const store = configureStore({
   reducer: reducer,
@@ -49,7 +37,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router history={browserHistory}>
-        {/* <ToastContainer /> */}
         <App />
       </Router>
     </Provider>

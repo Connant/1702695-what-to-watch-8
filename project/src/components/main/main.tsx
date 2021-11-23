@@ -23,7 +23,6 @@ export type MainProps = {
 export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
   const currentFilms = useSelector(getCurrentFilm);
-  // const authorizationStatus = useSelector(getAuthorizationStatus);
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 

@@ -57,20 +57,6 @@ export const requireAuthorization = createAction(
 
 export const requireLogout = createAction(ActionType.RequireLogout);
 
-// export type UserInfo = {
-//   id: number;
-//   email: string;
-//   name: string;
-//   avatarUrl?: string;
-// }
-
-// export const requireLogout = createAction(
-//   ActionType.RequireLogout,
-//   (authData: UserInfo) => ({
-//     payload: authData,
-//   }),
-// );
-
 export const loadSimilarFilms = (films: Film[]) => ({
   type: ActionType.LoadSimilarFilms,
   payload: films,

@@ -49,3 +49,4 @@ export enum FavoriteFilms {
   Add = 1,
   Remove = 0,
 }
+

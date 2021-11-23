@@ -6,6 +6,9 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { loginAction, AuthorizationData } from '../../store/actions-api';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const DEFAULT_STATE: AuthorizationData = {
   login: '',
@@ -27,16 +30,34 @@ export default function SignIn(): JSX.Element {
 
   const letterCheck = /[a-zA-Z]/;
   const numberCheck = /[0-9]/;
+  const emailValid = new RegExp('^[a-z0-9-_\\.]+@[a-z0-9-\\.]+\\.[a-z]+$');
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    toast.configure();
+
+    if (!userInput.login) {
+      return(toast.error('Please enter valid email', {
+        position: toast.POSITION.TOP_CENTER,
+      }));
+    }
+
+    if (!emailValid.test(userInput.login)) {
+      return(toast.error('Please enter valid email', {
+        position: toast.POSITION.TOP_CENTER,
+      }));
+    }
 
     if (!letterCheck.test(userInput.password)) {
-      return('Password must have at least one letter');
+      return(toast.error('Password must have at least one letter', {
+        position: toast.POSITION.TOP_CENTER,
+      }));
     }
 
     if (!numberCheck.test(userInput.password)) {
-      return('Password must have at least one number');
+      return(toast.error('Password must have at least one number', {
+        position: toast.POSITION.TOP_CENTER,
+      }));
     }
 
     if (userInput.login !== '' && userInput.password !== '') {

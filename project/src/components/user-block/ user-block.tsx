@@ -8,9 +8,12 @@ import { getAuthorizationStatus } from '../../store/selectors';
 
 
 function UserBlock(): JSX.Element {
-
   const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  // eslint-disable-next-line no-console
+  console.log(authorizationStatus);
   const dispatch = useDispatch();
+
   const setLogout = () => {
     dispatch(logoutAction());
   };

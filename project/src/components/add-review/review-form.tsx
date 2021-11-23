@@ -1,7 +1,10 @@
 import React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { sendReview } from '../../store/actions-api';
+import { getCurrentFilm } from '../../store/selectors';
 
 export type ReviewPost = {
   id: number,
@@ -14,6 +17,11 @@ export type ReviewPost = {
   comment: string,
 }
 
+export type ReviewRC = {
+  rating: number,
+  comment: string,
+}
+
 const DEFAULT_RATING = 0;
 const MAX_RATING = 10;
 const MIN_LENGTH = 50;
@@ -21,11 +29,16 @@ const MAX_LENGTH = 400;
 
 
 export default function ReviewForm(): JSX.Element {
+  const currentFilms = useSelector(getCurrentFilm);
   const [userInput, setUserInput] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isFormSending, setIsFormSending] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+
+  const sendComment = (id: number, data: ReviewRC) => dispatch(sendReview(id, data));
 
   useEffect(() => {
     const isRatingValid = rating > DEFAULT_RATING;
@@ -38,12 +51,24 @@ export default function ReviewForm(): JSX.Element {
     setRating(+evt.currentTarget.value);
   };
 
+  const { id }: {id: string} = useParams();
+  const filmId = Number(id);
+  const currentMovie = currentFilms.find((film) => film.id === Number(id));
+  const filmIdNum = currentMovie?.id || 0;
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
+
+    const postData = {
+      rating: rating,
+      comment: userInput,
+    };
+
     setIsFormSending(true);
-    dispatch(sendReview);
+    sendComment(filmIdNum, postData);
+    history.push(AppRoute.Film.replace(':id', `${filmId}`));
   };
+
 
   return (
     <div className="add-review">

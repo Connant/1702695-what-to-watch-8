@@ -111,7 +111,7 @@ export default function FilmPage(): JSX.Element {
 
                 <MyListButton />
 
-                {authorizationStatus === AuthorizationStatus.Auth &&
+                {authorizationStatus !== AuthorizationStatus.NoAuth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>
                     Add review
                   </Link>}

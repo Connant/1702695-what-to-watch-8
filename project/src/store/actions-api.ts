@@ -8,7 +8,7 @@ import { State } from './reducer';
 import { Film } from '../components/film-card/film-card';
 import { Actions, loadSimilarFilms, loadReviews } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
-import { ReviewPost } from '../components/add-review/review-form';
+import { ReviewPost, ReviewRC } from '../components/add-review/review-form';
 
 export type AuthorizationData = {
   login: string,
@@ -36,12 +36,15 @@ export const fetchFilmsAction = (): ThunkActionResult =>
 //       });
 //   };
 
-export  const checkAuthorizationAction = (): ThunkActionResult => (
+export const checkAuthorizationAction = (): ThunkActionResult => (
   async (dispatch, _getState, api): Promise<void> => {
     try {
       const { data } = await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(requireLogout(data));
+      if ( data !== undefined) {
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      } else {
+        dispatch(requireLogout());
+      }
     } catch {
       toast.warn('Please, don\'t forget to log in');
     }
@@ -58,10 +61,10 @@ export const loginAction = ({login: email, password}: AuthorizationData): ThunkA
 
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const { data } = await api.get(APIRoute.Login);
+    // const { data } = await api.get(APIRoute.Login);
     api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireLogout(data));
+    dispatch(requireLogout());
   };
 
 export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
@@ -76,16 +79,18 @@ export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
     dispatch(loadReviews(data));
   };
 
-export const sendReview = (filmId: number, review: ReviewPost ): ThunkActionResult =>
+export const sendReview = (filmId: number, review: ReviewRC ): ThunkActionResult =>
   async (dispatch, _getState, api) : Promise<void> => {
     try {
       const {data} = await api.post<ReviewPost[]>(APIRoute.Reviews.replace(':id', `${filmId}`), review);
+      // eslint-disable-next-line no-console
+      console.log(data);
       dispatch(loadReviews(data));
+      // dispatch(redirectToRoute(AppRoute.Film.replace(':id', `${filmId}/#reviews`)));
     } catch {
       toast.error('Sending failed');
     }
   };
-
 
 export const fetchFavoriteFilms = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void>  => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import { Router } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import { reducer } from './store/reducer';
@@ -11,10 +12,11 @@ import { requireAuthorization } from './store/action';
 import { fetchFilmsAction, checkAuthorizationAction } from './store/actions-api';
 import { configureStore } from '@reduxjs/toolkit';
 import { redirect } from './store/redirect';
+import { browserHistory } from './store/redirect';
 // import { State } from './store/reducer';
 
 
-const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
+const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.Auth)));
 
 // const loadState = () => {
 //   try {
@@ -46,8 +48,10 @@ const store = configureStore({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <ToastContainer /> */}
-      <App />
+      <Router history={browserHistory}>
+        {/* <ToastContainer /> */}
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

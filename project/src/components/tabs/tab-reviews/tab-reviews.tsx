@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchReviewsAction } from '../../../store/actions-api';
 
 import { getCurrentFilm, getIsReviewsLoaded, getReviews } from '../../../store/selectors';
+import { formatDate, normalDate } from '../../../utils/utils';
 import Loading from '../../loading/loading';
 
 export type FilmReviewProps = {
@@ -56,7 +57,7 @@ export default function TabReviews(): JSX.Element {
 
               <footer className="review__details">
                 <cite className="review__author">{review.user.name}</cite>
-                <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+                <time className="review__date" dateTime={formatDate(review.date)}>{normalDate(review.date)}</time>
               </footer>
             </blockquote>
 
@@ -72,7 +73,7 @@ export default function TabReviews(): JSX.Element {
 
               <footer className="review__details">
                 <cite className="review__author">{review.user.name}</cite>
-                <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+                <time className="review__date" dateTime={formatDate(review.date)}>{normalDate(review.date)}</time>
               </footer>
             </blockquote>
             <div className="review__rating">{review.rating}</div>

@@ -55,21 +55,21 @@ export const requireAuthorization = createAction(
   (authStatus: AuthorizationStatus) => ({payload: authStatus}),
 );
 
-// export const requireLogout = createAction(ActionType.RequireLogout);
+export const requireLogout = createAction(ActionType.RequireLogout);
 
-export type UserInfo = {
-  id: number;
-  email: string;
-  name: string;
-  avatarUrl?: string;
-}
+// export type UserInfo = {
+//   id: number;
+//   email: string;
+//   name: string;
+//   avatarUrl?: string;
+// }
 
-export const requireLogout = createAction(
-  ActionType.RequireLogout,
-  (authData: UserInfo) => ({
-    payload: authData,
-  }),
-);
+// export const requireLogout = createAction(
+//   ActionType.RequireLogout,
+//   (authData: UserInfo) => ({
+//     payload: authData,
+//   }),
+// );
 
 export const loadSimilarFilms = (films: Film[]) => ({
   type: ActionType.LoadSimilarFilms,

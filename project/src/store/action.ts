@@ -28,6 +28,7 @@ export type Actions =
 | ReturnType<typeof addFavorite>
 | ReturnType<typeof removeFavorite>
 | ReturnType<typeof loadFavorite>
+| ReturnType<typeof redirectToRoute>
 
 export type ChangeGenreAction = {
   type: ActionType.ChangeGenre,
@@ -54,7 +55,21 @@ export const requireAuthorization = createAction(
   (authStatus: AuthorizationStatus) => ({payload: authStatus}),
 );
 
-export const requireLogout = createAction(ActionType.RequireLogout);
+// export const requireLogout = createAction(ActionType.RequireLogout);
+
+export type UserInfo = {
+  id: number;
+  email: string;
+  name: string;
+  avatarUrl?: string;
+}
+
+export const requireLogout = createAction(
+  ActionType.RequireLogout,
+  (authData: UserInfo) => ({
+    payload: authData,
+  }),
+);
 
 export const loadSimilarFilms = (films: Film[]) => ({
   type: ActionType.LoadSimilarFilms,
@@ -76,6 +91,9 @@ export const loadFavorite = createAction(
   (films: Film[]) => ({payload: films}),
 );
 
-export const addFavorite = createAction(ActionType.AddFavorite);
+export const addFavorite = createAction(
+  ActionType.AddFavorite,
+  (films: Film[]) => ({payload: films}),
+);
 
 export const removeFavorite = createAction(ActionType.RemoveFavorite);

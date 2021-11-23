@@ -11,9 +11,22 @@ import { requireAuthorization } from './store/action';
 import { fetchFilmsAction, checkAuthorizationAction } from './store/actions-api';
 import { configureStore } from '@reduxjs/toolkit';
 import { redirect } from './store/redirect';
+// import { State } from './store/reducer';
 
 
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)));
+
+// const loadState = () => {
+//   try {
+//     const serialisedState = window.localStorage.getItem('app_state');
+//     if (!serialisedState) {
+//       return undefined;
+//     }
+//     return JSON.parse(serialisedState);
+//   } catch (err) {
+//     return undefined;
+//   }
+// };
 
 const store = configureStore({
   reducer: reducer,
@@ -25,8 +38,10 @@ const store = configureStore({
     }).concat(redirect),
 });
 
+
 (store.dispatch)(checkAuthorizationAction());
 (store.dispatch)(fetchFilmsAction());
+
 
 ReactDOM.render(
   <React.StrictMode>

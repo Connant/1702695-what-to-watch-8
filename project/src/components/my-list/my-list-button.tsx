@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { memo, useEffect, useState } from 'react';
 import { setFavoriteAction } from '../../store/actions-api';
@@ -20,36 +21,27 @@ function MyListButton(): JSX.Element {
 
   useEffect(() => setIsInFavoriteList(currentMovie?.is_favorite), [currentMovie]);
 
-  const handleFavoriteClick = () => {
-    if (authorizationStatus !== AuthorizationStatus.Auth) {
-      <Redirect to={AppRoute.SignIn} />;
-      // setIsInFavoriteList(!isInFavoriteList);
+  const handleFavoriteClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      dispatch(<Redirect to={AppRoute.SignIn} />);
+      setIsInFavoriteList(!isInFavoriteList);
+      return;
     }
     dispatch(setFavoriteAction(filmIdNum, isInFavoriteList ? FavoriteFilms.Remove : FavoriteFilms.Add));
   };
 
-  // const [isInFavoriteList, setIsInFavoriteList] = useState(film.isFavorite);
-  // const authorizationStatus = useSelector(getAuthorizationStatus);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => setIsInFavoriteList(film.isFavorite), [film]);
-
-  // const handleFavoriteClick = () => {
-  //   if (authorizationStatus === AuthorizationStatus.Auth) {
-  //     setIsInFavoriteList(!isInFavoriteList);
-  //   }
-  //   dispatch(setFavoriteAction(filmIdNum, isInFavoriteList ? FavoriteFilms.Remove : FavoriteFilms.Add));
-  // };
 
   return (
-    <button
-      className="btn btn--list film-card__button"
-      type="button"
-      onClick={handleFavoriteClick}
-    >
-      <svg viewBox="0 0 19 20" width="19" height="20">
-        <use xlinkHref={isInFavoriteList ? '#in-list' : '#add'}></use>
-      </svg>
+    <button className="btn btn--list film-card__button" type="button" onClick={handleFavoriteClick}>
+      {!currentMovie?.is_favorite &&
+          <svg viewBox="0 0 19 20" width="19" height="20">
+            <use xlinkHref="#add"/>
+          </svg>}
+      {(authorizationStatus === AuthorizationStatus.Auth && currentMovie?.is_favorite) &&
+          <svg viewBox="0 0 18 14" width="18" height="14">
+            <use xlinkHref="#in-list"></use>
+          </svg>}
       <span>My list</span>
     </button>
   );

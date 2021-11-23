@@ -15,6 +15,10 @@ export type AuthorizationData = {
   password: string,
 }
 
+export type AuthInfo = {
+  token: Token,
+}
+
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
@@ -24,13 +28,25 @@ export const fetchFilmsAction = (): ThunkActionResult =>
     dispatch(loadFilms(data));
   };
 
-export const checkAuthorizationAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Unknown));
-      });
-  };
+// export const checkAuthorizationAction = (): ThunkActionResult =>
+//   async (dispatch, _getState, api): Promise<void> => {
+//     await api.get(APIRoute.Login)
+//       .then(() => {
+//         dispatch(requireAuthorization(AuthorizationStatus.Auth));
+//       });
+//   };
+
+export  const checkAuthorizationAction = (): ThunkActionResult => (
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const { data } = await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(requireLogout(data));
+    } catch {
+      toast.warn('Please, don\'t forget to log in');
+    }
+  }
+);
 
 export const loginAction = ({login: email, password}: AuthorizationData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
@@ -39,11 +55,13 @@ export const loginAction = ({login: email, password}: AuthorizationData): ThunkA
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
 
+
 export const logoutAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
+  async (dispatch, _getState, api): Promise<void> => {
+    const { data } = await api.get(APIRoute.Login);
     api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireLogout());
+    dispatch(requireLogout(data));
   };
 
 export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
@@ -77,10 +95,11 @@ export const fetchFavoriteFilms = (): ThunkActionResult =>
 
 export const setFavoriteAction = (filmId: number, action: FavoriteFilms): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<Film[]>(APIRoute.Favorites);
     await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
 
     if (action === FavoriteFilms.Add) {
-      dispatch(addFavorite());
+      dispatch(addFavorite(data));
     }
     if (action === FavoriteFilms.Remove) {
       dispatch(removeFavorite());

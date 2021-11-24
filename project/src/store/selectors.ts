@@ -13,4 +13,5 @@ export const getIsDataLoaded = (state: State): boolean => state.isDataLoaded;
 export const getSimilarFilmsLoading = (state: State): boolean => state.similarFilmsLoading;
 export const getIsReviewsLoaded = (state: State): boolean => state.isReviewsLoaded;
 export const getFavoriteFilms = (state: State): Film[] => state.favoriteFilms;
+export const getPromo = (state: State): Film => state.promo;
 

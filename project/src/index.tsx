@@ -9,7 +9,7 @@ import { reducer } from './store/reducer';
 import { createAPI } from './services/api';
 import { AuthorizationStatus } from './const';
 import { requireAuthorization } from './store/action';
-import { fetchFilmsAction, checkAuthorizationAction } from './store/actions-api';
+import { fetchFilmsAction, checkAuthorizationAction, fetchPromoAction } from './store/actions-api';
 import { configureStore } from '@reduxjs/toolkit';
 import { redirect } from './store/redirect';
 import { browserHistory } from './store/redirect';
@@ -31,6 +31,7 @@ const store = configureStore({
 
 (store.dispatch)(checkAuthorizationAction());
 (store.dispatch)(fetchFilmsAction());
+store.dispatch(fetchPromoAction());
 
 
 ReactDOM.render(

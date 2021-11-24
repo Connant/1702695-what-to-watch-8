@@ -12,7 +12,7 @@ import Loading from '../loading/loading';
 import UserBlock from '../user-block/ user-block';
 import { useHistory } from 'react-router';
 
-import { getCurrentFilm } from '../../store/selectors';
+import { getCurrentFilm, getPromo } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type MainProps = {
@@ -21,7 +21,7 @@ export type MainProps = {
 }
 
 export default function Main({films, currentGenre}: MainProps): JSX.Element {
-
+  const promoFilm = useSelector(getPromo);
   const currentFilms = useSelector(getCurrentFilm);
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
@@ -97,7 +97,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                <MyListButton />
+                <MyListButton film={promoFilm} />
 
               </div>
             </div>

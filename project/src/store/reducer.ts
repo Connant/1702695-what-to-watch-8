@@ -14,6 +14,7 @@ export type State = {
   reviews: ReviewPost[],
   isReviewsLoaded: boolean,
   favoriteFilms: Film[],
+  promo: Film,
 }
 
 const initialState: State = {
@@ -26,6 +27,7 @@ const initialState: State = {
   reviews: [],
   isReviewsLoaded: false,
   favoriteFilms: [],
+  promo: {} as  Film,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {

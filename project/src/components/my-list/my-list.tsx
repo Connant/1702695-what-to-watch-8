@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { fetchFavoriteFilms } from '../../store/actions-api';
-import { getFavoriteFilms } from '../../store/selectors';
+import { getCurrentFilm } from '../../store/selectors';
 import FilmList from '../film-list/film-list';
 import UserBlock from '../user-block/ user-block';
 
 
 export default function MyList(): JSX.Element {
-  const favoriteFilms = useSelector(getFavoriteFilms);
+  const currentFilms = useSelector(getCurrentFilm);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,7 +34,11 @@ export default function MyList(): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList films={favoriteFilms} />
+        {currentFilms.length > 0 && (
+          <FilmList films={currentFilms
+            .filter((film) => film.is_favorite === true)}
+          />
+        )}
 
       </section>
 

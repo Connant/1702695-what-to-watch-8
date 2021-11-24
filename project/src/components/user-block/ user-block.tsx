@@ -8,9 +8,9 @@ import { getAuthorizationStatus } from '../../store/selectors';
 
 
 function UserBlock(): JSX.Element {
-
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
+
   const setLogout = () => {
     dispatch(logoutAction());
   };

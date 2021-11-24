@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useSelector } from 'react-redux';
 
 import Main from '../main/main';
@@ -11,21 +11,18 @@ import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
 
-import { getCurrentFilm, getCurrentGenre } from '../../store/selectors';
+import { getAuthorizationStatus, getCurrentFilm, getCurrentGenre } from '../../store/selectors';
+import Loading from '../loading/loading';
 
 
 export default  function App(): JSX.Element {
-
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const currentFilms = useSelector(getCurrentFilm);
   const currentGenre = useSelector(getCurrentGenre);
-  // const isDataLoaded = useSelector(getIsDataLoaded);
-  // const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  // if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
-  //   return (
-  //     <Loading />
-  //   );
-  // }
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return <Loading />;
+  }
 
   return (
     <BrowserRouter>
@@ -40,7 +37,9 @@ export default  function App(): JSX.Element {
 
         <Route path={AppRoute.Film} exact component={FilmPage} />
 
-        <Route path={AppRoute.AddReview} exact component={AddReview} />
+        <PrivateRoute path={AppRoute.AddReview} exact>
+          <AddReview />
+        </PrivateRoute>
 
         <Route path={AppRoute.Player} exact component={Player} />
 

@@ -1,7 +1,11 @@
-import React from 'react';
-// import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchReviewsAction } from '../../../store/actions-api';
 
-// import { getReviews } from '../../../store/selectors';
+import { getCurrentFilm, getIsReviewsLoaded, getReviews } from '../../../store/selectors';
+import { formatDate, normalDate } from '../../../utils/utils';
+import Loading from '../../loading/loading';
 
 export type FilmReviewProps = {
     id: number,
@@ -14,7 +18,31 @@ export type FilmReviewProps = {
   date: string,
 }
 
-export default function TabReviews({reviews}: {reviews: FilmReviewProps[]}): JSX.Element {
+export default function TabReviews(): JSX.Element {
+
+  const currentFilms = useSelector(getCurrentFilm);
+  const reviews = useSelector(getReviews);
+  const isReviewsLoaded = useSelector(getIsReviewsLoaded);
+  const dispatch = useDispatch();
+
+  const getReviewList = (id: number) => {
+    dispatch(fetchReviewsAction(id));
+  };
+
+  const { id }: {id: string} = useParams();
+  const currentMovie = currentFilms.find((film) => film.id === Number(id));
+
+  const filmIdNum = currentMovie?.id || 0;
+
+  useEffect(() => {
+    if (!isReviewsLoaded) {
+      getReviewList(filmIdNum);
+    }
+  });
+
+  if (!isReviewsLoaded) {
+    return <Loading />;
+  }
 
   const splitArr = Math.round(reviews.length / 2);
 
@@ -29,7 +57,7 @@ export default function TabReviews({reviews}: {reviews: FilmReviewProps[]}): JSX
 
               <footer className="review__details">
                 <cite className="review__author">{review.user.name}</cite>
-                <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+                <time className="review__date" dateTime={formatDate(review.date)}>{normalDate(review.date)}</time>
               </footer>
             </blockquote>
 
@@ -37,7 +65,6 @@ export default function TabReviews({reviews}: {reviews: FilmReviewProps[]}): JSX
           </div>
         ))}
       </div>
-
       <div className="film-card__reviews-col">
         {reviews.slice(splitArr).map((review) => (
           <div key={review.id} className="review">
@@ -46,7 +73,7 @@ export default function TabReviews({reviews}: {reviews: FilmReviewProps[]}): JSX
 
               <footer className="review__details">
                 <cite className="review__author">{review.user.name}</cite>
-                <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+                <time className="review__date" dateTime={formatDate(review.date)}>{normalDate(review.date)}</time>
               </footer>
             </blockquote>
             <div className="review__rating">{review.rating}</div>
@@ -56,3 +83,4 @@ export default function TabReviews({reviews}: {reviews: FilmReviewProps[]}): JSX
     </div>
   );
 }
+

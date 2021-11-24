@@ -1,7 +1,7 @@
 import { Actions,  ActionType } from './action';
 import { Film } from '../components/film-card/film-card';
 import { Genres, AuthorizationStatus } from '../const';
-import { FilmReviewProps } from '../components/tabs/tab-reviews/tab-reviews';
+import { ReviewPost } from '../components/add-review/review-form';
 import { filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
@@ -11,9 +11,10 @@ export type State = {
   authorizationStatus: AuthorizationStatus;
   similarFilms: Film[],
   similarFilmsLoading: boolean,
-  reviews: FilmReviewProps[],
+  reviews: ReviewPost[],
   isReviewsLoaded: boolean,
   favoriteFilms: Film[],
+  promo: Film,
 }
 
 const initialState: State = {
@@ -26,6 +27,7 @@ const initialState: State = {
   reviews: [],
   isReviewsLoaded: false,
   favoriteFilms: [],
+  promo: {} as  Film,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
@@ -60,6 +62,12 @@ export const reducer = (state: State = initialState, action: Actions): State => 
 
     case ActionType.LoadFavorite:
       return  {...state, favoriteFilms: []};
+
+    case ActionType.LoadPromo:
+      return  {...state, promo: {} as  Film};
+
+    case ActionType.UpdatePromo:
+      return  {...state, promo: {} as  Film};
 
     default:
       return state;

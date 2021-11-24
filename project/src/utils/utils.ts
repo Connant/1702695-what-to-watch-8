@@ -45,7 +45,7 @@ export const formatRemainingTime = (remainingTime: number): string => {
   const format = remainingTime >= Time.HourInSecond ? '-HH:mm:ss' : '-mm:ss';
   return dayjs.duration(remainingTime, 'seconds').format(format);
 };
-export const dateFormat = (date: string): string => dayjs(date).format('MMMM D, YYYY');
+export const normalDate = (date: string): string => dayjs(date).format('MMMM D, YYYY');
 
 export const getGrade = (rating: number): string => {
   if (rating === 10) {

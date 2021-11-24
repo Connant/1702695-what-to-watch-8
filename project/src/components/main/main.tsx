@@ -13,6 +13,7 @@ import UserBlock from '../user-block/ user-block';
 import { useHistory } from 'react-router';
 
 import { getCurrentFilm } from '../../store/selectors';
+import MyListButton from '../my-list/my-list-button';
 
 export type MainProps = {
   films: Film[],
@@ -20,12 +21,11 @@ export type MainProps = {
 }
 
 export default function Main({films, currentGenre}: MainProps): JSX.Element {
-
   const currentFilms = useSelector(getCurrentFilm);
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 
-  const filmList = films.filter((film) => {
+  const filmList = currentFilms.filter((film) => {
     if (currentGenre === Genres.All) {
       return true;
     }
@@ -33,6 +33,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
   }).slice(0, showSize * FILM_CARD_COUNT);
 
   const shownFilms = films.slice(0, showSize * FILM_CARD_COUNT);
+
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };
@@ -94,12 +95,9 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <MyListButton film={currentFilms[0]} />
+
               </div>
             </div>
           </div>
@@ -112,9 +110,9 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
           <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
-          <FilmList films={filmList} />
+          {currentFilms.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
 
-          {filmList.length === shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
+          {filmList.length >= shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
 
         </section>
 

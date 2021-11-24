@@ -32,10 +32,6 @@ export const adaptFilmsToClient = (films: Film[]): FilmProps[] => (
   films.map((film) => adaptToClient(film))
 );
 
-// export const adaptFilmsToSome = (films: Film[]): Film[] => (
-//   films.map((film) => adaptToClient(film))
-// );
-
 export const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
   if (genre === Genres.All) {
     return films;

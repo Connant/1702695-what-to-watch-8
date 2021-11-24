@@ -16,7 +16,8 @@ export enum ActionType {
   AddFavorite = 'user/addFavorite',
   RemoveFavorite = 'user/removeFavorite',
   LoadPromo = 'data/loadPromo',
-  UpdatePromo = 'user/updatePromo'
+  UpdatePromo = 'user/updatePromo',
+  UpdateFilm = 'user/updateFilm'
 }
 
 export type Actions =
@@ -33,6 +34,7 @@ export type Actions =
 | ReturnType<typeof redirectToRoute>
 | ReturnType<typeof loadPromo>
 | ReturnType<typeof updatePromo>
+| ReturnType<typeof updateFilm>
 
 export type ChangeGenreAction = {
   type: ActionType.ChangeGenre,
@@ -95,5 +97,10 @@ export const loadPromo = createAction(
 
 export const updatePromo = createAction(
   ActionType.UpdatePromo,
-  (film: Film[]) => ({payload: film}),
+  (film: Film) => ({payload: film}),
+);
+
+export const updateFilm = createAction(
+  ActionType.UpdateFilm,
+  (film: Film) => ({payload: film}),
 );

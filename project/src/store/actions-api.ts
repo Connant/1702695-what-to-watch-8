@@ -1,4 +1,5 @@
-import { addFavorite, loadFavorite, loadFilms, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo } from './action';
+/* eslint-disable camelcase */
+import { addFavorite, loadFavorite, loadFilms, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoriteFilms } from '../const';
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
@@ -101,12 +102,11 @@ export const fetchPromoAction = (): ThunkActionResult =>
 
 export const setFavoriteAction = (filmId: number, action: FavoriteFilms): ThunkActionResult =>
   async (dispatch, getState, api): Promise<void> => {
-    const {data} = await api.get<Film[]>(APIRoute.Favorites);
     await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
+    const {data} = await api.get<Film[]>(APIRoute.Favorites);
 
-    if (getState().promo.id === filmId) {
-      dispatch(updatePromo(data));
-    }
+    dispatch(updatePromo({...getState().promo, is_favorite: !getState().promo.is_favorite}));
+    dispatch(updateFilm({...getState().promo, is_favorite: !getState().promo.is_favorite}));
 
     if (action === FavoriteFilms.Add) {
       dispatch(addFavorite(data));

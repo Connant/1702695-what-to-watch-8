@@ -1,10 +1,9 @@
-import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { memo, useEffect, useState } from 'react';
 import { setFavoriteAction } from '../../store/actions-api';
 import { getAuthorizationStatus } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus, FavoriteFilms } from '../../const';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Film } from '../film-card/film-card';
 
 
@@ -12,17 +11,17 @@ function MyListButton({film}: {film: Film}): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const [isInFavoriteList, setIsInFavoriteList] = useState(film.is_favorite);
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  useEffect(() => setIsInFavoriteList(film.is_favorite), [film]);
+  useEffect(() => setIsInFavoriteList(film.is_favorite), [film, film.is_favorite]);
 
-  const handleFavoriteClick = (evt: MouseEvent<HTMLButtonElement>) => {
-    evt.preventDefault();
-    if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      dispatch(<Redirect to={AppRoute.SignIn} />);
-      return;
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      setIsInFavoriteList(!isInFavoriteList);
+      dispatch(setFavoriteAction(film.id, isInFavoriteList ? FavoriteFilms.Remove : FavoriteFilms.Add));
+    } else {
+      history.push(AppRoute.SignIn);
     }
-    setIsInFavoriteList(!isInFavoriteList);
-    dispatch(setFavoriteAction(film.id, isInFavoriteList ? FavoriteFilms.Remove : FavoriteFilms.Add));
   };
 
   return (

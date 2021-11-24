@@ -58,13 +58,13 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, favoriteFilms: []};
 
     case ActionType.AddFavorite:
-      return {...state, authorizationStatus: AuthorizationStatus.Auth,  favoriteFilms: []};
+      return {...state, authorizationStatus: AuthorizationStatus.Auth,  favoriteFilms: action.payload};
 
     case ActionType.LoadFavorite:
-      return  {...state, favoriteFilms: []};
+      return  {...state, favoriteFilms: action.payload};
 
     case ActionType.LoadPromo:
-      return  {...state, promo: {} as  Film};
+      return  {...state, promo: action.payload};
 
     case ActionType.UpdatePromo:
       return  {...state, promo: {} as  Film};

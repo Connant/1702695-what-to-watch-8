@@ -6,31 +6,35 @@ import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
 
-export const adaptToClient = (film: FilmProps): Film => (
+export const adaptToClient = (film: Film): FilmProps => (
   {
     id: film['id'],
     name: film['name'],
-    poster_image: film['posterImage'],
-    preview_image: film['previewImage'],
-    background_image: film['backgroundImage'],
-    background_color: film['backgroundColor'],
-    video_link: film['videoLink'],
-    preview_video_link: film['previewVideoLink'],
+    posterImage: film['poster_image'],
+    previewImage: film['preview_image'],
+    backgroundImage: film['background_image'],
+    backgroundColor: film['background_color'],
+    videoLink: film['video_link'],
+    previewVideoLink: film['preview_video_link'],
     description: film['description'],
     rating: film['rating'],
-    scores_count: film['scoresCount'],
+    scoresCount: film['scores_count'],
     director: film['director'],
     starring: film['starring'],
-    run_time: film['runTime'],
+    runTime: film['run_time'],
     genre: film['genre'],
     released: film['released'],
-    is_favorite: film['isFavorite'],
+    isFavorite: film['is_favorite'],
   }
 );
 
-export const adaptFilmsToClient = (films: FilmProps[]): Film[] => (
+export const adaptFilmsToClient = (films: Film[]): FilmProps[] => (
   films.map((film) => adaptToClient(film))
 );
+
+// export const adaptFilmsToSome = (films: Film[]): Film[] => (
+//   films.map((film) => adaptToClient(film))
+// );
 
 export const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
   if (genre === Genres.All) {

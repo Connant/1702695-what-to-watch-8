@@ -31,7 +31,7 @@ const store = configureStore({
 
 (store.dispatch)(checkAuthorizationAction());
 (store.dispatch)(fetchFilmsAction());
-store.dispatch(fetchPromoAction());
+(store.dispatch)(fetchPromoAction());
 
 
 ReactDOM.render(

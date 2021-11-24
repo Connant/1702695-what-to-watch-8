@@ -104,9 +104,13 @@ export const setFavoriteAction = (filmId: number, action: FavoriteFilms): ThunkA
   async (dispatch, getState, api): Promise<void> => {
     await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
     const {data} = await api.get<Film[]>(APIRoute.Favorites);
+    const curFilm = getState().currentFilms.find((el) => el.id === filmId);
 
     dispatch(updatePromo({...getState().promo, is_favorite: !getState().promo.is_favorite}));
-    dispatch(updateFilm({...getState().promo, is_favorite: !getState().promo.is_favorite}));
+
+    if (curFilm) {
+      dispatch(updateFilm({...curFilm, is_favorite: !curFilm.is_favorite}));
+    }
 
     if (action === FavoriteFilms.Add) {
       dispatch(addFavorite(data));

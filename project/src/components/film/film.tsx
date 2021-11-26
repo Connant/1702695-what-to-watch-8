@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
@@ -54,10 +53,10 @@ export default function FilmPage(): JSX.Element {
 
   const {
     name,
-    background_image,
+    backgroundImage,
     genre,
     released,
-    poster_image,
+    posterImage,
   } = currentMovie as Film;
 
   const renderActiveTab = (tab: string) => {
@@ -76,7 +75,7 @@ export default function FilmPage(): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={background_image} alt={name} />
+            <img src={backgroundImage} alt={name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
 
@@ -122,7 +121,7 @@ export default function FilmPage(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">

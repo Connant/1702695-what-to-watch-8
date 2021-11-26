@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -60,11 +59,11 @@ export default function Player(): JSX.Element {
   return (
     <div className="player">
       <video
-        src={currentMovie?.video_link}
+        src={currentMovie?.videoLink}
         ref={ref}
         className="player__video"
         preload='metadata'
-        poster={currentMovie?.preview_image}
+        poster={currentMovie?.previewImage}
         onTimeUpdate={(evt) => setCurrentTime(Math.round(evt.currentTarget.currentTime))}
         onDurationChange={(evt) => setDuration(Math.round(evt.currentTarget.duration))}
       />

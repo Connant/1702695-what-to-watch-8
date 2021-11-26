@@ -8,7 +8,7 @@ export default function TabOverview({film}: {film: Film}): JSX.Element {
         <div className="film-rating__score">{film.rating}</div>
         <p className="film-rating__meta">
           <span className="film-rating__level">Very good</span>
-          <span className="film-rating__count">{film.scores_count}</span>
+          <span className="film-rating__count">{film.scoresCount}</span>
         </p>
       </div>
 

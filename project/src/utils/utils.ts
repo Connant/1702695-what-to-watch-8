@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { FilmProps, Film } from '../components/film-card/film-card';
 import { Genres, Grade, Time } from '../const';
 import dayjs from 'dayjs';
@@ -6,7 +5,7 @@ import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
 
-export const adaptToClient = (film: Film): FilmProps => (
+export const adaptToClient = (film: FilmProps): Film => (
   {
     id: film['id'],
     name: film['name'],
@@ -28,11 +27,11 @@ export const adaptToClient = (film: Film): FilmProps => (
   }
 );
 
-export const adaptFilmsToClient = (films: Film[]): FilmProps[] => (
+export const adaptFilmsToClient = (films: FilmProps[]): Film[] => (
   films.map((film) => adaptToClient(film))
 );
 
-export const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
+export const filterFilmsByGenre = (films: FilmProps[], genre: string): FilmProps[] => {
   if (genre === Genres.All) {
     return films;
   }

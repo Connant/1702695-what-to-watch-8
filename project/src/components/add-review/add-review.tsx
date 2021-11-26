@@ -69,7 +69,7 @@ export default function AddReview(): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={currentMovie.poster_image} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={currentMovie.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
         </div>
       </div>
 

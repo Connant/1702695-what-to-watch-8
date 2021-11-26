@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
@@ -47,15 +46,15 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
     name,
     genre,
     released,
-    poster_image,
-    background_image,
+    posterImage,
+    backgroundImage,
   } = currentFilms[0];
 
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={background_image} alt={name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -76,7 +75,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={poster_image} alt={`${name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">

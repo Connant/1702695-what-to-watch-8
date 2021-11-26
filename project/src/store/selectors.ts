@@ -1,5 +1,5 @@
 import { ReviewPost } from '../components/add-review/review-form';
-import { Film } from '../components/film-card/film-card';
+import { Film, FilmProps } from '../components/film-card/film-card';
 import { AuthorizationStatus } from '../const';
 import { State } from './reducer';
 
@@ -12,6 +12,6 @@ export const getCurrentGenre = (state: State): string => state.currentGenre;
 export const getIsDataLoaded = (state: State): boolean => state.isDataLoaded;
 export const getSimilarFilmsLoading = (state: State): boolean => state.similarFilmsLoading;
 export const getIsReviewsLoaded = (state: State): boolean => state.isReviewsLoaded;
-export const getFavoriteFilms = (state: State): Film[] => state.favoriteFilms;
+export const getFavoriteFilms = (state: State): FilmProps[] => state.favoriteFilms;
 export const getPromo = (state: State): Film => state.promo;
 

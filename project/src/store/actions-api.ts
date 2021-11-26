@@ -1,10 +1,9 @@
-/* eslint-disable camelcase */
 import { addFavorite, loadFavorite, loadFilms, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoriteFilms } from '../const';
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { State } from './reducer';
-import { Film } from '../components/film-card/film-card';
+import { Film, FilmProps } from '../components/film-card/film-card';
 import { Actions, loadSimilarFilms, loadReviews } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
 import { ReviewPost, ReviewRC } from '../components/add-review/review-form';
@@ -24,7 +23,7 @@ export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Film[]>(APIRoute.Films);
+    const {data} = await api.get<FilmProps[]>(APIRoute.Films);
     dispatch(loadFilms(data));
   };
 
@@ -90,7 +89,7 @@ export const sendReview = (filmId: number, review: ReviewRC ): ThunkActionResult
 
 export const fetchFavoriteFilms = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void>  => {
-    const {data} = await api.get<Film[]>(APIRoute.Favorites);
+    const {data} = await api.get<FilmProps[]>(APIRoute.Favorites);
     dispatch(loadFavorite(data));
   };
 
@@ -103,13 +102,13 @@ export const fetchPromoAction = (): ThunkActionResult =>
 export const setFavoriteAction = (filmId: number, action: FavoriteFilms): ThunkActionResult =>
   async (dispatch, getState, api): Promise<void> => {
     await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
-    const {data} = await api.get<Film[]>(APIRoute.Favorites);
+    const {data} = await api.get<FilmProps[]>(APIRoute.Favorites);
     const curFilm = getState().currentFilms.find((el) => el.id === filmId);
 
-    dispatch(updatePromo({...getState().promo, is_favorite: !getState().promo.is_favorite}));
+    dispatch(updatePromo({...getState().promo, isFavorite: !getState().promo.isFavorite}));
 
     if (curFilm) {
-      dispatch(updateFilm({...curFilm, is_favorite: !curFilm.is_favorite}));
+      dispatch(updateFilm({...curFilm, isFavorite: !curFilm.isFavorite}));
     }
 
     if (action === FavoriteFilms.Add) {

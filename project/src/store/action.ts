@@ -1,4 +1,4 @@
-import { Film } from '../components/film-card/film-card';
+import { Film, FilmProps } from '../components/film-card/film-card';
 import { AuthorizationStatus } from '../const';
 import { ReviewPost } from '../components/add-review/review-form';
 import { createAction } from '@reduxjs/toolkit';
@@ -48,10 +48,10 @@ export const changeGenre = (genre: string): ChangeGenreAction => ({
 
 export const filterFilms = createAction(
   ActionType.FilterFilms,
-  (films: Film[]) => ({payload: films}),
+  (films: FilmProps[]) => ({payload: films}),
 );
 
-export const loadFilms = (films: Film[]) => ({
+export const loadFilms = (films: FilmProps[]) => ({
   type: ActionType.LoadFilms,
   payload: films,
 } as const);
@@ -80,12 +80,12 @@ export const redirectToRoute = createAction(
 
 export const loadFavorite = createAction(
   ActionType.LoadFavorite,
-  (films: Film[]) => ({payload: films}),
+  (films: FilmProps[]) => ({payload: films}),
 );
 
 export const addFavorite = createAction(
   ActionType.AddFavorite,
-  (films: Film[]) => ({payload: films}),
+  (films: FilmProps[]) => ({payload: films}),
 );
 
 export const removeFavorite = createAction(ActionType.RemoveFavorite);

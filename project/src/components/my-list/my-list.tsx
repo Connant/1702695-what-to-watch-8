@@ -3,14 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { fetchFavoriteFilms } from '../../store/actions-api';
-import { getFavoriteFilms } from '../../store/selectors';
+import { getCurrentFilm } from '../../store/selectors';
 import FilmList from '../film-list/film-list';
 import UserBlock from '../user-block/ user-block';
 
 
 export default function MyList(): JSX.Element {
-  const favoriteFilms = useSelector(getFavoriteFilms);
+  const currentFilm = useSelector(getCurrentFilm);
   const dispatch = useDispatch();
+
+  const favoriteFilms = currentFilm.filter((film) => film.isFavorite);
 
   useEffect(() => {
     dispatch(fetchFavoriteFilms());

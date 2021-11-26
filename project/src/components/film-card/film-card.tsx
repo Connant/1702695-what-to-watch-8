@@ -1,45 +1,44 @@
-/* eslint-disable camelcase */
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState, useRef, memo } from 'react';
 
 export type Film = {
   id: number,
   name: string,
-  poster_image: string,
-  preview_image: string,
-  background_image: string,
-  background_color: string,
-  video_link: string,
-  preview_video_link: string,
+  posterImage: string,
+  previewImage: string,
+  backgroundImage: string,
+  backgroundColor: string,
+  videoLink: string,
+  previewVideoLink: string,
   description: string,
   rating: number,
-  scores_count: number,
+  scoresCount: number,
   director: string,
   starring: string[],
-  run_time: number,
+  runTime: number,
   genre: string,
   released: number,
-  is_favorite: boolean,
+  isFavorite: boolean,
 }
 
 export type FilmProps = {
   'id': number,
   'name': string,
-  'posterImage': string,
-  'previewImage': string,
-  'backgroundImage': string,
-  'backgroundColor': string,
-  'videoLink': string,
-  'previewVideoLink': string,
+  'poster_image': string,
+  'preview_image': string,
+  'background_image': string,
+  'background_color': string,
+  'video_link': string,
+  'preview_video_link': string,
   'description': string,
   'rating': number,
-  'scoresCount': number,
+  'scores_count': number,
   'director': string,
   'starring': string[],
-  'runTime': number,
+  'run_time': number,
   'genre': string,
   'released': number,
-  'isFavorite': boolean,
+  'is_favorite': boolean,
 }
 
 
@@ -88,9 +87,9 @@ function FilmCard({films}: {films: Film}): JSX.Element {
 
   const {
     name,
-    preview_video_link,
-    preview_image,
-    poster_image,
+    previewVideoLink,
+    previewImage,
+    posterImage,
   } = films;
 
   return (
@@ -100,10 +99,10 @@ function FilmCard({films}: {films: Film}): JSX.Element {
       {
         isDelayedHovered ?
           <div style={VIDEO_STYLES}>
-            <video src={preview_video_link} autoPlay muted poster={preview_image} width="280" height="175" style={{objectFit: 'cover'}} />
+            <video src={previewVideoLink} autoPlay muted poster={previewImage} width="280" height="175" style={{objectFit: 'cover'}} />
           </div> :
           <div className="small-film-card__image">
-            <img src={poster_image} alt={name} width="280" height="175" />
+            <img src={posterImage} alt={name} width="280" height="175" />
           </div>
       }
       <h3 className="small-film-card__title">

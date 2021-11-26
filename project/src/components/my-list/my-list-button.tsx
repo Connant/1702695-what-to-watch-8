@@ -9,11 +9,11 @@ import { Film } from '../film-card/film-card';
 
 function MyListButton({film}: {film: Film}): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const [isInFavoriteList, setIsInFavoriteList] = useState(film.is_favorite);
+  const [isInFavoriteList, setIsInFavoriteList] = useState(film.isFavorite);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => setIsInFavoriteList(film.is_favorite), [film, film.is_favorite]);
+  useEffect(() => setIsInFavoriteList(film.isFavorite), [film, film.isFavorite]);
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

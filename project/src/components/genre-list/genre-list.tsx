@@ -1,8 +1,8 @@
-import { Film } from '../film-card/film-card';
 import { changeGenre } from '../../store/action';
 import { useDispatch, useSelector } from 'react-redux';
-import { Genres } from '../../const';
-import { getCurrentFilm, getCurrentGenre } from '../../store/selectors';
+import { Genre } from '../../const';
+import { getCurrentGenre } from '../../store/selectors';
+import { Film } from '../film-card/film-card';
 
 export type GenreListProps = {
   films: Film[],
@@ -10,15 +10,14 @@ export type GenreListProps = {
 }
 
 export default function GenreList({films, resetGenre}: GenreListProps): JSX.Element {
-  const currentFilms = useSelector(getCurrentFilm);
   const currentGenre = useSelector(getCurrentGenre);
   const dispatch = useDispatch();
 
-  const onChangeGenre = (genre: string) => {
+  const handleChangeGenre = (genre: string) => {
     dispatch(changeGenre(genre));
   };
 
-  const genres = [Genres.All, ...new Set(currentFilms.map((it) => it.genre))] as string[];
+  const genres = [Genre.All, ...new Set(films.map((film) => film.genre))];
 
   return (
     <ul className="catalog__genres-list">
@@ -32,7 +31,7 @@ export default function GenreList({films, resetGenre}: GenreListProps): JSX.Elem
             className="catalog__genres-link"
             onClick={(evt) => {
               evt.preventDefault();
-              onChangeGenre(genre);
+              handleChangeGenre(genre);
               dispatch(changeGenre(genre));
               resetGenre();
             }}

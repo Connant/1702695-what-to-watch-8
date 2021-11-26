@@ -1,26 +1,24 @@
 import { Actions,  ActionType } from './action';
-import { Film, FilmProps } from '../components/film-card/film-card';
-import { Genres, AuthorizationStatus } from '../const';
+import { Film } from '../components/film-card/film-card';
+import { Genre, AuthorizationStatus } from '../const';
 import { ReviewPost } from '../components/add-review/review-form';
-import { adaptFilmsToClient, filterFilmsByGenre } from '../utils/utils';
+import { adaptFilmsToClient, adaptToClient, filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
   currentGenre: string,
-  currentFilms: Film[],
-  isDataLoaded: boolean,
+  currentFilms: Film,
   authorizationStatus: AuthorizationStatus;
   similarFilms: Film[],
   similarFilmsLoading: boolean,
   reviews: ReviewPost[],
   isReviewsLoaded: boolean,
-  favoriteFilms: FilmProps[],
+  favoriteFilms: Film[],
   promo: Film,
 }
 
 const initialState: State = {
-  currentGenre: Genres.All,
-  currentFilms: [],
-  isDataLoaded: false,
+  currentGenre: Genre.All,
+  currentFilms: {} as  Film,
   authorizationStatus: AuthorizationStatus.Unknown,
   similarFilms: [],
   similarFilmsLoading: false,
@@ -36,10 +34,10 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, currentGenre: action.payload};
 
     case ActionType.FilterFilms:
-      return {...state, currentFilms: adaptFilmsToClient(filterFilmsByGenre(action.payload, state.currentGenre))};
+      return {...state, favoriteFilms: adaptFilmsToClient(filterFilmsByGenre(action.payload, state.currentGenre))};
 
     case ActionType.LoadFilms: {
-      return {...state, currentFilms: adaptFilmsToClient(action.payload), similarFilms: [], similarFilmsLoading: false};
+      return {...state, currentFilms: adaptToClient(action.payload), similarFilms: [], similarFilmsLoading: false};
     }
 
     case ActionType.LoadSimilarFilms:
@@ -58,10 +56,10 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, favoriteFilms: []};
 
     case ActionType.AddFavorite:
-      return {...state, authorizationStatus: AuthorizationStatus.Auth, favoriteFilms: action.payload};
+      return {...state, authorizationStatus: AuthorizationStatus.Auth, favoriteFilms: adaptFilmsToClient(action.payload)};
 
     case ActionType.LoadFavorite:
-      return  {...state, favoriteFilms: action.payload};
+      return  {...state, favoriteFilms: adaptFilmsToClient(action.payload)};
 
     case ActionType.LoadPromo:
       return  {...state, promo: action.payload};

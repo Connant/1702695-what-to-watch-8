@@ -11,7 +11,7 @@ function UserBlock(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
-  const setLogout = () => {
+  const handleLogout = () => {
     dispatch(logoutAction());
   };
 
@@ -28,7 +28,7 @@ function UserBlock(): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <Link onClick={setLogout} className="user-block__link" to={AppRoute.Main}>Sign Out</Link>
+              <Link onClick={handleLogout} className="user-block__link" to={AppRoute.Main}>Sign Out</Link>
             </li>
           </React.Fragment>
         ) : (

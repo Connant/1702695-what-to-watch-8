@@ -14,13 +14,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Genres {
+export enum Genre {
   All = 'All genres',
 }
 
 export const FILM_CARD_COUNT = 8;
 export const DEFAULT_SIZE = 1;
-export const MORE_FILMS = 4;
 
 
 export enum APIRoute {
@@ -31,6 +30,7 @@ export enum APIRoute {
   Reviews = '/comments/:id',
   Favorites = '/favorite',
   Promo = '/promo',
+  Error = '/404',
 }
 
 export enum Grade {
@@ -46,7 +46,7 @@ export enum Time {
   HourInSecond = 3600,
 }
 
-export enum FavoriteFilms {
+export enum FavoriteFilm {
   Add = 1,
   Remove = 0,
 }

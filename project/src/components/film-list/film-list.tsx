@@ -5,8 +5,7 @@ export type FilmsListPropsType = {
   films: Film[];
 }
 
-
-function FilmList({ films }: FilmsListPropsType): JSX.Element {
+function FilmList({films}: FilmsListPropsType): JSX.Element {
 
   return (
     <div className="catalog__films-list">
@@ -14,7 +13,11 @@ function FilmList({ films }: FilmsListPropsType): JSX.Element {
         <FilmCard
           {...film}
           key={film.id}
-          films={film}
+          id={film.id}
+          name={film.name}
+          previewImage={film.previewImage}
+          posterImage={film.posterImage}
+          previewVideoLink={film.previewVideoLink}
         />
       ))}
     </div>

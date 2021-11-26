@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Film } from '../film-card/film-card';
-import TabReviews from '../tabs/tab-reviews/tab-reviews';
 import { fetchFilmsAction } from '../../store/actions-api';
-import SimilarFilms from './similar-films';
+import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 
-import TabDetails from '../tabs/tab-details/tab-details';
-import TabOverview from '../tabs/tab-overview/tab-overview';
+import SimilarFilms from './similar-films';
 import Loading from '../loading/loading';
 import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
-
-import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
+import FilmTabs from '../tabs/film-tabs/film-tabs';
 
 
 export default function FilmPage(): JSX.Element {
@@ -29,25 +26,24 @@ export default function FilmPage(): JSX.Element {
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
-  const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
   useEffect(() => {
-    if (currentMovie?.id !== filmId) {
+    if (currentFilms.id !== filmId) {
       getFilm(filmId);
     }
   });
 
   const history = useHistory();
 
-  const [activeTab, setActiveTab] = useState('Overview');
+  // const [activeTab, setActiveTab] = useState('Overview');
 
-  if (currentMovie?.id !== filmId) {
+  if (currentFilms.id !== filmId) {
     return (
       <Loading />
     );
   }
 
-  if (!currentMovie) {
+  if (!currentFilms) {
     return <Error />;
   }
 
@@ -57,18 +53,7 @@ export default function FilmPage(): JSX.Element {
     genre,
     released,
     posterImage,
-  } = currentMovie as Film;
-
-  const renderActiveTab = (tab: string) => {
-    switch (tab) {
-      case 'Overview':
-        return <TabOverview film={currentMovie as Film} />;
-      case 'Details':
-        return <TabDetails film={currentMovie as Film} />;
-      case 'Reviews':
-        return <TabReviews />;
-    }
-  };
+  } = currentFilms as Film;
 
   return (
     <React.Fragment>
@@ -108,7 +93,7 @@ export default function FilmPage(): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                <MyListButton film={currentMovie} />
+                <MyListButton film={currentFilms} />
 
                 {authorizationStatus !== AuthorizationStatus.NoAuth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>
@@ -123,38 +108,7 @@ export default function FilmPage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className={`film-nav__item ${activeTab==='Overview' ? 'film-nav__item--active' : ''}`}>
-                    <Link
-                      className="film-nav__link"
-                      to={`/films/${filmId}/#overview`}
-                      onClick={(elem) => setActiveTab(elem.currentTarget.text)}
-                    >Overview
-                    </Link>
-                  </li>
-                  <li className={`film-nav__item ${activeTab==='Details' ? 'film-nav__item--active' : ''}`}>
-                    <Link
-                      className="film-nav__link"
-                      to={`/films/${filmId}/#details`}
-                      onClick={(elem) => setActiveTab(elem.currentTarget.text)}
-                    >Details
-                    </Link>
-                  </li>
-                  <li className={`film-nav__item ${activeTab==='Reviews' ? 'film-nav__item--active' : ''}`}>
-                    <Link
-                      className="film-nav__link"
-                      to={`/films/${filmId}/#reviews`}
-                      onClick={(elem) => setActiveTab(elem.currentTarget.text)}
-                    >
-                      Reviews
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-              {renderActiveTab(activeTab)}
-            </div>
+            <FilmTabs id={filmId} film={currentFilms}/>
           </div>
         </div>
       </section>

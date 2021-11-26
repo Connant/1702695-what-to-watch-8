@@ -9,29 +9,28 @@ import { title } from 'process';
 import ReviewForm from './review-form';
 import UserBlock from '../user-block/ user-block';
 import { getCurrentFilm } from '../../store/selectors';
-import { fetchFilmsAction } from '../../store/actions-api';
+import { fetchFilmAction } from '../../store/actions-api';
 
 
 export default function AddReview(): JSX.Element {
 
   const currentFilms = useSelector(getCurrentFilm);
   const { id }: {id: string} = useParams();
-  const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
   const dispatch = useDispatch();
   const filmId = Number(id);
 
   const getFilm = (currentFilmId: number) => {
-    dispatch(fetchFilmsAction());
+    dispatch(fetchFilmAction(currentFilmId));
   };
 
   useEffect(() => {
-    if (currentMovie?.id !== filmId) {
+    if (currentFilms.id !== filmId) {
       getFilm(filmId);
     }
   });
 
-  if (!currentMovie?.id) {
+  if (!currentFilms.id) {
     return <Loading />;
   }
 
@@ -69,7 +68,7 @@ export default function AddReview(): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={currentMovie.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={currentFilms.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
         </div>
       </div>
 

@@ -48,13 +48,18 @@ export const changeGenre = (genre: string): ChangeGenreAction => ({
 
 export const filterFilms = createAction(
   ActionType.FilterFilms,
-  (films: FilmProps[]) => ({payload: films}),
+  (films: FilmProps) => ({payload: films}),
 );
 
-export const loadFilms = (films: FilmProps[]) => ({
-  type: ActionType.LoadFilms,
-  payload: films,
-} as const);
+export const loadFilms = createAction(
+  ActionType.LoadFilms,
+  (films: Film[]) => ({payload: films}),
+);
+
+// export const loadFilms = (films: FilmProps[]) => ({
+//   type: ActionType.LoadFilms,
+//   payload: films,
+// } as const);
 
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
@@ -68,10 +73,10 @@ export const loadSimilarFilms = (films: Film[]) => ({
   payload: films,
 } as const);
 
-export const loadReviews = (reviews: ReviewPost[]) => ({
-  type: ActionType.LoadReviews,
-  payload: reviews,
-} as const);
+export const loadReviews = createAction(
+  ActionType.LoadReviews,
+  (reviews: ReviewPost[]) => ({payload: reviews}),
+);
 
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,

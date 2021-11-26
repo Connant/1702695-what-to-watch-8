@@ -1,22 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { fetchReviewsAction } from '../../../store/actions-api';
 
 import { getCurrentFilm, getIsReviewsLoaded, getReviews } from '../../../store/selectors';
 import { formatDate, normalDate } from '../../../utils/utils';
 import Loading from '../../loading/loading';
-
-export type FilmReviewProps = {
-    id: number,
-  user: {
-    id: number,
-    name: string,
-  },
-  rating: number,
-  comment: string,
-  date: string,
-}
 
 export default function TabReviews(): JSX.Element {
 
@@ -29,14 +17,9 @@ export default function TabReviews(): JSX.Element {
     dispatch(fetchReviewsAction(id));
   };
 
-  const { id }: {id: string} = useParams();
-  const currentMovie = currentFilms.find((film) => film.id === Number(id));
-
-  const filmIdNum = currentMovie?.id || 0;
-
   useEffect(() => {
     if (!isReviewsLoaded) {
-      getReviewList(filmIdNum);
+      getReviewList(currentFilms.id);
     }
   });
 
@@ -44,13 +27,13 @@ export default function TabReviews(): JSX.Element {
     return <Loading />;
   }
 
-  const splitArr = Math.round(reviews.length / 2);
+  const midIndex = Math.round(reviews.length / 2);
 
   return (
     <div className="film-card__reviews film-card__row">
 
       <div className="film-card__reviews-col">
-        {reviews.slice(0, splitArr).map((review) => (
+        {reviews.slice(0, midIndex).map((review) => (
           <div key={review.id} className="review">
             <blockquote className="review__quote">
               <p className="review__text">{review.comment}</p>
@@ -66,7 +49,7 @@ export default function TabReviews(): JSX.Element {
         ))}
       </div>
       <div className="film-card__reviews-col">
-        {reviews.slice(splitArr).map((review) => (
+        {reviews.slice(midIndex).map((review) => (
           <div key={review.id} className="review">
             <blockquote className="review__quote">
               <p className="review__text">{review.comment}</p>

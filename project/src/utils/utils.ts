@@ -1,5 +1,5 @@
 import { FilmProps, Film } from '../components/film-card/film-card';
-import { Genres, Grade, Time } from '../const';
+import { Genre, Grade, Time } from '../const';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
@@ -32,11 +32,12 @@ export const adaptFilmsToClient = (films: FilmProps[]): Film[] => (
 );
 
 export const filterFilmsByGenre = (films: FilmProps[], genre: string): FilmProps[] => {
-  if (genre === Genres.All) {
+  if (genre === Genre.All) {
     return films;
   }
   return films.filter((film) => film.genre === genre);
 };
+
 
 export const formatDate = (date: string): string => dayjs(date).format('YYYY-MM-DD');
 export const formatRunTime = (runtime: number): string => dayjs.duration(runtime, 'minutes').format('H[h] mm[m]');

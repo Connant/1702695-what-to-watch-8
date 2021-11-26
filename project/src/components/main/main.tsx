@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute, Genres, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
+import { AppRoute, Genre, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
 import  { Film } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
@@ -24,8 +24,8 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 
-  const filmList = currentFilms.filter((film) => {
-    if (currentGenre === Genres.All) {
+  const filmList = films.filter((film) => {
+    if (currentGenre === Genre.All) {
       return true;
     }
     return film.genre === currentGenre;
@@ -48,7 +48,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-  } = currentFilms[0];
+  } = currentFilms;
 
   return (
     <React.Fragment>
@@ -95,7 +95,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                <MyListButton film={currentFilms[0]} />
+                <MyListButton film={currentFilms} />
 
               </div>
             </div>
@@ -107,9 +107,9 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
+          <GenreList films={films} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
-          {currentFilms.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
+          {films.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
 
           {filmList.length >= shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
 

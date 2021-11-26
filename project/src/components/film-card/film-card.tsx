@@ -50,7 +50,15 @@ const VIDEO_STYLES = {
   alignItems: 'center',
 };
 
-function FilmCard({films}: {films: Film}): JSX.Element {
+export type FilmCardProps = {
+  id: number,
+  name: string,
+  previewImage: string,
+  posterImage: string,
+  previewVideoLink: string,
+};
+
+function FilmCard({id, name, previewImage, posterImage, previewVideoLink}: FilmCardProps): JSX.Element {
 
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [ isHovered, setHovered ] = useState(false);
@@ -85,16 +93,9 @@ function FilmCard({films}: {films: Film}): JSX.Element {
     return clearTimer;
   }, [isDelayedHovered, isHovered]);
 
-  const {
-    name,
-    previewVideoLink,
-    previewImage,
-    posterImage,
-  } = films;
-
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)} onClick={() => history.push(`/films/${films.id}`)}
+      onMouseLeave={() => setHovered(false)} onClick={() => history.push(`/films/${id}`)}
     >
       {
         isDelayedHovered ?
@@ -106,7 +107,7 @@ function FilmCard({films}: {films: Film}): JSX.Element {
           </div>
       }
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${films.id}`}>{name}</Link>
+        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
       </h3>
     </article>
   );

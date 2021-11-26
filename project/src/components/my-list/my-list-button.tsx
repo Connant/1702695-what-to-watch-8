@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { memo, useEffect, useState } from 'react';
 import { setFavoriteAction } from '../../store/actions-api';
 import { getAuthorizationStatus } from '../../store/selectors';
-import { AppRoute, AuthorizationStatus, FavoriteFilms } from '../../const';
+import { AppRoute, AuthorizationStatus, FavoriteFilm } from '../../const';
 import { useHistory } from 'react-router-dom';
 import { Film } from '../film-card/film-card';
 
@@ -18,7 +18,7 @@ function MyListButton({film}: {film: Film}): JSX.Element {
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       setIsInFavoriteList(!isInFavoriteList);
-      dispatch(setFavoriteAction(film.id, isInFavoriteList ? FavoriteFilms.Remove : FavoriteFilms.Add));
+      dispatch(setFavoriteAction(film.id, isInFavoriteList ? FavoriteFilm.Remove : FavoriteFilm.Add));
     } else {
       history.push(AppRoute.SignIn);
     }

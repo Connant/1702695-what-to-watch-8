@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { sendReview } from '../../store/actions-api';
+import { sendReview, ThunkAppDispatch } from '../../store/actions-api';
 import { getCurrentFilm } from '../../store/selectors';
 
 export type ReviewPost = {
@@ -34,7 +34,7 @@ export default function ReviewForm(): JSX.Element {
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isFormSending, setIsFormSending] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkAppDispatch>();
   const history = useHistory();
 
 
@@ -53,8 +53,6 @@ export default function ReviewForm(): JSX.Element {
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
-  const currentMovie = currentFilms.find((film) => film.id === Number(id));
-  const filmIdNum = currentMovie?.id || 0;
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
@@ -65,7 +63,8 @@ export default function ReviewForm(): JSX.Element {
     };
 
     setIsFormSending(true);
-    sendComment(filmIdNum, postData);
+    sendComment(currentFilms.id, postData)
+      .then(() => setIsFormSending(false));
     history.push(AppRoute.Film.replace(':id', `${filmId}`));
   };
 

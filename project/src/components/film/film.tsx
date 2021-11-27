@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { Film } from '../film-card/film-card';
-import { fetchFilmsAction } from '../../store/actions-api';
+import { fetchFilmAction } from '../../store/actions-api';
 import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 
 import SimilarFilms from './similar-films';
@@ -16,34 +15,33 @@ import FilmTabs from '../tabs/film-tabs/film-tabs';
 
 
 export default function FilmPage(): JSX.Element {
-  const currentFilms = useSelector(getCurrentFilm);
+  const currentFilm = useSelector(getCurrentFilm);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
-
-  const getFilm = (currentFilmId: number) => {
-    dispatch(fetchFilmsAction());
-  };
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
+  const getFilm = (currentFilmId: number) => {
+    dispatch(fetchFilmAction(currentFilmId));
+  };
+
   useEffect(() => {
-    if (currentFilms.id !== filmId) {
+    if (currentFilm.id !== filmId) {
       getFilm(filmId);
     }
   });
 
   const history = useHistory();
 
-  // const [activeTab, setActiveTab] = useState('Overview');
-
-  if (currentFilms.id !== filmId) {
+  if (currentFilm.id !== filmId) {
     return (
       <Loading />
     );
   }
 
-  if (!currentFilms) {
+
+  if (!currentFilm) {
     return <Error />;
   }
 
@@ -53,7 +51,10 @@ export default function FilmPage(): JSX.Element {
     genre,
     released,
     posterImage,
-  } = currentFilms as Film;
+  } = currentFilm;
+
+  // const [activeTab, setActiveTab] = useState('Overview');
+
 
   return (
     <React.Fragment>
@@ -93,7 +94,7 @@ export default function FilmPage(): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                <MyListButton film={currentFilms} />
+                <MyListButton film={currentFilm} />
 
                 {authorizationStatus !== AuthorizationStatus.NoAuth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>
@@ -108,7 +109,7 @@ export default function FilmPage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
-            <FilmTabs id={filmId} film={currentFilms}/>
+            <FilmTabs id={filmId} film={currentFilm}/>
           </div>
         </div>
       </section>

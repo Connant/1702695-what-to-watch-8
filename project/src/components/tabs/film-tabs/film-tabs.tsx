@@ -38,7 +38,7 @@ export default function FilmTabs({id, film}: FilmTabsProps) : JSX.Element {
       <nav className="film-nav film-card__nav">
         <ul className="film-nav__list">
           <li className={setClassName(FilmTab.OVERVIEW)}>
-            <Link className="film-nav__link" to={`/films/${id}/#${FilmTab.OVERVIEW}`}>
+            <Link className="film-nav__link film-nav__item--active" to={`/films/${id}/#${FilmTab.OVERVIEW}`}>
               Overview
             </Link>
           </li>

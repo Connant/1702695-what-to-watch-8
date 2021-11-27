@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, Genre, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
-import  { FilmProps } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
 import { useSelector } from 'react-redux';
@@ -11,42 +11,38 @@ import Loading from '../loading/loading';
 import UserBlock from '../user-block/ user-block';
 import { useHistory } from 'react-router';
 
-import { getCurrentFilm, getCurrentFilms, getCurrentFilmsProps } from '../../store/selectors';
+import { getCurrentFilms, getFilterFilms } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type MainProps = {
-  films: FilmProps[],
   currentGenre: string,
 }
 
-export default function Main({films, currentGenre}: MainProps): JSX.Element {
-  const currentFilmsProps = useSelector(getCurrentFilmsProps);
+export default function Main({currentGenre}: MainProps): JSX.Element {
   const currentFilms = useSelector(getCurrentFilms);
-  const currentFilm = useSelector(getCurrentFilm);
+  const filterFilms = useSelector(getFilterFilms);
 
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 
-  const filmList = currentFilms.filter((film) => {
+  const filmList = filterFilms.filter((film) => {
     if (currentGenre === Genre.All) {
       return true;
     }
     return film.genre === currentGenre;
   }).slice(0, showSize * FILM_CARD_COUNT);
 
-  const shownFilms = films.slice(0, showSize * FILM_CARD_COUNT);
+  const shownFilms = filmList.slice(0, showSize * FILM_CARD_COUNT);
 
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
   };
 
   // eslint-disable-next-line no-console
-  console.log(currentFilm);
-  // eslint-disable-next-line no-console
-  console.log(currentFilmsProps);
+  // console.log(filterFilms);
 
 
-  if(!currentFilmsProps.length) {
+  if(!currentFilms.length) {
     return <Loading />;
   }
 
@@ -57,16 +53,8 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-  } = currentFilm;
+  } = currentFilms[0];
 
-  // const {
-  //   id,
-  //   name,
-  //   genre,
-  //   released,
-  //   posterImage,
-  //   backgroundImage,
-  // } = currentFilms[0];
 
   return (
     <React.Fragment>
@@ -127,9 +115,17 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
 
           <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
-          {films.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
+          {currentFilms.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
 
-          {filmList.length >= shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
+          {filterFilms.length > shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
+
+          {/* {
+            if (filmList.length > shownFilms.length) {
+              <ShowMore onClick={handleShowMoreClick}/>
+            } else if (filmList.length === shownFilms.length {
+              return
+            }
+          } */}
 
         </section>
 

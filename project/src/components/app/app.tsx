@@ -11,12 +11,11 @@ import Error from '../error/error';
 import FilmPage from '../film/film';
 import PrivateRoute from '../private-route/private-route';
 
-import { getAuthorizationStatus, getCurrentFilmsProps, getCurrentGenre } from '../../store/selectors';
+import { getAuthorizationStatus, getCurrentGenre } from '../../store/selectors';
 import Loading from '../loading/loading';
 
 export default  function App(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const currentFilms = useSelector(getCurrentFilmsProps);
   const currentGenre = useSelector(getCurrentGenre);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
@@ -29,7 +28,6 @@ export default  function App(): JSX.Element {
 
         <Route path={AppRoute.Main} exact>
           <Main
-            films={currentFilms}
             currentGenre={currentGenre}
           />
         </Route>

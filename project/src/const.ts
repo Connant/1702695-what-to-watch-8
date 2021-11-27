@@ -24,6 +24,7 @@ export const DEFAULT_SIZE = 1;
 
 export enum APIRoute {
   Films = '/films',
+  Film = '/films/:id',
   Login = '/login',
   Logout = '/logout',
   SimilarFilms = '/films/:id/similar',

@@ -31,7 +31,9 @@ export const adaptFilmsToClient = (films: FilmProps[]): Film[] => (
   films.map((film) => adaptToClient(film))
 );
 
-export const filterFilmsByGenre = (films: FilmProps[], genre: string): FilmProps[] => {
+export const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
+  // eslint-disable-next-line no-console
+  console.log(films);
   if (genre === Genre.All) {
     return films;
   }

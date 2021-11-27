@@ -1,4 +1,4 @@
-import { addFavorite, loadFavorite, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm, loadFilm } from './action';
+import { addFavorite, loadFavorite, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm, loadFilms, loadFilm, filterFilms } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoriteFilm } from '../const';
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
@@ -10,6 +10,7 @@ import { ReviewPost, ReviewRC } from '../components/add-review/review-form';
 import { toast } from 'react-toastify';
 import { Action } from 'redux';
 import 'react-toastify/dist/ReactToastify.css';
+import { adaptFilmsToClient } from '../utils/utils';
 
 export type AuthorizationData = {
   login: string,
@@ -21,15 +22,18 @@ export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Film[]>(APIRoute.Films);
-    dispatch(loadFilm(data));
+    const {data} = await api.get<FilmProps[]>(APIRoute.Films);
+    dispatch(loadFilms(data));
+    dispatch(filterFilms(adaptFilmsToClient(data)));
   };
 
 
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data} = await api.get<Film[]>(APIRoute.Films.replace(':id', `${filmId}`));
+      // eslint-disable-next-line no-console
+      console.log(filmId);
+      const {data} = await api.get<FilmProps>(APIRoute.Film.replace(':id', `${filmId}`));
       dispatch(loadFilm(data));
     } catch {
       dispatch(redirectToRoute(APIRoute.Error));

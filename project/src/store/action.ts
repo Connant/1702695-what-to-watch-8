@@ -50,7 +50,7 @@ export const changeGenre = (genre: string): ChangeGenreAction => ({
 
 export const filterFilms = createAction(
   ActionType.FilterFilms,
-  (films: FilmProps[]) => ({payload: films}),
+  (films: Film[]) => ({payload: films}),
 );
 
 export const loadFilms = createAction(
@@ -60,7 +60,7 @@ export const loadFilms = createAction(
 
 export const loadFilm = createAction(
   ActionType.LoadFilm,
-  (films: Film[]) => ({payload: films}),
+  (film: FilmProps) => ({payload: film}),
 );
 
 // export const loadFilms = (films: FilmProps[]) => ({

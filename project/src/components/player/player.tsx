@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentFilm } from '../../store/selectors';
+import { getCurrentFilms } from '../../store/selectors';
 import { fetchFilmsAction } from '../../store/actions-api';
 import { Time } from '../../const';
 
@@ -11,7 +11,7 @@ import Pause from './pause';
 import Play from './play';
 
 export default function Player(): JSX.Element {
-  const currentFilms = useSelector(getCurrentFilm);
+  const currentFilms = useSelector(getCurrentFilms);
   const dispatch = useDispatch();
   const {id}: {id: string} = useParams();
   const filmId = Number(id);

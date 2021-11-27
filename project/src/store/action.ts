@@ -7,6 +7,7 @@ export enum ActionType {
   ChangeGenre = 'films/changeGenre',
   FilterFilms = 'films/filterFilms',
   LoadFilms = 'data/loadFilms',
+  LoadFilm = 'data/loadFilm',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   LoadSimilarFilms = 'data/loadSimilarFilms',
@@ -24,6 +25,7 @@ export type Actions =
 | ReturnType<typeof changeGenre>
 | ReturnType<typeof filterFilms>
 | ReturnType<typeof loadFilms>
+| ReturnType<typeof loadFilm>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
 | ReturnType<typeof loadSimilarFilms>
@@ -48,11 +50,16 @@ export const changeGenre = (genre: string): ChangeGenreAction => ({
 
 export const filterFilms = createAction(
   ActionType.FilterFilms,
-  (films: FilmProps) => ({payload: films}),
+  (films: FilmProps[]) => ({payload: films}),
 );
 
 export const loadFilms = createAction(
   ActionType.LoadFilms,
+  (films: FilmProps[]) => ({payload: films}),
+);
+
+export const loadFilm = createAction(
+  ActionType.LoadFilm,
   (films: Film[]) => ({payload: films}),
 );
 

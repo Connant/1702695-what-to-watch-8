@@ -21,7 +21,7 @@ export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Film[]>(APIRoute.Films);
+    const {data} = await api.get<FilmProps[]>(APIRoute.Films);
     dispatch(loadFilms(data));
   };
 
@@ -29,7 +29,7 @@ export const fetchFilmsAction = (): ThunkActionResult =>
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data} = await api.get<Film[]>(APIRoute.Films.replace(':id', `${filmId}`));
+      const {data} = await api.get<FilmProps[]>(APIRoute.Films.replace(':id', `${filmId}`));
       dispatch(loadFilms(data));
     } catch {
       dispatch(redirectToRoute(APIRoute.Error));

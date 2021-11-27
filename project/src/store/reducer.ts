@@ -1,12 +1,14 @@
 import { Actions,  ActionType } from './action';
-import { Film } from '../components/film-card/film-card';
+import { Film, FilmProps } from '../components/film-card/film-card';
 import { Genre, AuthorizationStatus } from '../const';
 import { ReviewPost } from '../components/add-review/review-form';
-import { adaptFilmsToClient, adaptToClient, filterFilmsByGenre } from '../utils/utils';
+import { adaptFilmsToClient, filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
   currentGenre: string,
-  currentFilms: Film,
+  currentFilmsProps: FilmProps[],
+  currentFilms: Film[],
+  currentFilm: Film,
   authorizationStatus: AuthorizationStatus;
   similarFilms: Film[],
   similarFilmsLoading: boolean,
@@ -18,7 +20,9 @@ export type State = {
 
 const initialState: State = {
   currentGenre: Genre.All,
-  currentFilms: {} as  Film,
+  currentFilmsProps: [],
+  currentFilms: [],
+  currentFilm: {} as  Film,
   authorizationStatus: AuthorizationStatus.Unknown,
   similarFilms: [],
   similarFilmsLoading: false,
@@ -36,8 +40,8 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     case ActionType.FilterFilms:
       return {...state, favoriteFilms: adaptFilmsToClient(filterFilmsByGenre(action.payload, state.currentGenre))};
 
-    case ActionType.LoadFilms: {
-      return {...state, currentFilms: adaptToClient(action.payload), similarFilms: [], similarFilmsLoading: false};
+    case ActionType.LoadFilm: {
+      return {...state, currentFilms: action.payload, similarFilms: [], similarFilmsLoading: false};
     }
 
     case ActionType.LoadSimilarFilms:

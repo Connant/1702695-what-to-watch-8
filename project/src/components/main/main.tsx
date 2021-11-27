@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, Genre, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
-import  { Film } from '../film-card/film-card';
+import  { FilmProps } from '../film-card/film-card';
 import GenreList from '../genre-list/genre-list';
 import FilmList from '../film-list/film-list';
 import { useSelector } from 'react-redux';
@@ -11,20 +11,22 @@ import Loading from '../loading/loading';
 import UserBlock from '../user-block/ user-block';
 import { useHistory } from 'react-router';
 
-import { getCurrentFilm } from '../../store/selectors';
+import { getCurrentFilm, getCurrentFilms } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type MainProps = {
-  films: Film[],
+  films: FilmProps[],
   currentGenre: string,
 }
 
 export default function Main({films, currentGenre}: MainProps): JSX.Element {
-  const currentFilms = useSelector(getCurrentFilm);
+  const currentFilms = useSelector(getCurrentFilms);
+  const currentFilm = useSelector(getCurrentFilm);
+
   const [showSize, setShowSize] = useState(DEFAULT_SIZE);
   const history = useHistory();
 
-  const filmList = films.filter((film) => {
+  const filmList = currentFilms.filter((film) => {
     if (currentGenre === Genre.All) {
       return true;
     }
@@ -37,7 +39,13 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
     setShowSize(() => showSize + 1);
   };
 
-  if(!films.length) {
+  // eslint-disable-next-line no-console
+  console.log(currentFilm);
+  // eslint-disable-next-line no-console
+  console.log(currentFilms);
+
+
+  if(!currentFilms.length) {
     return <Loading />;
   }
 
@@ -48,7 +56,16 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-  } = currentFilms;
+  } = currentFilm;
+
+  // const {
+  //   id,
+  //   name,
+  //   genre,
+  //   released,
+  //   posterImage,
+  //   backgroundImage,
+  // } = currentFilms[0];
 
   return (
     <React.Fragment>
@@ -95,7 +112,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
                   <span>Play</span>
                 </button>
 
-                <MyListButton film={currentFilms} />
+                <MyListButton film={currentFilms[0]} />
 
               </div>
             </div>
@@ -107,7 +124,7 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={films} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
+          <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
           {films.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
 

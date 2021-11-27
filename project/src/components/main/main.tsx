@@ -11,7 +11,7 @@ import Loading from '../loading/loading';
 import UserBlock from '../user-block/ user-block';
 import { useHistory } from 'react-router';
 
-import { getCurrentFilm, getCurrentFilms } from '../../store/selectors';
+import { getCurrentFilm, getCurrentFilms, getCurrentFilmsProps } from '../../store/selectors';
 import MyListButton from '../my-list/my-list-button';
 
 export type MainProps = {
@@ -20,6 +20,7 @@ export type MainProps = {
 }
 
 export default function Main({films, currentGenre}: MainProps): JSX.Element {
+  const currentFilmsProps = useSelector(getCurrentFilmsProps);
   const currentFilms = useSelector(getCurrentFilms);
   const currentFilm = useSelector(getCurrentFilm);
 
@@ -42,10 +43,10 @@ export default function Main({films, currentGenre}: MainProps): JSX.Element {
   // eslint-disable-next-line no-console
   console.log(currentFilm);
   // eslint-disable-next-line no-console
-  console.log(currentFilms);
+  console.log(currentFilmsProps);
 
 
-  if(!currentFilms.length) {
+  if(!currentFilmsProps.length) {
     return <Loading />;
   }
 

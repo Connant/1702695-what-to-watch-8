@@ -1,4 +1,4 @@
-import { addFavorite, loadFavorite, loadFilms, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm } from './action';
+import { addFavorite, loadFavorite, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm, loadFilm } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus, FavoriteFilm } from '../const';
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
@@ -21,16 +21,16 @@ export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmProps[]>(APIRoute.Films);
-    dispatch(loadFilms(data));
+    const {data} = await api.get<Film[]>(APIRoute.Films);
+    dispatch(loadFilm(data));
   };
 
 
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data} = await api.get<FilmProps[]>(APIRoute.Films.replace(':id', `${filmId}`));
-      dispatch(loadFilms(data));
+      const {data} = await api.get<Film[]>(APIRoute.Films.replace(':id', `${filmId}`));
+      dispatch(loadFilm(data));
     } catch {
       dispatch(redirectToRoute(APIRoute.Error));
     }

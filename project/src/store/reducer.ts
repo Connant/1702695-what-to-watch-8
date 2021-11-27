@@ -15,6 +15,7 @@ export type State = {
   reviews: ReviewPost[],
   isReviewsLoaded: boolean,
   favoriteFilms: Film[],
+  filterFilms: FilmProps[],
   promo: Film,
 }
 
@@ -29,6 +30,7 @@ const initialState: State = {
   reviews: [],
   isReviewsLoaded: false,
   favoriteFilms: [],
+  filterFilms: [],
   promo: {} as  Film,
 };
 
@@ -38,7 +40,7 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, currentGenre: action.payload};
 
     case ActionType.FilterFilms:
-      return {...state, favoriteFilms: adaptFilmsToClient(filterFilmsByGenre(action.payload, state.currentGenre))};
+      return {...state, filterFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
 
     case ActionType.LoadFilm: {
       return {...state, currentFilms: action.payload, similarFilms: [], similarFilmsLoading: false};

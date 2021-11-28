@@ -75,10 +75,10 @@ export const requireAuthorization = createAction(
 
 export const requireLogout = createAction(ActionType.RequireLogout);
 
-export const loadSimilarFilms = (films: Film[]) => ({
-  type: ActionType.LoadSimilarFilms,
-  payload: films,
-} as const);
+export const loadSimilarFilms = createAction(
+  ActionType.LoadSimilarFilms,
+  (films: FilmProps[]) => ({payload: films}),
+);
 
 export const loadReviews = createAction(
   ActionType.LoadReviews,

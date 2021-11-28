@@ -31,8 +31,6 @@ export const fetchFilmsAction = (): ThunkActionResult =>
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      // eslint-disable-next-line no-console
-      console.log(filmId);
       const {data} = await api.get<FilmProps>(APIRoute.Film.replace(':id', `${filmId}`));
       dispatch(loadFilm(data));
     } catch {
@@ -80,7 +78,9 @@ export const logoutAction = (): ThunkActionResult =>
 
 export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Film[]>(APIRoute.SimilarFilms.replace(':id', `${filmId}`));
+    const {data} = await api.get<FilmProps[]>(APIRoute.SimilarFilms.replace(':id', `${filmId}`));
+    // eslint-disable-next-line no-console
+    console.log(data);
     dispatch(loadSimilarFilms(data));
   };
 

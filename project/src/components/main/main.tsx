@@ -38,9 +38,6 @@ export default function Main({currentGenre}: MainProps): JSX.Element {
     setShowSize(() => showSize + 1);
   };
 
-  // eslint-disable-next-line no-console
-  // console.log(filterFilms);
-
 
   if(!currentFilms.length) {
     return <Loading />;

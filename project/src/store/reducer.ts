@@ -43,17 +43,17 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, filterFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
 
     case ActionType.LoadFilms: {
-      return {...state, currentFilms: adaptFilmsToClient(action.payload), similarFilms: [], similarFilmsLoading: false};
+      return {...state, currentFilms: adaptFilmsToClient(action.payload), similarFilmsLoading: false};
     }
 
     case ActionType.LoadFilm: {
-      // eslint-disable-next-line no-console
-      console.log(action.payload);
-      return {...state, currentFilm: adaptToClient(action.payload), similarFilms: [], similarFilmsLoading: false};
+      return {...state, currentFilm: adaptToClient(action.payload), similarFilmsLoading: false};
     }
 
     case ActionType.LoadSimilarFilms:
-      return {...state, similarFilms: action.payload, similarFilmsLoading: true};
+      // eslint-disable-next-line no-console
+      console.log(action.payload);
+      return {...state, similarFilms: adaptFilmsToClient(action.payload), similarFilmsLoading: true};
 
     case ActionType.RequireAuthorization:
       return {...state, authorizationStatus: action.payload};

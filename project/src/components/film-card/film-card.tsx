@@ -1,5 +1,6 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useEffect, useState, useRef, memo } from 'react';
+import { AppRoute } from '../../const';
 
 export type Film = {
   id: number,
@@ -93,9 +94,11 @@ function FilmCard({id, name, previewImage, posterImage, previewVideoLink}: FilmC
     return clearTimer;
   }, [isDelayedHovered, isHovered]);
 
+  const filmCardRoute = AppRoute.Film.replace(':id', `${id}/#Overview`);
+
   return (
     <article className="small-film-card catalog__films-card" onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)} onClick={() => history.push(`/films/${id}`)}
+      onMouseLeave={() => setHovered(false)} onClick={() => history.push(filmCardRoute)}
     >
       {
         isDelayedHovered ?
@@ -107,7 +110,7 @@ function FilmCard({id, name, previewImage, posterImage, previewVideoLink}: FilmC
           </div>
       }
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
+        <Link className="small-film-card__link" to={filmCardRoute}>{name}</Link>
       </h3>
     </article>
   );

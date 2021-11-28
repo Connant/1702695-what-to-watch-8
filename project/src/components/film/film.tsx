@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { fetchFilmAction } from '../../store/actions-api';
@@ -53,8 +53,6 @@ export default function FilmPage(): JSX.Element {
     posterImage,
   } = currentFilm;
 
-  // const [activeTab, setActiveTab] = useState('Overview');
-
 
   return (
     <React.Fragment>
@@ -85,14 +83,15 @@ export default function FilmPage(): JSX.Element {
                 <span className="film-card__year">{released}</span>
               </p>
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button"
-                  onClick={() => history.push(AppRoute.Player.replace(':id', `${filmId}`))}
-                >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                {!currentFilm ? <Redirect to={AppRoute.Error} /> :
+                  <button className="btn btn--play film-card__button" type="button"
+                    onClick={() => history.push(AppRoute.Player.replace(':id', `${filmId}`))}
+                  >
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>}
 
                 <MyListButton film={currentFilm} />
 
@@ -109,13 +108,12 @@ export default function FilmPage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
-            <FilmTabs id={filmId} film={currentFilm}/>
+            <FilmTabs id={filmId} />
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
 
           <SimilarFilms />
 

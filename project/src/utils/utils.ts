@@ -32,8 +32,6 @@ export const adaptFilmsToClient = (films: FilmProps[]): Film[] => (
 );
 
 export const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
-  // eslint-disable-next-line no-console
-  console.log(films);
   if (genre === Genre.All) {
     return films;
   }

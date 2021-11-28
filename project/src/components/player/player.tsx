@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -7,8 +8,9 @@ import { fetchFilmsAction } from '../../store/actions-api';
 import { Time } from '../../const';
 
 import Controls from './controls';
-import Pause from './pause';
-import Play from './play';
+import Loading from '../loading/loading';
+// import Pause from './pause';
+// import Play from './play';
 
 export default function Player(): JSX.Element {
   const currentFilms = useSelector(getCurrentFilms);
@@ -19,45 +21,60 @@ export default function Player(): JSX.Element {
 
   const ref = useRef<HTMLVideoElement | null>(null);
 
-  const [isPlayed, setIsPlayed] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [isPlayed, setIsPlayed] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const [duration, setDuration] = useState(Time.Zero);
   const [currentTime, setCurrentTime] = useState(Time.Zero);
 
   const currentMovie = currentFilms.find((film) => film.id === Number(id));
 
+  function tmpSetIsPlaing(value: boolean) {
+    // console.log(`value=${value}`);
+    // console.log(`ref.current.pauesed=${ref.current?.paused}`);
+    setIsPlayed(value);
+  }
+
+  // function onFocusEventListener() {
+  //   console.log(`ref.current.pauesed=${ref.current?.paused}`);
+  //   setIsPlayed(!!ref.current?.paused);
+  // }
+
   useEffect(() => {
     dispatch(fetchFilmsAction());
   }, [dispatch, filmId]);
 
-  useEffect(() => {
-    isPlayed ? ref.current?.pause() : ref.current?.play();
-  }, [isPlayed]);
 
   useEffect(() => {
-    if (ref.current !== null) {
-      ref.current.onloadeddata = () => setIsLoading(false);
+    if (ref.current) {
+      ref.current.onloadeddata = () => {
+        setLoading(false);
+      };
+
     }
-    return () => {
-      if (ref.current !== null) {
-        ref.current.onloadeddata = null;
-        ref.current = null;
-      }
-    };
-  }, []);
+  }, [ref]);
+
 
   useEffect(() => {
     if (ref.current === null) {
       return;
     }
-    if (isLoading) {
+
+    if (ref.current !== null && isPlayed) {
       ref.current.play();
+      return;
     }
-  }, [isLoading]);
+    ref.current.pause();
+  }, [isPlayed]);
+
+  const handleLoadedData = () => {
+    setIsPlayed(true);
+    setLoading(false);
+  };
+
 
   return (
     <div className="player">
+      {isLoading ? <Loading /> : ''}
       <video
         src={currentMovie?.videoLink}
         ref={ref}
@@ -66,6 +83,7 @@ export default function Player(): JSX.Element {
         poster={currentMovie?.previewImage}
         onTimeUpdate={(evt) => setCurrentTime(Math.round(evt.currentTarget.currentTime))}
         onDurationChange={(evt) => setDuration(Math.round(evt.currentTarget.duration))}
+        onLoadedData={handleLoadedData}
       />
 
       <button type="button" className="player__exit" onClick={() => history.goBack()}>
@@ -78,15 +96,20 @@ export default function Player(): JSX.Element {
         <Controls duration={duration} currentTime={currentTime} />
 
         <div className="player__controls-row">
-          <button type="button" className="player__play" onClick={() => setIsPlayed((state) => !state)} >
-
-            {isPlayed ? <Play /> : <Pause /> }
-
-            <span>
-              {isPlayed ? 'Play' : 'Pause'}
-            </span>
-
-          </button>
+          {isPlayed === true ?
+            <button type="button" className="player__play" onClick={()=>tmpSetIsPlaing(false)}>
+              <svg viewBox="0 0 14 21" width="14" height="21">
+                <use xlinkHref="#pause"></use>
+              </svg>
+              <span>Pause</span>
+            </button>
+            :
+            <button type="button" className="player__play" onClick={()=> tmpSetIsPlaing(true)} >
+              <svg viewBox="0 0 19 19" width="19" height="19">
+                <use xlinkHref="#play-s"></use>
+              </svg>
+              <span>Play</span>
+            </button>}
 
           <div className="player__name">{currentMovie?.name}</div>
 

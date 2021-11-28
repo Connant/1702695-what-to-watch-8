@@ -35,6 +35,7 @@ export default function FilmTabs({id}: FilmTabsProps) : JSX.Element {
     `film-nav__item ${urlHash === thisTab ? 'film-nav__item--active' : ''}`
   );
 
+
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">

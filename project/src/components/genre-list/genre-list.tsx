@@ -5,7 +5,6 @@ import { getCurrentGenre, getCurrentFilms } from '../../store/selectors';
 import { Film } from '../film-card/film-card';
 
 export type GenreListProps = {
-  films: Film[],
   resetGenre: () => void,
 }
 
@@ -16,6 +15,10 @@ export default function GenreList({resetGenre}: GenreListProps): JSX.Element {
   const dispatch = useDispatch();
 
   const genres = [Genre.All, ...new Set(currentFilms.map((film) => film.genre))];
+
+  const onFilterFilms = (filmList: Film[]) => {
+    dispatch(filterFilms(filmList));
+  };
 
   const handleChangeGenre = (genre: string) => {
     dispatch(changeGenre(genre));
@@ -35,6 +38,7 @@ export default function GenreList({resetGenre}: GenreListProps): JSX.Element {
             onClick={(evt) => {
               evt.preventDefault();
               handleChangeGenre(genre);
+              onFilterFilms(currentFilms);
               dispatch(changeGenre(genre));
               resetGenre();
             }}

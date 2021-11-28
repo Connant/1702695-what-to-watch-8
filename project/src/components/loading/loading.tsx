@@ -1,6 +1,7 @@
+import './loading.css';
 
 export default function Loading(): JSX.Element {
   return (
-    <p>Loading</p>
+    <p className='loader'>Loading</p>
   );
 }

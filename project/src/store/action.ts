@@ -63,11 +63,6 @@ export const loadFilm = createAction(
   (film: FilmProps) => ({payload: film}),
 );
 
-// export const loadFilms = (films: FilmProps[]) => ({
-//   type: ActionType.LoadFilms,
-//   payload: films,
-// } as const);
-
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
   (authStatus: AuthorizationStatus) => ({payload: authStatus}),

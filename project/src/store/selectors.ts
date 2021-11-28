@@ -20,5 +20,4 @@ export const getCurrentGenre = (state: State): string => state.currentGenre;
 
 export const getFavoriteFilms = (state: State): Film[] => state.favoriteFilms;
 export const getFilterFilms = (state: State): Film[] => state.filterFilms;
-// export const getPromo = (state: State): Film => state.promo;
 

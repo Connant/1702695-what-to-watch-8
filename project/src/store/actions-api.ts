@@ -1,5 +1,5 @@
 import { addFavorite, loadFavorite, loadPromo, redirectToRoute, removeFavorite, requireAuthorization, requireLogout, updatePromo, updateFilm, loadFilms, loadFilm, filterFilms } from './action';
-import { APIRoute, AppRoute, AuthorizationStatus, FavoriteFilm } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, FavoriteFilm, ToastMessage } from '../const';
 import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { State } from './reducer';
@@ -7,10 +7,11 @@ import { Film, FilmProps } from '../components/film-card/film-card';
 import { loadSimilarFilms, loadReviews } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
 import { ReviewPost, ReviewRC } from '../components/add-review/review-form';
-import { toast } from 'react-toastify';
 import { Action } from 'redux';
-import 'react-toastify/dist/ReactToastify.css';
 import { adaptFilmsToClient } from '../utils/utils';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export type AuthorizationData = {
   login: string,
@@ -22,11 +23,15 @@ export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Action>;
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmProps[]>(APIRoute.Films);
-    dispatch(loadFilms(data));
-    dispatch(filterFilms(adaptFilmsToClient(data)));
+    try {
+      const {data} = await api.get<FilmProps[]>(APIRoute.Films);
+      dispatch(loadFilms(data));
+      dispatch(filterFilms(adaptFilmsToClient(data)));
+    }
+    catch {
+      toast.error(ToastMessage.Data);
+    }
   };
-
 
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -35,6 +40,7 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
       dispatch(loadFilm(data));
     } catch {
       dispatch(redirectToRoute(APIRoute.Error));
+      toast.error(ToastMessage.Film);
     }
   };
 
@@ -48,7 +54,7 @@ export const checkAuthorizationAction = (): ThunkActionResult => (
         dispatch(requireLogout());
       }
     } catch {
-      toast.warn('Please, don\'t forget to log in');
+      toast.info(ToastMessage.Auth);
     }
   }
 );
@@ -61,13 +67,9 @@ export const loginAction = ({login: email, password}: AuthorizationData): ThunkA
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
-      toast.error('Please enter valid email', {
-        position: toast.POSITION.TOP_CENTER,
-      });
-      dispatch(redirectToRoute(AppRoute.SignIn));
+      toast.info(ToastMessage.IncorrectEmail);
     }
   };
-
 
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -78,16 +80,22 @@ export const logoutAction = (): ThunkActionResult =>
 
 export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmProps[]>(APIRoute.SimilarFilms.replace(':id', `${filmId}`));
-    // eslint-disable-next-line no-console
-    console.log(data);
-    dispatch(loadSimilarFilms(data));
+    try {
+      const {data} = await api.get<FilmProps[]>(APIRoute.SimilarFilms.replace(':id', `${filmId}`));
+      dispatch(loadSimilarFilms(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<ReviewPost[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
-    dispatch(loadReviews(data));
+    try {
+      const {data} = await api.get<ReviewPost[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
+      dispatch(loadReviews(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const sendReview = (filmId: number, review: ReviewRC ): ThunkActionResult =>
@@ -97,7 +105,7 @@ export const sendReview = (filmId: number, review: ReviewRC ): ThunkActionResult
       dispatch(loadReviews(data));
       dispatch(redirectToRoute(AppRoute.Film.replace(':id', `${filmId}/#Overview`)));
     } catch {
-      toast.error('Sending failed');
+      toast.error(ToastMessage.Review);
     }
   };
 
@@ -115,20 +123,25 @@ export const fetchPromoAction = (): ThunkActionResult =>
 
 export const setFavoriteAction = (filmId: number, action: FavoriteFilm): ThunkActionResult =>
   async (dispatch, getState, api): Promise<void> => {
-    await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
-    const {data} = await api.get<FilmProps[]>(APIRoute.Favorites);
-    const curFilm = getState().currentFilms.find((el) => el.id === filmId);
+    try {
+      await api.post<Film>(`${APIRoute.Favorites}/${filmId}/${action}`);
+      const {data} = await api.get<FilmProps[]>(APIRoute.Favorites);
+      const curFilm = getState().currentFilms.find((el) => el.id === filmId);
 
-    dispatch(updatePromo({...getState().promo, isFavorite: !getState().promo.isFavorite}));
+      dispatch(updatePromo({...getState().promo, isFavorite: !getState().promo.isFavorite}));
 
-    if (curFilm) {
-      dispatch(updateFilm({...curFilm, isFavorite: !curFilm.isFavorite}));
-    }
+      if (curFilm) {
+        dispatch(updateFilm({...curFilm, isFavorite: !curFilm.isFavorite}));
+      }
 
-    if (action === FavoriteFilm.Add) {
-      dispatch(addFavorite(data));
-    }
-    if (action === FavoriteFilm.Remove) {
-      dispatch(removeFavorite());
+      if (action === FavoriteFilm.Add) {
+        dispatch(addFavorite(data));
+      }
+      if (action === FavoriteFilm.Remove) {
+        dispatch(removeFavorite());
+      }
+    } catch {
+      toast.info(ToastMessage.Auth);
+      dispatch(redirectToRoute(AppRoute.SignIn));
     }
   };

@@ -47,12 +47,10 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     }
 
     case ActionType.LoadFilm: {
-      return {...state, currentFilm: adaptToClient(action.payload), similarFilmsLoading: false};
+      return {...state, currentFilm: adaptToClient(action.payload), similarFilmsLoading: false, isReviewsLoaded: false};
     }
 
     case ActionType.LoadSimilarFilms:
-      // eslint-disable-next-line no-console
-      console.log(action.payload);
       return {...state, similarFilms: adaptFilmsToClient(action.payload), similarFilmsLoading: true};
 
     case ActionType.RequireAuthorization:

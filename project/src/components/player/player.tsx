@@ -1,19 +1,17 @@
-/* eslint-disable no-console */
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentFilms } from '../../store/selectors';
-import { fetchFilmsAction } from '../../store/actions-api';
-import { Time } from '../../const';
+import { getCurrentFilm } from '../../store/selectors';
+import { fetchFilmAction } from '../../store/actions-api';
+import { AppRoute, Time } from '../../const';
 
 import Controls from './controls';
 import Loading from '../loading/loading';
-// import Pause from './pause';
-// import Play from './play';
+import Error from '../error/error';
 
 export default function Player(): JSX.Element {
-  const currentFilms = useSelector(getCurrentFilms);
+  const currentFilm = useSelector(getCurrentFilm);
   const dispatch = useDispatch();
   const {id}: {id: string} = useParams();
   const filmId = Number(id);
@@ -26,33 +24,18 @@ export default function Player(): JSX.Element {
   const [duration, setDuration] = useState(Time.Zero);
   const [currentTime, setCurrentTime] = useState(Time.Zero);
 
-  const currentMovie = currentFilms.find((film) => film.id === Number(id));
-
   function tmpSetIsPlaing(value: boolean) {
-    // console.log(`value=${value}`);
-    // console.log(`ref.current.pauesed=${ref.current?.paused}`);
     setIsPlayed(value);
   }
 
-  // function onFocusEventListener() {
-  //   console.log(`ref.current.pauesed=${ref.current?.paused}`);
-  //   setIsPlayed(!!ref.current?.paused);
-  // }
-
   useEffect(() => {
-    dispatch(fetchFilmsAction());
-  }, [dispatch, filmId]);
-
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.onloadeddata = () => {
-        setLoading(false);
+    if (isNaN(filmId)) {
+      return function cleanup() {
+        <Redirect to={AppRoute.Error} />;
       };
-
     }
-  }, [ref]);
-
+    dispatch(fetchFilmAction(filmId));
+  }, [dispatch, filmId]);
 
   useEffect(() => {
     if (ref.current === null) {
@@ -60,8 +43,9 @@ export default function Player(): JSX.Element {
     }
 
     if (ref.current !== null && isPlayed) {
-      ref.current.play();
+      ref.current.play().catch(() => {setIsPlayed(false);});
       return;
+      // ошибки вылезают из-за политики браузеров https://developer.chrome.com/blog/autoplay/
     }
     ref.current.pause();
   }, [isPlayed]);
@@ -72,17 +56,20 @@ export default function Player(): JSX.Element {
   };
 
 
-  return (
+  return currentFilm !== undefined ? (
     <div className="player">
+      {isNaN(filmId) ? <Redirect to={AppRoute.Error} /> : ''}
       {isLoading ? <Loading /> : ''}
       <video
-        src={currentMovie?.videoLink}
+        src={currentFilm.videoLink}
         ref={ref}
         className="player__video"
         preload='metadata'
-        poster={currentMovie?.previewImage}
+        poster={currentFilm.previewImage}
         onTimeUpdate={(evt) => setCurrentTime(Math.round(evt.currentTarget.currentTime))}
         onDurationChange={(evt) => setDuration(Math.round(evt.currentTarget.duration))}
+        onPause={() => setIsPlayed(false)}
+        onPlay={() => setIsPlayed(true)}
         onLoadedData={handleLoadedData}
       />
 
@@ -111,7 +98,7 @@ export default function Player(): JSX.Element {
               <span>Play</span>
             </button>}
 
-          <div className="player__name">{currentMovie?.name}</div>
+          <div className="player__name">{currentFilm.name}</div>
 
           <button type="button" className="player__full-screen" onClick={() => ref.current?.requestFullscreen()}>
             <svg viewBox="0 0 27 27" width="27" height="27">
@@ -123,5 +110,5 @@ export default function Player(): JSX.Element {
         </div>
       </div>
     </div>
-  );
+  ) : <Error />;
 }

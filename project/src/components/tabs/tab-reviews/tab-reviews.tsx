@@ -8,23 +8,28 @@ import Loading from '../../loading/loading';
 
 export default function TabReviews(): JSX.Element {
 
-  const currentFilms = useSelector(getCurrentFilm);
+  const currentFilm = useSelector(getCurrentFilm);
   const reviews = useSelector(getReviews);
   const isReviewsLoaded = useSelector(getIsReviewsLoaded);
   const dispatch = useDispatch();
 
+
   const getReviewList = (id: number) => {
-    dispatch(fetchReviewsAction(id));
+    dispatch(fetchReviewsAction(currentFilm.id));
   };
 
   useEffect(() => {
     if (!isReviewsLoaded) {
-      getReviewList(currentFilms.id);
+      getReviewList(currentFilm.id);
     }
   });
 
   if (!isReviewsLoaded) {
     return <Loading />;
+  }
+
+  if (reviews.length === 0) {
+    return <p>Oh, this movie hasnt got any reviews!</p>;
   }
 
   const midIndex = Math.round(reviews.length / 2);

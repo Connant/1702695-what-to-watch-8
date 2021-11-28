@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, Genre, DEFAULT_SIZE, FILM_CARD_COUNT } from '../../const';
@@ -52,7 +51,6 @@ export default function Main({currentGenre}: MainProps): JSX.Element {
     backgroundImage,
   } = currentFilms[0];
 
-
   return (
     <React.Fragment>
       <section className="film-card">
@@ -64,11 +62,11 @@ export default function Main({currentGenre}: MainProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <Link to={AppRoute.Main} className="logo__link">
+            <a href="/" className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </Link>
+            </a>
           </div>
 
           <UserBlock />
@@ -110,19 +108,11 @@ export default function Main({currentGenre}: MainProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={currentFilms} resetGenre={() => setShowSize(DEFAULT_SIZE)} />
+          <GenreList resetGenre={() => setShowSize(DEFAULT_SIZE)} />
 
           {currentFilms.length !== 0 ? <FilmList films={filmList} /> : <Loading />}
 
           {filterFilms.length > shownFilms.length && <ShowMore onClick={handleShowMoreClick}/>}
-
-          {/* {
-            if (filmList.length > shownFilms.length) {
-              <ShowMore onClick={handleShowMoreClick}/>
-            } else if (filmList.length === shownFilms.length {
-              return
-            }
-          } */}
 
         </section>
 

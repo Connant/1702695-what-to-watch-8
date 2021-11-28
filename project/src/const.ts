@@ -53,3 +53,10 @@ export enum FavoriteFilm {
   Remove = 0,
 }
 
+export enum ToastMessage {
+  Auth = 'Sorry, you are not authorized',
+  IncorrectEmail = 'Your email was entered incorrectly, please try again',
+  Data = 'Sorry, we were unable to retrieve data',
+  Film = 'Sorry, but there is no such film.',
+  Review = 'Something went wrong, could not send review',
+}

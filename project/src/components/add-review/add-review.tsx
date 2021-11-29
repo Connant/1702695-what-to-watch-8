@@ -5,7 +5,6 @@ import { AppRoute } from '../../const';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '../loading/loading';
-import { title } from 'process';
 import ReviewForm from './review-form';
 import UserBlock from '../user-block/ user-block';
 import { getCurrentFilm } from '../../store/selectors';
@@ -38,7 +37,7 @@ export default function AddReview(): JSX.Element {
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={currentFilms.backgroundImage} alt={currentFilms.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -55,7 +54,7 @@ export default function AddReview(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)} className="breadcrumbs__link">{title}</Link>
+                <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)} className="breadcrumbs__link">{currentFilms.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link to={AppRoute.AddReview.replace(':id', id.toString())} className="breadcrumbs__link">Add review</Link>

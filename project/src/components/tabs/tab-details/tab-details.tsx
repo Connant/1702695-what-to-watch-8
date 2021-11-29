@@ -10,8 +10,8 @@ export default function TabDetails({film}: {film: Film}) : JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value">
-            {film.starring}
+          <span style={{whiteSpace: 'pre-line'}} className="film-card__details-value">
+            {film.starring.join(', \n')}
           </span>
         </p>
       </div>

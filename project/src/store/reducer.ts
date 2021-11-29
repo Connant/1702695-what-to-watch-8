@@ -47,7 +47,8 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     }
 
     case ActionType.LoadFilm: {
-      return {...state, currentFilm: adaptToClient(action.payload), similarFilmsLoading: false, isReviewsLoaded: false};
+      return {...state, currentFilm: adaptToClient(action.payload), similarFilmsLoading: false, isReviewsLoaded: false,
+        currentGenre: Genre.All, filterFilms: state.currentFilms};
     }
 
     case ActionType.LoadSimilarFilms:

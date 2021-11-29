@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Stars from './stars';
 import { sendReview } from '../../store/actions-api';
 import { getCurrentFilm } from '../../store/selectors';
-import { useHistory, useParams } from 'react-router-dom';
-import { AppRoute } from '../../const';
-
 
 const DEFAULT_RATING = 0;
 const MIN_POST_LENGTH = 50;
@@ -34,15 +31,10 @@ export default function AddReviewForm(): JSX.Element {
   const [isFormSending, setIsFormSending] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const history = useHistory();
-
   const currentFilm = useSelector(getCurrentFilm);
   const dispatch = useDispatch();
 
   const sendComment = (id: number, data: ReviewRC) => dispatch(sendReview(id, data));
-
-  const { id }: {id: string} = useParams();
-  const filmId = Number(id);
 
   React.useEffect(() => {
     const isRatingValid = rating > DEFAULT_RATING;
@@ -70,7 +62,6 @@ export default function AddReviewForm(): JSX.Element {
 
     setIsFormSending(true);
     sendComment(currentFilm.id, postData);
-    history.push(AppRoute.Film.replace(':id', `${filmId}#Overview`));
   };
 
 

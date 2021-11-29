@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { Router as BrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import { reducer } from './store/reducer';
@@ -14,12 +13,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { redirect } from './store/redirect';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createBrowserHistory } from 'history';
 
 
 const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.Auth)));
-
-const browserHistory = createBrowserHistory();
 
 const store = configureStore({
   reducer: reducer,
@@ -41,9 +37,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer />
-      <BrowserRouter history={browserHistory}>
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

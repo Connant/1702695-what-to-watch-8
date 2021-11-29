@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useSelector } from 'react-redux';
 
@@ -13,6 +13,7 @@ import PrivateRoute from '../private-route/private-route';
 
 import { getAuthorizationStatus, getCurrentGenre } from '../../store/selectors';
 import Loading from '../loading/loading';
+import { browserHistory } from '../../store/history';
 
 export default  function App(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
@@ -23,7 +24,7 @@ export default  function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <Router history={browserHistory}>
       <Switch>
 
         <Route path={AppRoute.Main} exact>
@@ -53,7 +54,7 @@ export default  function App(): JSX.Element {
         </Route>
 
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
 

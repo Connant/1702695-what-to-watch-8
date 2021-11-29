@@ -8,46 +8,41 @@ import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 
 import SimilarFilms from './similar-films';
 import Loading from '../loading/loading';
-// import Error from '../error/error';
+import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
 import MyListButton from '../my-list/my-list-button';
 import FilmTabs from '../tabs/film-tabs/film-tabs';
 
-
 export default function FilmPage(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
   const authorizationStatus = useSelector(getAuthorizationStatus);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
-  const getFilm = (currentFilmId: number) => {
-    dispatch(fetchFilmAction(currentFilmId));
-  };
-
   useEffect(() => {
+    if (isNaN(filmId)) {
+      return function cleanup() {
+        <Redirect to={AppRoute.Error} />;
+      };
+    }
     if (currentFilm.id !== filmId) {
-      getFilm(filmId);
+      dispatch(fetchFilmAction(filmId));
     }
   });
 
-  // useEffect(() => {
-  //   if (currentFilm.id !== filmId) {
-  //     dispatch(fetchFilmAction(filmId));
-  //   }
-  // });
+  if (!currentFilm) {
+    return <Error />;
+  }
 
   if (currentFilm.id !== filmId) {
     return (
       <Loading />
     );
   }
-
-  // if (!currentFilm) {
-  //   return <Error />;
-  // }
 
   const {
     name,
@@ -60,6 +55,7 @@ export default function FilmPage(): JSX.Element {
 
   return (
     <React.Fragment>
+      {isNaN(filmId) ? <Redirect to={AppRoute.Error} /> : ''}
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">

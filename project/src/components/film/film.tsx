@@ -8,7 +8,7 @@ import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
 
 import SimilarFilms from './similar-films';
 import Loading from '../loading/loading';
-import Error from '../error/error';
+// import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
 import MyListButton from '../my-list/my-list-button';
 import FilmTabs from '../tabs/film-tabs/film-tabs';
@@ -18,6 +18,7 @@ export default function FilmPage(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
@@ -32,7 +33,11 @@ export default function FilmPage(): JSX.Element {
     }
   });
 
-  const history = useHistory();
+  // useEffect(() => {
+  //   if (currentFilm.id !== filmId) {
+  //     dispatch(fetchFilmAction(filmId));
+  //   }
+  // });
 
   if (currentFilm.id !== filmId) {
     return (
@@ -40,10 +45,9 @@ export default function FilmPage(): JSX.Element {
     );
   }
 
-
-  if (!currentFilm) {
-    return <Error />;
-  }
+  // if (!currentFilm) {
+  //   return <Error />;
+  // }
 
   const {
     name,

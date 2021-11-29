@@ -1,7 +1,8 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Stars from './stars';
-import { sendReview, ThunkAppDispatch } from '../../store/actions-api';
+import { sendReview } from '../../store/actions-api';
 import { getCurrentFilm } from '../../store/selectors';
 import { useHistory, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -36,18 +37,22 @@ export default function AddReviewForm(): JSX.Element {
   const history = useHistory();
 
   const currentFilm = useSelector(getCurrentFilm);
-  const dispatch = useDispatch<ThunkAppDispatch>();
+  const dispatch = useDispatch();
 
   const sendComment = (id: number, data: ReviewRC) => dispatch(sendReview(id, data));
 
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const isRatingValid = rating > DEFAULT_RATING;
     const isTextAreaValid = userInput.length >= MIN_POST_LENGTH && userInput.length <= MAX_POST_LENGTH;
 
     setIsFormValid(isRatingValid && isTextAreaValid);
+
+    return function cleanup() {
+      setIsFormSending(false);
+    };
   }, [rating, userInput]);
 
   const handleRatingChange = useCallback(
@@ -64,8 +69,7 @@ export default function AddReviewForm(): JSX.Element {
     };
 
     setIsFormSending(true);
-    sendComment(currentFilm.id, postData)
-      .then(() => setIsFormSending(false));
+    sendComment(currentFilm.id, postData);
     history.push(AppRoute.Film.replace(':id', `${filmId}#Overview`));
   };
 

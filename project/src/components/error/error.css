@@ -6,9 +6,10 @@
   text-transform: uppercase;
   font-weight: bold;
   line-height: 200%;
-  color: rgba(0, 0, 0, 0.5);
+  color: #a05858;
+  /* background-color: #a05858; */
 }
 
 .error a {
-  color: rgba(0, 0, 0, 0.7);
+  color: #693a3a;
 }

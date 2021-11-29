@@ -1,11 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { loginAction, AuthorizationData } from '../../store/actions-api';
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,7 +11,6 @@ const DEFAULT_STATE: AuthorizationData = {
   login: '',
   password: '',
 };
-
 
 export default function SignIn(): JSX.Element {
 
@@ -25,8 +21,6 @@ export default function SignIn(): JSX.Element {
   const onSubmit = (authData: AuthorizationData) => {
     dispatch(loginAction(authData));
   };
-
-  const history = useHistory();
 
   const letterCheck = /[a-zA-Z]/;
   const numberCheck = /[0-9]/;
@@ -62,7 +56,6 @@ export default function SignIn(): JSX.Element {
 
     if (userInput.login !== '' && userInput.password !== '') {
       onSubmit(userInput);
-      history.push(AppRoute.Main);
     }
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchReviewsAction } from '../../../store/actions-api';
 
@@ -13,14 +13,9 @@ export default function TabReviews(): JSX.Element {
   const isReviewsLoaded = useSelector(getIsReviewsLoaded);
   const dispatch = useDispatch();
 
-
-  const getReviewList = (id: number) => {
-    dispatch(fetchReviewsAction(currentFilm.id));
-  };
-
   useEffect(() => {
     if (!isReviewsLoaded) {
-      getReviewList(currentFilm.id);
+      dispatch(fetchReviewsAction(currentFilm.id));
     }
   });
 

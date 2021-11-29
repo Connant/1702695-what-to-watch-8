@@ -1,7 +1,7 @@
 import { Actions,  ActionType } from './action';
 import { Film, FilmProps } from '../components/film-card/film-card';
 import { Genre, AuthorizationStatus } from '../const';
-import { ReviewPost } from '../components/add-review/review-form';
+import { ReviewPost } from '../components/add-review/add-review-form';
 import { adaptFilmsToClient, adaptToClient, filterFilmsByGenre } from '../utils/utils';
 
 export type State = {
@@ -82,6 +82,7 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return  {...state,
         currentFilms: state.currentFilms.map((el) =>
           el.id === action.payload.id ? action.payload : el),
+        currentFilm: state.currentFilm.id === action.payload.id ? action.payload : state.currentFilm,
       };
 
     default:

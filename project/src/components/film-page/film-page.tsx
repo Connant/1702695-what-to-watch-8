@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
-
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { fetchFilmAction } from '../../store/actions-api';
 import { getAuthorizationStatus, getCurrentFilm } from '../../store/selectors';
-
 import SimilarFilms from './similar-films';
 import Loading from '../loading/loading';
 import Error from '../error/error';
 import UserBlock from '../user-block/ user-block';
 import MyListButton from '../my-list/my-list-button';
 import FilmTabs from '../tabs/film-tabs/film-tabs';
+
 
 export default function FilmPage(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
@@ -95,7 +94,7 @@ export default function FilmPage(): JSX.Element {
 
                 <MyListButton film={currentFilm} />
 
-                {authorizationStatus !== AuthorizationStatus.NoAuth &&
+                {authorizationStatus === AuthorizationStatus.Auth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>
                     Add review
                   </Link>}

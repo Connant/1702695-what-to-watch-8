@@ -33,8 +33,7 @@ export default function GenreList({resetGenre}: GenreListProps): JSX.Element {
           className={`catalog__genres-item ${currentGenre === genre && 'catalog__genres-item--active'}`}
         >
           <a
-            href="/"
-            className="catalog__genres-link"
+            href="/" className="catalog__genres-link"
             onClick={(evt) => {
               evt.preventDefault();
               handleChangeGenre(genre);

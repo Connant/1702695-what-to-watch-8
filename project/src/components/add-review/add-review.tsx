@@ -1,22 +1,19 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { AppRoute } from '../../const';
 import { useDispatch, useSelector } from 'react-redux';
-
-import Loading from '../loading/loading';
-import ReviewForm from './review-form';
-import UserBlock from '../user-block/ user-block';
+import { AppRoute } from '../../const';
 import { getCurrentFilm } from '../../store/selectors';
 import { fetchFilmAction } from '../../store/actions-api';
+import Loading from '../loading/loading';
+import ReviewForm from './add-review-form';
+import UserBlock from '../user-block/ user-block';
 
 
 export default function AddReview(): JSX.Element {
-
   const currentFilms = useSelector(getCurrentFilm);
-  const { id }: {id: string} = useParams();
-
   const dispatch = useDispatch();
+  const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
   const getFilm = (currentFilmId: number) => {

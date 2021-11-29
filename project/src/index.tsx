@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
 import { Provider } from 'react-redux';
 import { reducer } from './store/reducer';
-
 import { createAPI } from './services/api';
-import { AuthorizationStatus } from './const';
-import { requireAuthorization } from './store/action';
 import { fetchFilmsAction, checkAuthorizationAction, fetchPromoAction } from './store/actions-api';
 import { configureStore } from '@reduxjs/toolkit';
 import { redirect } from './store/redirect';
@@ -15,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const api = createAPI(() => store.dispatch(requireAuthorization(AuthorizationStatus.Auth)));
+const api = createAPI(() => undefined);
 
 const store = configureStore({
   reducer: reducer,
@@ -26,7 +22,6 @@ const store = configureStore({
       },
     }).concat(redirect),
 });
-
 
 (store.dispatch)(checkAuthorizationAction());
 (store.dispatch)(fetchFilmsAction());

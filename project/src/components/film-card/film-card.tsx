@@ -60,11 +60,9 @@ export type FilmCardProps = {
 };
 
 function FilmCard({id, name, previewImage, posterImage, previewVideoLink}: FilmCardProps): JSX.Element {
-
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [ isHovered, setHovered ] = useState(false);
   const [ isDelayedHovered, setDelayedHovered ] = useState(false);
-
   const history = useHistory();
 
   const clearTimer = () => {

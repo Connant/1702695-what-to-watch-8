@@ -54,9 +54,9 @@ export enum FavoriteFilm {
 }
 
 export enum ToastMessage {
-  Auth = 'Sorry, you are not authorized',
+  Auth = 'You are not authorized',
   IncorrectEmail = 'Your email was entered incorrectly, please try again',
   Data = 'Sorry, we were unable to retrieve data',
-  Film = 'Sorry, but there is no such film.',
+  Film = 'Sorry, but there is no such film',
   Review = 'Something went wrong, could not send review',
 }

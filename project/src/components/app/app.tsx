@@ -1,27 +1,19 @@
 import { Router, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { useSelector } from 'react-redux';
-
 import Main from '../main/main';
 import AddReview from '../add-review/add-review';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import SignIn from '../sign-in/sign-in';
 import Error from '../error/error';
-import FilmPage from '../film/film';
+import FilmPage from '../film-page/film-page';
 import PrivateRoute from '../private-route/private-route';
-
-import { getAuthorizationStatus, getCurrentGenre } from '../../store/selectors';
-import Loading from '../loading/loading';
+import { getCurrentGenre } from '../../store/selectors';
 import { browserHistory } from '../../store/history';
 
 export default  function App(): JSX.Element {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
   const currentGenre = useSelector(getCurrentGenre);
-
-  if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return <Loading />;
-  }
 
   return (
     <Router history={browserHistory}>

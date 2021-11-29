@@ -40,11 +40,12 @@ export const filterFilmsByGenre = (films: Film[], genre: string): Film[] => {
 
 
 export const formatDate = (date: string): string => dayjs(date).format('YYYY-MM-DD');
-export const formatRunTime = (runtime: number): string => dayjs.duration(runtime, 'minutes').format('H[h] mm[m]');
+
 export const formatRemainingTime = (remainingTime: number): string => {
   const format = remainingTime >= Time.HourInSecond ? '-HH:mm:ss' : '-mm:ss';
   return dayjs.duration(remainingTime, 'seconds').format(format);
 };
+
 export const normalDate = (date: string): string => dayjs(date).format('MMMM D, YYYY');
 
 export const getGrade = (rating: number): string => {
@@ -62,8 +63,3 @@ export const getGrade = (rating: number): string => {
   return '';
 };
 
-export function getGenres (films : Film[]): string[] {
-  const allGenres = ['All genres'];
-  const genres = Array.from(new Set(films.map((film : Film) => film.genre)));
-  return allGenres.concat(genres);
-}

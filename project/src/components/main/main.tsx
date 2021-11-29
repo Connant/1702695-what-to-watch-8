@@ -37,7 +37,6 @@ export default function Main({currentGenre}: MainProps): JSX.Element {
     setShowSize(() => showSize + 1);
   };
 
-
   if(!currentFilms.length) {
     return <Loading />;
   }

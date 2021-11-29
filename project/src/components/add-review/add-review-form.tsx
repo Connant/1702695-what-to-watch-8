@@ -1,9 +1,8 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
-import React from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Stars from './stars';
 import { sendReview } from '../../store/actions-api';
 import { getCurrentFilm } from '../../store/selectors';
+import Stars from './stars';
 
 const DEFAULT_RATING = 0;
 const MIN_POST_LENGTH = 50;
@@ -36,7 +35,7 @@ export default function AddReviewForm(): JSX.Element {
 
   const sendComment = (id: number, data: ReviewRC) => dispatch(sendReview(id, data));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const isRatingValid = rating > DEFAULT_RATING;
     const isTextAreaValid = userInput.length >= MIN_POST_LENGTH && userInput.length <= MAX_POST_LENGTH;
 

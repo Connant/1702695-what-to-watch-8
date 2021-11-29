@@ -6,7 +6,7 @@ import { State } from './reducer';
 import { Film, FilmProps } from '../components/film-card/film-card';
 import { loadSimilarFilms, loadReviews } from './action';
 import { dropToken, saveToken, Token } from '../services/token';
-import { ReviewPost, ReviewRC } from '../components/add-review/review-form';
+import { ReviewPost, ReviewRC } from '../components/add-review/add-review-form';
 import { Action } from 'redux';
 import { adaptFilmsToClient } from '../utils/utils';
 
@@ -28,7 +28,9 @@ export const fetchFilmsAction = (): ThunkActionResult =>
       dispatch(filterFilms(adaptFilmsToClient(data)));
     }
     catch {
-      toast.error(ToastMessage.Data);
+      toast.error(ToastMessage.Data, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -39,7 +41,9 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
       dispatch(loadFilm(data));
     } catch {
       dispatch(redirectToRoute(APIRoute.Error));
-      toast.error(ToastMessage.Film);
+      toast.error(ToastMessage.Film, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -53,7 +57,9 @@ export const checkAuthorizationAction = (): ThunkActionResult => (
         dispatch(requireLogout());
       }
     } catch {
-      toast.info(ToastMessage.Auth);
+      toast.info(ToastMessage.Auth, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
 );
@@ -66,7 +72,9 @@ export const loginAction = ({login: email, password}: AuthorizationData): ThunkA
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
-      toast.info(ToastMessage.IncorrectEmail);
+      toast.info(ToastMessage.IncorrectEmail, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -83,7 +91,9 @@ export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
       const {data} = await api.get<FilmProps[]>(APIRoute.SimilarFilms.replace(':id', `${filmId}`));
       dispatch(loadSimilarFilms(data));
     } catch {
-      toast.error(ToastMessage.Data);
+      toast.error(ToastMessage.Data, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -93,7 +103,9 @@ export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
       const {data} = await api.get<ReviewPost[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
       dispatch(loadReviews(data));
     } catch {
-      toast.error(ToastMessage.Data);
+      toast.error(ToastMessage.Data, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -104,7 +116,9 @@ export const sendReview = (filmId: number, review: ReviewRC ): ThunkActionResult
       dispatch(loadReviews(data));
       dispatch(redirectToRoute(AppRoute.Film.replace(':id', `${filmId}/#Overview`)));
     } catch {
-      toast.error(ToastMessage.Review);
+      toast.error(ToastMessage.Review, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -140,7 +154,8 @@ export const setFavoriteAction = (filmId: number, action: FavoriteFilm): ThunkAc
         dispatch(removeFavorite());
       }
     } catch {
-      toast.info(ToastMessage.Auth);
-      dispatch(redirectToRoute(AppRoute.SignIn));
+      toast.info(ToastMessage.Auth, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };

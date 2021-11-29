@@ -1,6 +1,6 @@
 import { Film, FilmProps } from '../components/film-card/film-card';
 import { AuthorizationStatus } from '../const';
-import { ReviewPost } from '../components/add-review/review-form';
+import { ReviewPost } from '../components/add-review/add-review-form';
 import { createAction } from '@reduxjs/toolkit';
 
 export enum ActionType {

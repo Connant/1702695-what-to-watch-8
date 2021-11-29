@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentFilm } from '../../store/selectors';
 import { fetchFilmAction } from '../../store/actions-api';
 import { AppRoute, Time } from '../../const';
-
 import Controls from './controls';
 import Loading from '../loading/loading';
 import Error from '../error/error';
+
 
 export default function Player(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
@@ -45,7 +45,6 @@ export default function Player(): JSX.Element {
     if (ref.current !== null && isPlayed) {
       ref.current.play().catch(() => {setIsPlayed(false);});
       return;
-      // ошибки вылезают из-за политики браузеров https://developer.chrome.com/blog/autoplay/
     }
     ref.current.pause();
   }, [isPlayed]);
@@ -54,7 +53,6 @@ export default function Player(): JSX.Element {
     setIsPlayed(true);
     setLoading(false);
   };
-
 
   return currentFilm !== undefined ? (
     <div className="player">

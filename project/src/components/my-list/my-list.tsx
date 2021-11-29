@@ -38,7 +38,6 @@ export default function MyList(): JSX.Element {
           <FilmList films={favoriteFilms} />
         )}
 
-
       </section>
 
       <footer className="page-footer">
